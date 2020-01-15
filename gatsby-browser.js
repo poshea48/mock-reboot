@@ -1,7 +1,12 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/browser-apis/
- */
+import React from 'react';
+import MainLayout from './src/components/layout/MainLayout';
+import PropTypes from 'prop-types';
 
-// You can delete this file if you're not using it
+export const wrapPageElement = ({ element, props }) => {
+  return <MainLayout {...props}>{element}</MainLayout>;
+};
+
+wrapPageElement.propTypes = {
+  props: PropTypes.object,
+  element: PropTypes.func,
+};

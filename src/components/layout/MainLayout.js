@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { ThemeProvider } from 'emotion-theming'
-import { Global, css } from '@emotion/core'
-import { useStaticQuery, graphql } from 'gatsby'
-import theme from '../../../config/theme'
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { ThemeProvider } from 'emotion-theming';
+import { Global, css } from '@emotion/core';
+import { useStaticQuery, graphql } from 'gatsby';
+import theme from '../../../config/theme';
 // import Header from '../header'
-import SEO from './SEO'
+import SEO from './SEO';
 
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
+const MainLayout = ({ children }) => {
+  const { site } = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
         siteMetadata {
@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
         }
       }
     }
-  `)
+  `);
 
   return (
     <ThemeProvider theme={theme}>
@@ -36,6 +36,8 @@ const Layout = ({ children }) => {
               -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
+              font-family: sans-serif;
+              -webkit-text-size-adjust: 100%;
             }
             html,
             body {
@@ -49,6 +51,37 @@ const Layout = ({ children }) => {
               display: flex;
               flex-direction: column;
               min-height: 100vh;
+            }
+            article,
+            aside,
+            details,
+            figcaption,
+            figure,
+            footer,
+            header,
+            main,
+            menu,
+            nav,
+            section,
+            summary {
+              display: block;
+            }
+            audio,
+            canvas,
+            progress,
+            video {
+              display: inline-block;
+            }
+            audio:not([controls]) {
+              display: none;
+              height: 0;
+            }
+            progress {
+              vertical-align: baseline;
+            }
+            [hidden],
+            template {
+              display: none;
             }
             a {
               color: ${theme.colors.black.blue};
@@ -64,15 +97,15 @@ const Layout = ({ children }) => {
             }
           `}
         />
-        <SEO />
+        <SEO title={site.siteMetadata.title} />
         {children}
       </Fragment>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-Layout.propTypes = {
+MainLayout.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
-export default Layout
+export default MainLayout;
