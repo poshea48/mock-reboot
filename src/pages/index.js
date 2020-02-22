@@ -107,7 +107,7 @@ const IndexPage = () => {
             )}
           </Button>
           <Button>
-            <StyledLink to="/fantasy/draftroom">Fantasy Draftroom</StyledLink>
+            <StyledLink to="/fantasy/">Fantasy Draftroom</StyledLink>
           </Button>
         </LinksContainer>
         <MainTitle>Fantasy Football</MainTitle>

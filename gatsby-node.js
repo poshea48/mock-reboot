@@ -3,5 +3,8 @@ exports.onCreatePage = async ({ page, actions }) => {
   if (page.path.match(/^\/nfl/)) {
     page.matchPath = '/nfl/*';
     createPage(page);
+  } else if (page.path.match(/^\/fantasy/)) {
+    page.match = '/fantasy/*';
+    createPage(page);
   }
 };
