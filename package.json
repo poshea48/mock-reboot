@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "mock-draft-reboot",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "Reboot of Mock NFL and Fantasy Football Draft",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Paul O'Shea <osheapaulf@gmail.com>",
   "dependencies": {
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.23",
@@ -15,6 +15,7 @@
     "gatsby-plugin-offline": "^3.0.27",
     "gatsby-plugin-react-helmet": "^3.1.16",
     "gatsby-plugin-sharp": "^2.3.4",
+    "gatsby-plugin-smoothscroll": "^1.0.4",
     "gatsby-plugin-typography": "^2.3.18",
     "gatsby-remark-images": "^3.1.35",
     "gatsby-remark-prismjs": "^3.3.25",
@@ -37,6 +38,8 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.17.0",
+    "husky": "^4.0.10",
+    "lint-staged": "^9.5.0",
     "prettier": "^1.19.1"
   },
   "keywords": [
@@ -51,6 +54,11 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "repository": {
     "type": "git",

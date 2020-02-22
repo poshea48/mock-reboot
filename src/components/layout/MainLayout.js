@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
 import { useStaticQuery, graphql } from 'gatsby';
+
 import theme from '../../../config/theme';
 // import Header from '../header'
 import SEO from './SEO';
@@ -26,7 +27,7 @@ const MainLayout = ({ children }) => {
             *,
             *:before,
             *:after {
-              box-sizing: inherit;
+              box-sizing: border-box;
             }
             html {
               text-rendering: optimizeLegibility;
@@ -41,8 +42,8 @@ const MainLayout = ({ children }) => {
             }
             html,
             body {
-              width: 100%;
-              height: 100%;
+              width: 100vw;
+              height: 100vh;
               margin: 0;
               padding: 0;
             }
@@ -90,10 +91,45 @@ const MainLayout = ({ children }) => {
             }
             a:hover {
               text-decoration: none;
-              color: ${theme.colors.primary.base};
+              color: ${theme.colors.primary.light};
+            }
+            hgroup,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+              margin: 0;
             }
             h1 {
               font-family: ${theme.fontFamily.heading};
+            }
+            select,
+            input {
+              font-size: 16px;
+            }
+            ul {
+              margin: 0;
+              padding: 0;
+            }
+            li {
+              list-style: none;
+              margin: 0;
+              padding: 0;
+            }
+            table {
+              margin: 0;
+              padding: 0;
+              border: none;
+              tr {
+                &:hover {
+                  background: #e0ebeb;
+                }
+              }
+              td {
+                border-top: 1px solid hsla(0, 0%, 0%, 0.12);
+              }
             }
           `}
         />

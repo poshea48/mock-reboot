@@ -3,8 +3,8 @@ module.exports = {
   title: 'Pauls Gatsby Starter', // Navigation and Site Title
   titleAlt: 'GatsbyStarter', // Title for JSONLD
   description: 'My Gatsby starter',
-  url: '', // Domain of your site. No trailing slash!
-  siteUrl: '', // url + pathPrefix
+  // url: '', // Domain of your site. No trailing slash!
+  // siteUrl: '', // url + pathPrefix
   siteLanguage: 'en', // Language Tag on <html> element
   // logo: 'static/logo/logo.png', // Used for SEO
   // banner: 'static/logo/banner.png',
