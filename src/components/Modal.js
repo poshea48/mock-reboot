@@ -142,10 +142,11 @@ Modal.propTypes = {
   children: PropTypes.element,
   close: PropTypes.func,
   render: PropTypes.func,
-  buttonRef: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.shape({ current: PropTypes.instanceOf(HTMLElement) }),
-  ]),
+  // buttonRef: PropTypes.oneOfType([
+  //   PropTypes.object,
+  //   PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  // ]),
+  buttonRef: PropTypes.instanceOf(React.Component),
 };
 
 export default Modal;

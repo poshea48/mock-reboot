@@ -36,7 +36,7 @@ const Container = styled.main`
   border: 1px solid ${colors.black};
   border-radius: 20px;
   h3 {
-    color: ${colors2.dodgerBlue};
+    color: ${colors2.eerieBlack};
     text-align: center;
     font-weight: 700;
     text-transform: uppercase;
@@ -288,7 +288,6 @@ const Settings = () => {
     );
   });
 
-  //TODO Start back here!!!!
   const handleReset = async () => {
     changeState({
       myTeam: '',
