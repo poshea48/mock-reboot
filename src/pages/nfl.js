@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import Settings from '../components/nfl/Settings';
 import Draftroom from '../components/nfl/Draftroom';
 import { NFLProvider } from '../context/nflContext';
+import SEO from '../components/layout/SEO';
 
 const colors = {
   brown: '#D1AB98',
@@ -70,6 +71,7 @@ const NFL = () => {
   return (
     <NFLProvider>
       <Container>
+        <SEO title="NFL Mock Draft" />
         <nav>
           <Link to="/">Home</Link>
           <Link to="/nfl/settings">Settings</Link>

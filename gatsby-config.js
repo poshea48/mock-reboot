@@ -52,6 +52,8 @@ module.exports = {
         name: config.title,
         short_name: config.shortName,
         description: config.description,
+        icon: config.favicon,
+        icons: config.icons,
         start_url: config.pathPrefix,
         background_color: config.backgroundColor,
         theme_color: config.themeColor,

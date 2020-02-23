@@ -35,12 +35,17 @@ const Container = styled.main`
   background: #8b4c33;
   border: 1px solid ${colors.black};
   border-radius: 20px;
-  h3 {
+  h2 {
     color: ${colors2.eerieBlack};
     text-align: center;
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
     margin-bottom: 1em;
+  }
+  @media (max-width: 350px) {
+    h2 {
+      font-size: 1.2em;
+    }
   }
 `;
 
@@ -49,6 +54,7 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  margin: 0;
   .error {
     margin-left: 140px;
     background: #fff;
@@ -89,7 +95,6 @@ const Field = styled.div`
   }
   @media (max-width: 450px) {
     flex-direction: column;
-    margin-bottom: 1em;
     label {
       align-self: center;
       text-align: center;
@@ -115,6 +120,7 @@ const SimulationField = styled.div`
     flex-direction: column;
     justify-content: center;
     overflow-y: scroll;
+    margin: 0 0 1em 0;
     div {
       display: flex;
       margin-bottom: .2em;
@@ -128,6 +134,9 @@ const SimulationField = styled.div`
         align-self: center;
         color: #fff;
       }
+    }
+    @media (max-width: 500px) {
+      margin-bottom: .5em;
     }
   }
 `;
@@ -149,9 +158,9 @@ const ResetButton = styled.button`
   cursor: pointer;
 `;
 const SubmitButton = styled.button`
-  max-width: 500px;
+  width: 150px;
+  height: 40px;
   align-self: center;
-  padding: 0.5em 1em;
   background: ${colors2.gray};
   border-radius: 20px;
   text-transform: uppercase;
@@ -162,6 +171,11 @@ const SubmitButton = styled.button`
   &:focus {
     outline: none;
     transform: scale(1.1);
+  }
+
+  @media (max-width: 400px) {
+    font-weight: 800;
+    font-size: 1em;
   }
 `;
 
@@ -195,8 +209,8 @@ const Settings = () => {
     getSimulationTeams(state.manualTeams)
   );
 
-  const teamNeedsList = ['default', 'test1', 'test2'];
-  const draftboardList = ['default', 'test1', 'test2'];
+  const teamNeedsList = ['default'];
+  const draftboardList = ['default'];
   const nflDispatch = useNflDispatch();
   const appDispatch = useAppDispatch();
 
@@ -301,7 +315,7 @@ const Settings = () => {
   };
   return (
     <Container>
-      <h3>Customize draft</h3>
+      <h2>Customize draft</h2>
       <Form>
         {errorMessage && (
           <>
