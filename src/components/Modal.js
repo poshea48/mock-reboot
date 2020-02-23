@@ -144,7 +144,7 @@ Modal.propTypes = {
   render: PropTypes.func,
   buttonRef: PropTypes.oneOfType([
     PropTypes.object,
-    PropTypes.shape({ current: PropTypes.instanceOf(HTMLButtonElement) }),
+    PropTypes.shape({ current: PropTypes.instanceOf(HTMLElement) }),
   ]),
 };
 
