@@ -40,7 +40,7 @@ const Container = styled.div`
         margin: 0 0 0 1em;
       }
     }
-    @media (max-width: 800px) {
+    @media only screen and (max-width: 800px) {
       span,
       a {
         margin: 0 0.5em;

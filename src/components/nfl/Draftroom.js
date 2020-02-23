@@ -20,7 +20,7 @@ const Container = styled.div`
     overflow: hidden;
     justify-content: space-evenly;
 
-    @media (max-width: 800px) {
+    @media only screen and(max-width: 800px) {
       justify-content: center;
     }
   }
@@ -39,7 +39,7 @@ const StartButton = styled.button`
     text-align: center;
     font-size: 2em;
   }
-  @media (max-width: 600px) {
+  @media only screen and(max-width: 600px) {
     right: 0;
   }
 `;

@@ -28,13 +28,13 @@ const PositionsFilter = styled.div`
     margin: 0;
     font-weight: 700;
   }
-  @media (max-width: 600px) {
+  @media only screen and (max-width: 600px) {
     padding: 0.8em 0;
     h2 {
       font-size: 1.8em;
     }
   }
-  @media (max-width: 450px) {
+  @media only screen and (max-width: 450px) {
     padding: 0.5em 0;
     flex-direction: row;
     justify-content: flex-start;

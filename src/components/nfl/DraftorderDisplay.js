@@ -20,7 +20,7 @@ const Container = styled.section`
     h2 {
       margin: 0;
     }
-    @media (max-width: 600px) {
+    @media only screen and (max-width: 600px) {
       h2 {
         font-size: 1.2em;
       }
@@ -56,7 +56,7 @@ const Container = styled.section`
       }
     }
   }
-  @media (max-width: 600px) {
+  @media only screen and (max-width: 600px) {
     height: 110px;
   }
 `;

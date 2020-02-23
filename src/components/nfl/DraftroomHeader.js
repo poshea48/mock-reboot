@@ -29,12 +29,12 @@ const Container = styled.header`
   h4 {
     align-self: center;
   }
-  @media (max-width: 500px) {
+  @media only screen and (max-width: 500px) {
     hgroup {
       flex-direction: column;
     }
   }
-  @media (max-width: 350px) {
+  @media only screen and (max-width: 350px) {
     h2 {
       font-size: 1.6em;
     }
