@@ -56,13 +56,13 @@ const TeamFilter = styled.div`
     font-weight: 700;
     font-size: 1.2em;
   }
-  @media only screen and (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     padding: 0.8em 0;
     h2 {
       font-size: 1.4em;
     }
   }
-  @media only screen and (max-width: 450px) {
+  @media screen and (max-width: 450px) {
     padding: 0.5em 0;
     flex-direction: row;
     justify-content: space-between;

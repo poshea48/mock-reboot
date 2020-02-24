@@ -28,13 +28,13 @@ const PositionsFilter = styled.div`
     margin: 0;
     font-weight: 700;
   }
-  @media only screen and (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     padding: 0.8em 0;
     h2 {
       font-size: 1.8em;
     }
   }
-  @media only screen and (max-width: 450px) {
+  @media screen and (max-width: 450px) {
     padding: 0.5em 0;
     flex-direction: row;
     justify-content: flex-start;
@@ -58,7 +58,6 @@ const PositionsFilter = styled.div`
 const Table = styled.section`
   display: flex;
   flex-direction: column;
-  flex-basis: 1 auto;
   position: relative;
   border-collapse: collapse;
   overflow: scroll;

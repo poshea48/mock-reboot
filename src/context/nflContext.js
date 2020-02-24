@@ -2,14 +2,14 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import nflReducer, { initialState } from './nflReducer';
 
-let localNflState;
-if (typeof window !== 'undefined') {
-  localNflState = JSON.parse(localStorage.getItem('nflState'));
-}
 const NFLStateContext = createContext();
 const NFLDispatchContext = createContext();
 
 function NFLProvider({ children }) {
+  let localNflState;
+  if (typeof window !== 'undefined') {
+    localNflState = JSON.parse(localStorage.getItem('nflState'));
+  }
   const [state, dispatch] = useReducer(
     nflReducer,
     localNflState || initialState

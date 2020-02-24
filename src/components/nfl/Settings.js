@@ -42,7 +42,7 @@ const Container = styled.main`
     text-transform: uppercase;
     margin-bottom: 1em;
   }
-  @media only screen and (max-width: 450px) {
+  @media screen and (max-width: 450px) {
     h2 {
       font-size: 1.4em;
       margin-bottom: 0.5em;
@@ -94,7 +94,7 @@ const Field = styled.div`
   option {
     padding: 0.5em;
   }
-  @media only screen and (max-width: 450px) {
+  @media screen and (max-width: 450px) {
     flex-direction: column;
     label {
       align-self: center;
@@ -136,7 +136,7 @@ const SimulationField = styled.div`
         color: #fff;
       }
     }
-    @media only screen and (max-width: 500px) {
+    @media screen and (max-width: 500px) {
       margin-bottom: .5em;
     }
   }
@@ -174,7 +174,7 @@ const SubmitButton = styled.button`
     transform: scale(1.1);
   }
 
-  @media only screen and (max-width: 400px) {
+  @media screen and (max-width: 400px) {
     font-weight: 800;
     font-size: 1em;
   }

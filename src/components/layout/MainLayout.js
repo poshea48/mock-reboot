@@ -44,6 +44,7 @@ const MainLayout = ({ children }) => {
             body {
               width: 100vw;
               height: 100vh;
+              /* height: calc(var(--vh, 1vh) * 100); */
               margin: 0;
               padding: 0;
             }
@@ -52,6 +53,9 @@ const MainLayout = ({ children }) => {
               display: flex;
               flex-direction: column;
               min-height: 100vh;
+            }
+            div[role='group'][tabindex] {
+              height: 100%;
             }
             article,
             aside,

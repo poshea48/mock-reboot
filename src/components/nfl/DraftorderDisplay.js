@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
 import draftOrder from '../../data/draftOrder';
 
@@ -14,13 +14,26 @@ const Container = styled.section`
   height: 120px;
   .round-selection {
     display: flex;
-    justify-content: space-around;
     align-self: center;
-    width: 120px;
     h2 {
       margin: 0;
     }
-    @media only screen and (max-width: 600px) {
+    select {
+      margin: 0 0.5em;
+    }
+    .scroll-to {
+      font-size: 12px;
+      font-weight: 800;
+      color: dodgerblue;
+      align-self: center;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    @media screen and (max-width: 600px) {
       h2 {
         font-size: 1.2em;
       }
@@ -56,7 +69,7 @@ const Container = styled.section`
       }
     }
   }
-  @media only screen and (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     height: 110px;
   }
 `;
@@ -86,8 +99,7 @@ const DraftorderDisplay = () => {
   //   console.log('in useEffec');
   //   changeRound(state.currentRound);
   // }, [selectedRound]);
-
-  useLayoutEffect(() => {
+  const scrollTo = () => {
     let element = document.querySelector(`li[data-id='${state.currentPick}']`);
     if (element) {
       element.scrollIntoView({
@@ -101,8 +113,14 @@ const DraftorderDisplay = () => {
         inline: 'center',
       });
     }
-  }, [state.currentPick]);
+  };
+  useLayoutEffect(() => {
+    scrollTo();
+  }, [state, state.currentPick]);
 
+  const handleScrollToClick = () => {
+    scrollTo();
+  };
   const abbreviateName = name => {
     let [firstName, rest] = name.split(' ');
     return `${firstName[0]}. ${rest}`;
@@ -146,6 +164,9 @@ const DraftorderDisplay = () => {
             </option>
           ))}
         </select>
+        <button onClick={handleScrollToClick} className="scroll-to">
+          Scroll To current
+        </button>
       </div>
       <ul>{displaySelectionList}</ul>
     </Container>

@@ -20,7 +20,7 @@ const Container = styled.div`
     overflow: hidden;
     justify-content: space-evenly;
 
-    @media only screen and(max-width: 800px) {
+    @media screen and(max-width: 800px) {
       justify-content: center;
     }
   }
@@ -39,7 +39,7 @@ const StartButton = styled.button`
     text-align: center;
     font-size: 2em;
   }
-  @media only screen and(max-width: 600px) {
+  @media screen and(max-width: 600px) {
     right: 0;
   }
 `;
@@ -94,7 +94,7 @@ const Draftroom = () => {
         break;
       }
     }
-    //! add name to draftedPlayer object (will update in Production data)
+
     // update contex
     dispatch({
       type: 'draftPlayer',

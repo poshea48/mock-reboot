@@ -42,14 +42,14 @@ const StyledBurger = styled.button`
     }
   }
 
-  @media only screen and (min-width: 801px) {
+  @media screen and (min-width: 801px) {
    display: none;
   }
-  @media only screen and (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     top: 0.8em;
     right: 0;
   }
-  @media only screen and (max-width: 450px) {
+  @media screen and (max-width: 450px) {
     top: 0.5em;
     right: 0em;
   }

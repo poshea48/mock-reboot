@@ -19,7 +19,7 @@ const Container = styled.div`
   flex-direction: column;
   background: ${colors.white};
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   padding: 0 1em;
   overflow: hidden;
   nav {
@@ -40,7 +40,7 @@ const Container = styled.div`
         margin: 0 0 0 1em;
       }
     }
-    @media only screen and (max-width: 800px) {
+    @media screen and (max-width: 800px) {
       span,
       a {
         margin: 0 0.5em;
@@ -64,7 +64,7 @@ const Container = styled.div`
 `;
 
 const StyledRouter = styled(Router)`
-  height: calc(100vh - 80px);
+  height: calc(100% - 80px);
 `;
 
 const NFL = () => {
