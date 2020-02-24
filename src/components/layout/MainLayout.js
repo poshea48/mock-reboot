@@ -43,20 +43,11 @@ const MainLayout = ({ children }) => {
             html,
             body {
               width: 100vw;
-              height: 100vh;
-              /* height: calc(var(--vh, 1vh) * 100); */
+              min-height: 100vh;
               margin: 0;
               padding: 0;
             }
 
-            body {
-              display: flex;
-              flex-direction: column;
-              min-height: 100vh;
-            }
-            div[role='group'][tabindex] {
-              height: 100%;
-            }
             article,
             aside,
             details,
