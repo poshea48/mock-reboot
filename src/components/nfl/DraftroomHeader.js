@@ -8,12 +8,12 @@ const Container = styled.header`
   width: 100%;
   text-transform: uppercase;
   text-align: left;
+  height: 60px;
   hgroup {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-right: 1em;
-    height: 60px;
   }
   h2 {
     font-weight: 900;

@@ -35,12 +35,17 @@ const Container = styled.main`
   background: #8b4c33;
   border: 1px solid ${colors.black};
   border-radius: 20px;
-  h2 {
-    color: ${colors2.eerieBlack};
-    text-align: center;
-    font-weight: 800;
-    text-transform: uppercase;
+  header {
+    height: 30px;
     margin-bottom: 1em;
+    align-self: center;
+    h2 {
+      display: inline-block;
+      color: ${colors2.eerieBlack};
+      text-align: center;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
   }
   @media screen and (max-width: 450px) {
     h2 {
@@ -54,6 +59,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 1 auto;
   overflow: hidden;
   margin: 0;
   .error {
@@ -316,7 +322,9 @@ const Settings = () => {
   };
   return (
     <Container>
-      <h2>Customize draft</h2>
+      <header>
+        <h2>Customize draft</h2>
+      </header>
       <Form>
         {errorMessage && (
           <>
