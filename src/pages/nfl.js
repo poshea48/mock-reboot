@@ -6,7 +6,6 @@ import Settings from '../components/nfl/Settings';
 import Draftroom from '../components/nfl/Draftroom';
 import { NFLProvider } from '../context/nflContext';
 import SEO from '../components/layout/SEO';
-import Test from '../components/nfl/Test';
 
 const colors = {
   brown: '#D1AB98',
