@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import NFLTEAMS from '../../data/nflTeams';
-import { navigate } from '@reach/router';
-import { useNflDispatch, useNflState } from '../../context/nflContext';
-import { useAppState, useAppDispatch } from '../../context/appContext';
 
 const colors = {
   brown: '#D1AB98',
@@ -21,50 +18,51 @@ const colors2 = {
   cadetGrey: '#93a3b1',
 };
 
-const Main = styled.main`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-self: center;
   max-width: 650px;
   width: 100%;
-  height: calc(100vh - 80px);
+  height: 100%;
   margin: 0 auto;
-  h2 {
+  padding: 1em;
+  background: #8b4c33;
+  border: 1px solid ${colors.black};
+  border-radius: 20px;
+  header {
+    display: block;
     align-self: center;
-    display: inline-block;
-    margin-bottom: 1em;
-    color: ${colors2.eerieBlack};
-    text-align: center;
-    font-weight: 800;
-    text-transform: uppercase;
-  }
-  @media screen and (max-width: 450px) {
+    background: white;
+
     h2 {
-      font-size: 1.4em;
-      margin-bottom: 0.5em;
+      display: inline-block;
+      color: ${colors2.eerieBlack};
+      text-align: center;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    @media screen and (max-width: 450px) {
+      h2 {
+        font-size: 1.4em;
+      }
     }
   }
   @media screen and (max-width: 600px) {
+    padding: 0.5em;
   }
 `;
 
 const Form = styled.form`
-  background: #8b4c33;
-  padding: 1em;
-  max-height: calc(100% - 30px);
-  border: 1px solid ${colors.black};
-  border-radius: 20px;
-  overflow: hidden;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  flex: 1 auto;
-  margin: 0;
+  /* justify-content: space-between; */
+  /* flex: 1 auto; */
   overflow: hidden;
-  @media screen and (max-width: 600px) {
-    padding: 0.5em;
-  }
+  margin: 0;
+  background: blue;
   .error {
     margin-left: 140px;
     background: #fff;
@@ -82,18 +80,13 @@ const Form = styled.form`
   .select-fields {
     display: flex;
     flex-direction: column;
-    min-height: 130px;
-
-    @media screen and (max-width: 450px) {
-      min-height: 175px;
-    }
   }
 `;
+
 const Field = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  min-height: 35px;
   margin-bottom: .5em;
   label {
     width: 140px;
@@ -116,6 +109,7 @@ const Field = styled.div`
   @media screen and (max-width: 450px) {
     flex-direction: column;
     label {
+      margin-bottom: 0.25em;
       align-self: center;
       text-align: center;
     }
@@ -128,34 +122,31 @@ const SimulationField = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: .5em;
-  height: calc(100% - 180px);
-  @media screen and (max-width: 450px) {
-    height: calc(100% - 225px);
-
-  }
+  overflow: hidden;
+  background: black;
   h4 {
     text-align: center;
     color: #fff;/*${colors2.eerieBlack};*/
     font-weight: 900;
     margin-bottom: .5em;
   }
-  fieldset {
+  .fieldset {
     padding: 0.5em 1em;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 90%;
     overflow-y: scroll;
     margin: 0 0 1em 0;
+    background: gray;
     div {
       display: flex;
       margin-bottom: .2em;
       border-bottom: 1px solid rgba(255, 255, 255, .5);
-      min-height: 30px;
       label {
-        width: 220px;
+        width: 95%;
         color: #fff;
         text-transform: uppercase;
+        font-size: 14px;
       }
       input {
         align-self: center;
@@ -173,7 +164,6 @@ const ButtonsWrapper = styled.div`
   justify-content: center;
   min-height: 50px;
 `;
-
 const ResetButton = styled.button`
   border: 4px solid black;
   background: ${colors2.gray};
@@ -186,7 +176,6 @@ const ResetButton = styled.button`
   height: 50px;
   cursor: pointer;
 `;
-
 const SubmitButton = styled.button`
   width: 150px;
   height: 40px;
@@ -220,12 +209,10 @@ const getSimulationTeams = manualTeams => {
   }
   return newTeams;
 };
-
-const Settings = () => {
-  const nflContext = useNflState();
-  const appContext = useAppState();
-  const { isNflSetup } = appContext;
-
+const Test = () => {
+  const nflContext = {};
+  const appContext = { isNflSetup: false };
+  const isNflSetup = false;
   const [state, changeState] = useState({
     myTeam: nflContext.myTeam || '',
     teamNeeds: nflContext.teamNeeds || '',
@@ -233,21 +220,24 @@ const Settings = () => {
     manualTeams: nflContext.manualTeams || [],
   });
 
-  const [errorMessage, changeError] = useState(null);
-
   const [simulationTeams, changeSimulationTeams] = useState(
     getSimulationTeams(state.manualTeams)
   );
-
   const teamNeedsList = ['default'];
   const draftboardList = ['default'];
-  const nflDispatch = useNflDispatch();
-  const appDispatch = useAppDispatch();
+  const teamsField = (
+    <>
+      <option disabled value=""></option>
+      {Object.keys(NFLTEAMS).map(team => (
+        <option key={NFLTEAMS[team].code} value={NFLTEAMS[team].code}>
+          {NFLTEAMS[team].fullName}
+        </option>
+      ))}
+      ;
+    </>
+  );
 
   const handleChange = e => {
-    if (e.target.name === 'myTeam' && !!errorMessage) {
-      changeError(null);
-    }
     if (e.target.name === 'myTeam') {
       changeState({
         ...state,
@@ -260,6 +250,16 @@ const Settings = () => {
         [e.target.name]: e.target.value,
       });
     }
+  };
+
+  const submitForm = e => {
+    e.preventDefault();
+    if (!state.myTeam) {
+      console.log('error');
+      return;
+    }
+    console.log('submitted');
+    return;
   };
 
   const handleSimulationToggle = e => {
@@ -282,36 +282,6 @@ const Settings = () => {
     return;
   };
 
-  const submitForm = e => {
-    e.preventDefault();
-    if (!state.myTeam) {
-      changeError('You must select a team');
-      return;
-    }
-
-    nflDispatch({
-      type: 'newDraft',
-      payload: { ...state },
-    });
-    appDispatch({
-      type: 'nflSetup',
-      payload: { isNflSetup: true },
-    });
-    navigate('/nfl/draftroom');
-  };
-
-  const teamsField = (
-    <>
-      <option disabled value=""></option>
-      {Object.keys(NFLTEAMS).map(team => (
-        <option key={NFLTEAMS[team].code} value={NFLTEAMS[team].code}>
-          {NFLTEAMS[team].fullName}
-        </option>
-      ))}
-      ;
-    </>
-  );
-
   let simulationDisplay = Object.keys(simulationTeams).map(team => {
     let disableMyTeam = false;
     if (!appContext.isNflSetup && simulationTeams[team].code === state.myTeam) {
@@ -332,28 +302,16 @@ const Settings = () => {
     );
   });
 
-  const handleReset = async () => {
-    changeState({
-      myTeam: '',
-      teamNeeds: '',
-      draftboard: '',
-      manualTeams: [],
-    });
-    changeSimulationTeams(getSimulationTeams([]));
-    appDispatch({ type: 'reset' });
-    nflDispatch({ type: 'reset' });
+  const handleReset = () => {
+    console.log('reset!');
   };
+
   return (
-    <Main>
-      <h2>Customize draft</h2>
+    <Container>
+      <header>
+        <h2>THis is header</h2>
+      </header>
       <Form>
-        {errorMessage && (
-          <>
-            <div className="error">
-              <p>{errorMessage}</p>
-            </div>
-          </>
-        )}
         <div className="select-fields">
           <Field>
             <label htmlFor="myTeam">Select Team</label>
@@ -368,7 +326,7 @@ const Settings = () => {
               {teamsField}
             </select>
           </Field>
-          <Field>
+          <Field style={{ background: 'red' }}>
             <label htmlFor="teamNeeds">Team Needs</label>
             <select
               id="teamNeeds"
@@ -386,7 +344,7 @@ const Settings = () => {
               ))}
             </select>
           </Field>
-          <Field>
+          <Field style={{ background: 'orange' }}>
             <label htmlFor="draftboard">Draft Board</label>
             <select
               id="draftboard"
@@ -408,7 +366,7 @@ const Settings = () => {
         </div>
         <SimulationField>
           <h4 htmlFor="simulation-teams">Simulated Teams</h4>
-          <fieldset>{simulationDisplay}</fieldset>
+          <div className="fieldset">{simulationDisplay}</div>
         </SimulationField>
         <ButtonsWrapper>
           <SubmitButton onClick={submitForm}>
@@ -418,8 +376,8 @@ const Settings = () => {
           {isNflSetup && <ResetButton onClick={handleReset}>reset</ResetButton>}
         </ButtonsWrapper>
       </Form>
-    </Main>
+    </Container>
   );
 };
 
-export default Settings;
+export default Test;

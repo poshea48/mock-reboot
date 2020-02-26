@@ -49,13 +49,6 @@ const LinksContainer = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  color: ${colors2.eerieBlack};
-  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
-  pointer-events: ${p => (p.disabled ? 'none' : 'auto')};
-  font-weight: 900;
-`;
-
-const Button = styled.button`
   background: ${colors2.cadetGrey};
   box-shadow: 5px 5px 5px ${colors2.eerieBlack};
   padding: 5px;
@@ -65,6 +58,10 @@ const Button = styled.button`
   align-self: center;
   margin: 0.5em;
   transition: all 0.3s ease-in-out;
+  color: ${colors2.eerieBlack};
+  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
+  pointer-events: ${p => (p.disabled ? 'none' : 'auto')};
+  font-weight: 900;
 
   &:disabled {
     background-color: ${colors2.eerieBlack};
@@ -99,16 +96,12 @@ const IndexPage = () => {
         />
         <MainTitle>NFL</MainTitle>
         <LinksContainer>
-          <Button>
-            {state.isNflSetup ? (
-              <StyledLink to="/nfl/draftroom">NFL Draftroom</StyledLink>
-            ) : (
-              <StyledLink to="/nfl/settings">NFL Draftroom</StyledLink>
-            )}
-          </Button>
-          <Button>
-            <StyledLink to="/fantasy/">Fantasy Draftroom</StyledLink>
-          </Button>
+          {state.isNflSetup ? (
+            <StyledLink to="/nfl/draftroom">NFL Draftroom</StyledLink>
+          ) : (
+            <StyledLink to="/nfl/settings">NFL Draftroom</StyledLink>
+          )}
+          <StyledLink to="/fantasy/">Fantasy Draftroom</StyledLink>
         </LinksContainer>
         <MainTitle>Fantasy Football</MainTitle>
       </Container>

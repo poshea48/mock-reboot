@@ -5,7 +5,7 @@ import nflTeams from '../../data/nflTeams';
 import useModal from '../../customHooks/useModal';
 import ToggleButton from '../ToggleButton';
 
-const Container = styled.section`
+const Container = styled.div`
   display: block;
   span {
     @media screen and (min-width: 801px) {
@@ -31,7 +31,7 @@ const Content = styled.div`
   @media screen and (max-width: 800px) {
     position: absolute;
     top: 0;
-    right: 0;
+    right: -1em;
     background: ${p => p.theme.colors.teamColors[p.team].secondary1};
 
     max-width: 500px;

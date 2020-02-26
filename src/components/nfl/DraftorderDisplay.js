@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
 import draftOrder from '../../data/draftOrder';
 
 import nflTeams from '../../data/nflTeams';
 import { useNflState } from '../../context/nflContext';
 
-const Container = styled.section`
+const Article = styled.article`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   border: 1px solid black;
   border-radius: 10px;
-  padding: 0.5em 0 0 0;
-  height: 120px;
+  min-height: 120px;
   .round-selection {
     display: flex;
     align-self: center;
@@ -41,10 +41,8 @@ const Container = styled.section`
   }
   ul {
     width: 100%;
-    margin-top: 0.15em;
     display: flex;
     overflow: scroll;
-    padding-bottom: 0.5em;
   }
   li {
     display: flex;
@@ -70,7 +68,7 @@ const Container = styled.section`
     }
   }
   @media screen and (max-width: 600px) {
-    height: 110px;
+    min-height: 99px;
   }
 `;
 const NUMOFTEAMS = 32;
@@ -95,21 +93,19 @@ const DraftorderDisplay = () => {
     return num + suffix;
   };
 
-  // useEffect(() => {
-  //   console.log('in useEffec');
-  //   changeRound(state.currentRound);
-  // }, [selectedRound]);
   const scrollTo = () => {
     let element = document.querySelector(`li[data-id='${state.currentPick}']`);
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
+        block: 'nearest',
         inline: 'center',
       });
     } else {
       changeRound(state.currentRound);
       document.querySelector('li[data-id]').scrollIntoView({
         behavior: 'smooth',
+        block: 'nearest',
         inline: 'center',
       });
     }
@@ -147,7 +143,7 @@ const DraftorderDisplay = () => {
   });
 
   return (
-    <Container>
+    <Article>
       <div className="round-selection">
         <label htmlFor="selectedRound">
           <h2>Round</h2>
@@ -169,7 +165,7 @@ const DraftorderDisplay = () => {
         </button>
       </div>
       <ul>{displaySelectionList}</ul>
-    </Container>
+    </Article>
   );
 };
 

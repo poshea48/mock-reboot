@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import nflTeams from '../../data/nflTeams';
 
-const Container = styled.header`
+const HGroup = styled.hgroup`
   display: flex;
   width: 100%;
   text-transform: uppercase;
   text-align: left;
-  height: 60px;
-  hgroup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 1em;
-  }
+  min-height: 55px;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1em;
+  overflow: hidden;
   h2 {
     font-weight: 900;
     font-size: 2em;
     color: ${p => p.theme.colors.teamColors[p.team].primary};
+    align-self: flex-start;
   }
   h3 {
     font-size: 1em;
@@ -30,11 +29,21 @@ const Container = styled.header`
     align-self: center;
   }
   @media screen and (max-width: 500px) {
-    hgroup {
-      flex-direction: column;
+    flex-direction: column;
+
+    h2 {
+      font-size: 1.8em;
+    }
+    h3 {
+      font-size: 1em;
     }
   }
+  @media screen and (max-width: 450px) {
+    min-height: 50px;
+  }
   @media screen and (max-width: 350px) {
+    min-height: 45px;
+
     h2 {
       font-size: 1.6em;
     }
@@ -45,12 +54,10 @@ const Container = styled.header`
 `;
 const DraftroomHeader = ({ myTeam }) => {
   return (
-    <Container team={myTeam}>
-      <hgroup>
-        <h3>{nflTeams[myTeam].city}</h3>
-        <h2>{nflTeams[myTeam].name}</h2>
-      </hgroup>
-    </Container>
+    <HGroup team={myTeam}>
+      <h3>{nflTeams[myTeam].city}</h3>
+      <h2>{nflTeams[myTeam].name}</h2>
+    </HGroup>
   );
 };
 

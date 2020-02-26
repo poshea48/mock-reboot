@@ -8,27 +8,19 @@ import TeamSelectedPlayers from './TeamSelectedPlayers';
 import prospects from '../../data/players';
 import { NFLPOSITIONS } from '../../data/positions';
 
-const Container = styled.div`
+const Main = styled.main`
   position: relative;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  main {
-    position: relative;
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-    justify-content: space-evenly;
-
-    @media screen and(max-width: 800px) {
-      justify-content: center;
-    }
+  height: calc(100vh - 80px);
+  @media screen and(max-width: 800px) {
+    justify-content: center;
   }
 `;
 
 const StartButton = styled.button`
   position: absolute;
-  top: 10px;
+  top: 0;
   right: 1em;
   padding: 0;
   border-radius: 10px;
@@ -41,6 +33,24 @@ const StartButton = styled.button`
   }
   @media screen and(max-width: 600px) {
     right: 0;
+  }
+`;
+
+const PlayersSection = styled.section`
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: calc(100% - 165px);
+  justify-content: space-evenly;
+
+  @media screen and (max-width: 600px) {
+    height: calc(100% - 154px);
+  }
+  @media screen and (max-width: 450px) {
+    height: calc(100% - 149px);
+  }
+  @media screen and (max-width: 350px) {
+    height: calc(100% - 144px);
   }
 `;
 
@@ -125,10 +135,11 @@ const Draftroom = () => {
       dispatch({ type: 'pauseDraft' });
     }
   };
+
   return (
-    <Container>
+    <Main>
       {!finished && (
-        <StartButton onClick={handleDraftPlay} alt="hello">
+        <StartButton onClick={handleDraftPlay}>
           {!started ? (
             <span
               role="img"
@@ -153,12 +164,11 @@ const Draftroom = () => {
         currentRound={currentRound || 1}
         currentPick={currentPick || 1}
       />
-
-      <main>
+      <PlayersSection>
         <BigBoard positions={NFLPOSITIONS} draftPlayer={draftPlayer} />
         <TeamSelectedPlayers />
-      </main>
-    </Container>
+      </PlayersSection>
+    </Main>
   );
 };
 

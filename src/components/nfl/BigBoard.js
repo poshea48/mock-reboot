@@ -6,12 +6,11 @@ import { useNflState } from '../../context/nflContext';
 import Modal from '../Modal';
 import useModal from '../../customHooks/useModal';
 
-const Container = styled.section`
+const Container = styled.div`
   align-self: flex-start;
   display: flex;
   flex-direction: column;
   height: 100%;
-  flex-basis: 500px;
 `;
 
 const PositionsFilter = styled.div`
@@ -21,7 +20,7 @@ const PositionsFilter = styled.div`
   align-items: center;
   padding: 1em 1em;
   width: 100%;
-  height: 90px;
+  min-height: 90px;
   h2 {
     text-align: center;
     text-transform: uppercase;
@@ -35,9 +34,11 @@ const PositionsFilter = styled.div`
     }
   }
   @media screen and (max-width: 450px) {
-    padding: 0.5em 0;
     flex-direction: row;
     justify-content: flex-start;
+    min-height: 40px;
+    padding: 0.5em 0;
+    box-sizing: border-box;
     h2 {
       font-size: 1.4em;
     }
@@ -55,19 +56,22 @@ const PositionsFilter = styled.div`
   }
 `;
 
-const Table = styled.section`
+const PlayersList = styled.ul`
   display: flex;
   flex-direction: column;
   position: relative;
   border-collapse: collapse;
-  overflow: scroll;
+  overflow-y: scroll;
   margin: 0 auto;
   width: 100%;
 `;
 
-const TR = styled.div`
+const PlayerLi = styled.li`
   display: flex;
   width: 100%;
+  min-height: 70px;
+  padding: 0.5em;
+
   justify-content: space-between;
   border-bottom: 1px solid #dcdcdc;
   &:hover,
@@ -76,9 +80,7 @@ const TR = styled.div`
   }
 `;
 
-const TD = styled.div`
-  padding-top: 10px;
-  padding-bottom: 10px;
+const Column = styled.div`
   width: 12%;
   .column-content {
     display: flex;
@@ -114,7 +116,7 @@ const TD = styled.div`
   }
 `;
 
-const NameTD = styled(TD)`
+const NameColumn = styled(Column)`
   width: 80%;
 `;
 
@@ -195,11 +197,11 @@ const BigBoard = ({ positions, draftPlayer }) => {
           </label>
         </div>
       </PositionsFilter>
-      <Table>
+      <PlayersList>
         {displayedPlayers.map((player, i) => (
-          <TR key={player}>
-            <TD>{i + 1}</TD>
-            <NameTD className="name-column">
+          <PlayerLi key={player}>
+            <Column>{i + 1}</Column>
+            <NameColumn className="name-column">
               <div className="column-content">
                 <button
                   ref={buttonRef}
@@ -212,16 +214,16 @@ const BigBoard = ({ positions, draftPlayer }) => {
                   {players[player].pos} | {players[player].sch}
                 </span>
               </div>
-            </NameTD>
-            <TD>
+            </NameColumn>
+            <Column>
               <div className="column-content last">
                 <span>{players[player].height}</span>
                 <span>{players[player].weight} </span>
               </div>
-            </TD>
-          </TR>
+            </Column>
+          </PlayerLi>
         ))}
-      </Table>
+      </PlayersList>
     </Container>
   );
 };

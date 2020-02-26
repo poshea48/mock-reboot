@@ -6,6 +6,7 @@ import Settings from '../components/nfl/Settings';
 import Draftroom from '../components/nfl/Draftroom';
 import { NFLProvider } from '../context/nflContext';
 import SEO from '../components/layout/SEO';
+import Test from '../components/nfl/Test';
 
 const colors = {
   brown: '#D1AB98',
@@ -19,9 +20,6 @@ const Container = styled.div`
   flex-direction: column;
   background: ${colors.white};
   width: 100vw;
-  height: 100vh;
-  padding: 0 1em;
-  overflow: hidden;
   nav {
     display: flex;
     justify-content: flex-end;
@@ -63,14 +61,10 @@ const Container = styled.div`
   }
 `;
 
-const StyledRouter = styled(Router)`
-  height: calc(100% - 80px);
-`;
-
 const NFL = () => {
   return (
     <NFLProvider>
-      <Container>
+      <Container id="page-container">
         <SEO title="NFL Mock Draft" />
         <nav>
           <Link to="/">Home</Link>
@@ -78,10 +72,10 @@ const NFL = () => {
           <span>Profile</span>
           <span>Sign in</span>
         </nav>
-        <StyledRouter>
+        <Router>
           <Settings path="/nfl/settings" default />
           <Draftroom path="/nfl/draftroom" />
-        </StyledRouter>
+        </Router>
         <footer>Created by Paul O&apos;Shea 2020</footer>
       </Container>
     </NFLProvider>
