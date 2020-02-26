@@ -62,9 +62,7 @@ const Form = styled.form`
   flex: 1 auto;
   margin: 0;
   overflow: hidden;
-  @media screen and (max-width: 600px) {
-    padding: 0.5em;
-  }
+
   .error {
     margin-left: 140px;
     background: #fff;
@@ -185,6 +183,7 @@ const ResetButton = styled.button`
   width: 50px;
   height: 50px;
   cursor: pointer;
+  padding: 0;
 `;
 
 const SubmitButton = styled.button`

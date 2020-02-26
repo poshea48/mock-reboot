@@ -4,6 +4,7 @@ import draftOrder from '../../data/draftOrder';
 
 import nflTeams from '../../data/nflTeams';
 import { useNflState } from '../../context/nflContext';
+import smoothscroll from 'smoothscroll-polyfill';
 
 const Article = styled.article`
   display: flex;
@@ -94,6 +95,8 @@ const DraftorderDisplay = () => {
   };
 
   const scrollTo = () => {
+    smoothscroll.polyfill();
+
     let element = document.querySelector(`li[data-id='${state.currentPick}']`);
     if (element) {
       element.scrollIntoView({

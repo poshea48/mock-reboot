@@ -20,6 +20,7 @@ const Container = styled.div`
   flex-direction: column;
   background: ${colors.white};
   width: 100vw;
+  overflow-x: hidden;
   nav {
     display: flex;
     justify-content: flex-end;

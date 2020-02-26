@@ -31,7 +31,7 @@ const Content = styled.div`
   @media screen and (max-width: 800px) {
     position: absolute;
     top: 0;
-    right: -1em;
+    right: 0em;
     background: ${p => p.theme.colors.teamColors[p.team].secondary1};
 
     max-width: 500px;
