@@ -31,14 +31,15 @@ const Content = styled.div`
   @media screen and (max-width: 800px) {
     position: absolute;
     top: 0;
-    right: 0em;
+    right: -2em;
     background: ${p => p.theme.colors.teamColors[p.team].secondary1};
 
     max-width: 500px;
     width: 100%;
     z-index: 20;
     transition: 0.3s ease-in-out;
-    transform: ${({ open }) => (open ? 'translateX(0em)' : 'translateX(100%)')};
+    transform: ${({ open }) =>
+      open ? 'translateX(-2em)' : 'translateX(100%)'};
   }
 `;
 
