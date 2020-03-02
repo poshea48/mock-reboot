@@ -22,7 +22,10 @@ const HGroup = styled.hgroup`
   h3 {
     font-size: 1em;
     align-self: flex-start;
-    color: ${p => p.theme.colors.teamColors[p.team].secondary1};
+    color: ${p =>
+      p.altColor
+        ? p.theme.colors.teamColors[p.team].secondary2
+        : p.theme.colors.teamColors[p.team].secondary1};
   }
 
   h4 {
@@ -54,7 +57,7 @@ const HGroup = styled.hgroup`
 `;
 const DraftroomHeader = ({ myTeam }) => {
   return (
-    <HGroup team={myTeam}>
+    <HGroup team={myTeam} altColor={myTeam === 'IND'}>
       <h3>{nflTeams[myTeam].city}</h3>
       <h2>{nflTeams[myTeam].name}</h2>
     </HGroup>
