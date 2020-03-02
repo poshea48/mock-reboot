@@ -51,7 +51,7 @@ const PlayersSection = styled.section`
   display: flex;
   width: 100%;
   height: calc(100% - 165px);
-  justify-content: space-evenly;
+  justify-content: center;
   @media screen and (max-width: 800px) {
     justify-content: center;
   }

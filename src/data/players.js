@@ -99,7 +99,7 @@ const players = {
   'Jonathan Taylor': {
     sch: 'Wisconsin',
     pos: 'RB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '215',
   },
   'Trey Adams': {
@@ -150,11 +150,11 @@ const players = {
     height: `6'5"`,
     weight: '245',
   },
-  'Jeff Gladney': { sch: 'TCU', pos: 'CB', height: `5'0"`, weight: '183' },
+  'Jeff Gladney': { sch: 'TCU', pos: 'CB', height: `6'0"`, weight: '183' },
   'J.K. Dobbins': {
     sch: 'Ohio State',
     pos: 'RB',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '214',
   },
   'Josh Jones': { sch: 'Houston', pos: 'OT', height: `6'7"`, weight: '310' },
@@ -195,7 +195,7 @@ const players = {
   'Zack Baun': { sch: 'Wisconsin', pos: 'LB', height: `6'3"`, weight: '235' },
   'John Simpson': { sch: 'Clemson', pos: 'OG', height: `6'4"`, weight: '330' },
   'Jake Fromm': { sch: 'Georgia', pos: 'QB', height: `6'2"`, weight: '220' },
-  'Jalen Reagor': { sch: 'TCU', pos: 'WR', height: `5'1"`, weight: '195' },
+  'Jalen Reagor': { sch: 'TCU', pos: 'WR', height: `6'1"`, weight: '195' },
   'Yasir Durant': {
     sch: 'Missouri',
     pos: 'OT',
@@ -262,7 +262,7 @@ const players = {
   'Antoine Winfield Jr.': {
     sch: 'Minnesota',
     pos: 'S',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '207',
   },
   'Marlon Davidson': {
@@ -334,13 +334,13 @@ const players = {
   'Cam Akers': {
     sch: 'Florida State',
     pos: 'RB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '210',
   },
   "K'Von Wallace": {
     sch: 'Clemson',
     pos: 'S',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '210',
   },
   'Jordyn Brooks': {
@@ -398,7 +398,7 @@ const players = {
   'Devin Duvernay': {
     sch: 'Texas',
     pos: 'WR',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '186',
   },
   'Josh Uche': { sch: 'Michigan', pos: 'LB', height: `6'3"`, weight: '238' },
@@ -411,7 +411,7 @@ const players = {
   'Ross Blacklock': { sch: 'TCU', pos: 'DL', height: `6'4"`, weight: '305' },
   'Leki Fotu': { sch: 'Utah', pos: 'DL', height: `6'5"`, weight: '330' },
   'Cole Kmet': { sch: 'Notre Dame', pos: 'TE', height: `6'6"`, weight: '255' },
-  'James Proche': { sch: 'SMU', pos: 'WR', height: `5'1"`, weight: '190' },
+  'James Proche': { sch: 'SMU', pos: 'WR', height: `6'1"`, weight: '190' },
   'Collin Johnson': { sch: 'Texas', pos: 'WR', height: `6'6"`, weight: '220' },
   'Akeem Davis-Gaither': {
     sch: 'Appalachian State',
@@ -432,7 +432,7 @@ const players = {
     weight: '215',
   },
   'Trevis Gipson': { sch: 'Tulsa', pos: 'DL', height: `6'4"`, weight: '268' },
-  'Zack Moss': { sch: 'Utah', pos: 'RB', height: `5'0"`, weight: '210' },
+  'Zack Moss': { sch: 'Utah', pos: 'RB', height: `6'0"`, weight: '210' },
   'Kenny Willekes': {
     sch: 'Michigan State',
     pos: 'EDGE',
@@ -472,7 +472,7 @@ const players = {
   "Ke'Shawn Vaughn": {
     sch: 'Vanderbilt',
     pos: 'RB',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '215',
   },
   'Jordan Elliott': {
@@ -491,14 +491,14 @@ const players = {
   'Troy Pride Jr.': {
     sch: 'Notre Dame',
     pos: 'CB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '194',
   },
   'Jordan Mack': { sch: 'Virginia', pos: 'LB', height: `6'2"`, weight: '230' },
   'Eno Benjamin': {
     sch: 'Arizona State',
     pos: 'RB',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '201',
   },
   'Bryan Edwards': {
@@ -530,7 +530,7 @@ const players = {
   'Noah Igbinoghene': {
     sch: 'Auburn',
     pos: 'CB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '200',
   },
   'McTelvin Agim': {
@@ -548,7 +548,7 @@ const players = {
   'Antoine Brooks Jr.': {
     sch: 'Maryland',
     pos: 'S',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '210',
   },
   'Raequan Williams': {
@@ -567,7 +567,7 @@ const players = {
   'DeeJay Dallas': {
     sch: 'Miami (FL)',
     pos: 'RB',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '214',
   },
   'Chris Orr': { sch: 'Wisconsin', pos: 'LB', height: `6'0"`, weight: '224' },
@@ -646,7 +646,7 @@ const players = {
     weight: '240',
   },
   'Michael Ojemudia': { sch: 'Iowa', pos: 'S', height: `6'1"`, weight: '199' },
-  'Darnay Holmes': { sch: 'UCLA', pos: 'CB', height: `5'0"`, weight: '198' },
+  'Darnay Holmes': { sch: 'UCLA', pos: 'CB', height: `6'0"`, weight: '198' },
   'Anthony McFarland Jr.': {
     sch: 'Maryland',
     pos: 'RB',
@@ -668,7 +668,7 @@ const players = {
   'Lavert Hill': {
     sch: 'Michigan',
     pos: 'CB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '181',
   },
   'Chase Claypool': {
@@ -723,7 +723,7 @@ const players = {
   'Salvon Ahmed': {
     sch: 'Washington',
     pos: 'RB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '196',
   },
   'Alton Robinson': {
@@ -782,7 +782,7 @@ const players = {
   'Alohi Gilman': {
     sch: 'Notre Dame',
     pos: 'S',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '201',
   },
   'Keandre Jones': {
@@ -816,7 +816,7 @@ const players = {
   'Lamical Perine': {
     sch: 'Florida',
     pos: 'RB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '227',
   },
   'Michael Divinity Jr.': {
@@ -846,7 +846,7 @@ const players = {
   'Darrynton Evans': {
     sch: 'Appalachian State',
     pos: 'RB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '190',
   },
   'John Molchon': {
@@ -857,11 +857,11 @@ const players = {
   },
   'Matt Peart': { sch: 'UConn', pos: 'OT', height: `6'7"`, weight: '303' },
   'Devin Asiasi': { sch: 'UCLA', pos: 'TE', height: `6'3"`, weight: '279' },
-  'Joshua Kelley': { sch: 'UCLA', pos: 'RB', height: `5'1"`, weight: '204' },
+  'Joshua Kelley': { sch: 'UCLA', pos: 'RB', height: `6'1"`, weight: '204' },
   'Jace Whittaker': {
     sch: 'Arizona',
     pos: 'CB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '185',
   },
   'Jessie Lemonier': {
@@ -918,7 +918,7 @@ const players = {
     height: `6'1"`,
     weight: '197',
   },
-  'Darius Anderson': { sch: 'TCU', pos: 'RB', height: `5'1"`, weight: '212' },
+  'Darius Anderson': { sch: 'TCU', pos: 'RB', height: `6'1"`, weight: '212' },
   'Scott Frantz': {
     sch: 'Kansas State',
     pos: 'OT',
@@ -942,7 +942,7 @@ const players = {
   'Essang Bassey': {
     sch: 'Wake Forest',
     pos: 'S',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '190',
   },
   'LaDarius Hamilton': {
@@ -986,7 +986,7 @@ const players = {
   'Levonta Taylor': {
     sch: 'Florida State',
     pos: 'CB',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '181',
   },
   'Matt Hennessy': { sch: 'Temple', pos: 'OC', height: `6'4"`, weight: '295' },
@@ -997,7 +997,7 @@ const players = {
     weight: '310',
   },
   'J.J. Taylor': { sch: 'Arizona', pos: 'RB', height: `5'6"`, weight: '184' },
-  'Geno Stone': { sch: 'Iowa', pos: 'S', height: `5'0"`, weight: '210' },
+  'Geno Stone': { sch: 'Iowa', pos: 'S', height: `6'0"`, weight: '210' },
   'David Woodward': {
     sch: 'Utah State',
     pos: 'LB',
@@ -1013,7 +1013,7 @@ const players = {
   'Reggie Corbin': {
     sch: 'Illinois',
     pos: 'RB',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '200',
   },
   'Justin Strnad': {
@@ -1038,7 +1038,7 @@ const players = {
   'Tavien Feaster': {
     sch: 'South Carolina',
     pos: 'RB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '220',
   },
   'James Morgan': {
@@ -1122,7 +1122,7 @@ const players = {
   'Josiah Scott': {
     sch: 'Michigan State',
     pos: 'CB',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '168',
   },
   'Cole McDonald': { sch: 'Hawaii', pos: 'QB', height: `6'4"`, weight: '220' },
@@ -1135,14 +1135,14 @@ const players = {
   'Aaron Fuller': {
     sch: 'Washington',
     pos: 'WR',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '186',
   },
   'Kamren Curl': { sch: 'Arkansas', pos: 'S', height: `6'2"`, weight: '198' },
   'James Robinson': {
     sch: 'Illinois State',
     pos: 'RB',
-    height: `5'0"`,
+    height: `6'0"`,
     weight: '220',
   },
   'Ben Bartch': {
@@ -1245,7 +1245,7 @@ const players = {
     height: `6'0"`,
     weight: '220',
   },
-  'Xavier Jones': { sch: 'SMU', pos: 'RB', height: `5'1"`, weight: '208' },
+  'Xavier Jones': { sch: 'SMU', pos: 'RB', height: `6'1"`, weight: '208' },
   'Chad Smith': { sch: 'Clemson', pos: 'LB', height: `6'3"`, weight: '240' },
   'Josiah Deguara': {
     sch: 'Cincinnati',
@@ -1262,7 +1262,7 @@ const players = {
   'John Reid': {
     sch: 'Penn State',
     pos: 'CB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '184',
   },
   'David Dowell': {
@@ -1298,10 +1298,10 @@ const players = {
   'Travion Banks': {
     sch: 'Miami (OH)',
     pos: 'CB',
-    height: `5'1"`,
+    height: `6'1"`,
     weight: '184',
   },
-  'Jeff Thomas': { sch: 'Miami', pos: 'WR', height: `5'0"`, weight: '180' },
+  'Jeff Thomas': { sch: 'Miami', pos: 'WR', height: `6'0"`, weight: '180' },
   'Marcel Spears Jr.': {
     sch: 'Iowa State',
     pos: 'LB',

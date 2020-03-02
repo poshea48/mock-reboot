@@ -12,7 +12,7 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
   flex: 1 auto;
-  max-width: 600px;
+  max-width: 500px;
 `;
 
 const PositionsFilter = styled.div`
@@ -80,6 +80,11 @@ const PlayerLi = styled.li`
   &:focus {
     background: #e6e6e6;
   }
+
+  @media screen and (max-width: 450px) {
+    padding: 0.25em;
+    min-height: 55px;
+  }
 `;
 
 const Column = styled.div`
@@ -89,7 +94,7 @@ const Column = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     button {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
       align-self: flex-start;
       text-transform: uppercase;
@@ -102,6 +107,18 @@ const Column = styled.div`
         transform: scale(1.1);
         outline: none;
         color: #0e2be1;
+      }
+
+      @media screen and (min-width: 450px) and (max-width: 800px) {
+        font-size: 20px;
+      }
+
+      @media screen and (max-width: 375px) {
+        font-size: 16px;
+      }
+
+      @media screen and (max-width: 350px) {
+        font-size: 15px;
       }
     }
     span {

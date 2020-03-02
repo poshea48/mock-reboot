@@ -19,7 +19,7 @@ const Content = styled.div`
   padding: 1em;
   overflow-y: scroll;
   flex-direction: column;
-  flex-basis: 500px;
+  min-width: 400px;
   color: ${p => p.theme.colors.teamColors[p.team].primary};
   height: 100%;
   table {
@@ -34,6 +34,7 @@ const Content = styled.div`
     right: 1em;
     background: ${p => p.theme.colors.teamColors[p.team].secondary1};
     max-width: 500px;
+    min-width: 0;
     width: ${({ open }) => (open ? '100%' : '0px')};
     z-index: ${({ open }) => (open ? '20' : '-5')};
     transition: 0.5s ease-in-out;
