@@ -71,6 +71,12 @@ function nflReducer(state, action) {
         undraftedPlayers: [...players],
       };
     }
+    case 'updateDraft': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
     case 'reset': {
       localStorage.removeItem('nflState');
       return {

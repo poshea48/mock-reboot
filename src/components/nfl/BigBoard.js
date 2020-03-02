@@ -11,6 +11,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  flex: 1 auto;
+  max-width: 600px;
 `;
 
 const PositionsFilter = styled.div`
