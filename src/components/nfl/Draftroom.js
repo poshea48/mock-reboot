@@ -22,14 +22,24 @@ const StartButton = styled.button`
   position: absolute;
   top: 0;
   right: 1em;
+  height: 55px;
   padding: 0;
   border-radius: 10px;
   background: transparent;
   border: none;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: ${({ color }) => (color === 'pause' ? 'gray' : 'green')};
   span {
-    text-align: center;
-    font-size: 2em;
+    font-size: 1.2em;
+    align-self: center;
+    height: 20px;
+  }
+  .action {
+    font-size: 1em;
+    font-weight: 900;
   }
   @media screen and(max-width: 600px) {
     right: 0;
@@ -42,7 +52,9 @@ const PlayersSection = styled.section`
   width: 100%;
   height: calc(100% - 165px);
   justify-content: space-evenly;
-
+  @media screen and (max-width: 800px) {
+    justify-content: center;
+  }
   @media screen and (max-width: 600px) {
     height: calc(100% - 154px);
   }
@@ -139,23 +151,35 @@ const Draftroom = () => {
   return (
     <Main>
       {!finished && (
-        <StartButton onClick={handleDraftPlay}>
+        <StartButton
+          onClick={handleDraftPlay}
+          color={!started ? 'begin' : paused ? 'play' : 'pause'}
+        >
           {!started ? (
-            <span
-              role="img"
-              title="start draft"
-              aria-label="start draft action"
-            >
-              ▶️
-            </span>
+            <>
+              <span className="action">Start Draft</span>
+              <span
+                role="img"
+                title="start draft"
+                aria-label="start draft action"
+              >
+                ▶️
+              </span>
+            </>
           ) : paused ? (
-            <span role="img" title="resume" aria-label="resume draft action">
-              ▶️
-            </span>
+            <>
+              <span className="action">Resume</span>
+              <span role="img" title="resume" aria-label="resume draft action">
+                ▶️
+              </span>
+            </>
           ) : (
-            <span role="img" title="pause" aria-label="pause draft action">
-              ⏸
-            </span>
+            <>
+              <span className="action">Pause</span>
+              <span role="img" title="pause" aria-label="pause draft action">
+                ⏸
+              </span>
+            </>
           )}
         </StartButton>
       )}
