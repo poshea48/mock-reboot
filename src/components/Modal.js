@@ -11,6 +11,7 @@ const Overlay = styled.div`
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
+  z-index: 30;
 `;
 
 const ModalWrapper = styled.div`
@@ -24,7 +25,6 @@ const ModalWrapper = styled.div`
   height: 100%;
 `;
 
-//! change x and y
 const ModalBody = styled.div`
   position: relative;
   background: white;
@@ -32,13 +32,12 @@ const ModalBody = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* background-color: #fefefe; */
   margin: auto;
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid #888;
-  max-width: 300px;
-  z-index: 10;
+  max-width: 350px;
+  z-index: 35;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
   width: 100%;
   transition: all 0.3s ease-in-out;

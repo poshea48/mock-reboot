@@ -40,36 +40,43 @@ const Article = styled.article`
       }
     }
   }
-  ul {
-    width: 100%;
-    display: flex;
-    overflow: scroll;
-  }
-  li {
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-    width: 300px;
-    padding: 0.5em 1em;
-    box-sizing: border-box;
-    &:first-of-type {
-      margin: 0;
-    }
-    span {
-      display: inline-block;
-      text-align: center;
-      width: 100px;
-      b {
-        background: #0da305;
-        box-shadow: 0 2px 8px 1px black;
-        color: #fff;
-        padding: 0.1em 0.3em;
-        border-radius: 10px;
-      }
-    }
-  }
+
   @media screen and (max-width: 600px) {
     min-height: 99px;
+  }
+`;
+
+const SelectionList = styled.ul`
+  width: 100%;
+  display: flex;
+  overflow: scroll;
+`;
+
+const SelectionLi = styled.li`
+  display: flex;
+  flex-direction: column;
+  background: ${({ team, manual, theme }) =>
+    manual ? theme.colors.teamColors[team].primary : 'transparent'};
+  color: ${({ manual }) => (manual ? '#fff' : '#000')};
+  font-size: 14px;
+  width: 300px;
+  border-radius: 10px;
+  padding: 0.5em 1em;
+  box-sizing: border-box;
+  &:first-of-type {
+    margin: 0;
+  }
+  span {
+    display: inline-block;
+    text-align: center;
+    width: 100px;
+    b {
+      background: #0da305;
+      box-shadow: 0 2px 8px 1px black;
+      color: #fff;
+      padding: 0.1em 0.3em;
+      border-radius: 10px;
+    }
   }
 `;
 const NUMOFTEAMS = 32;
@@ -137,11 +144,16 @@ const DraftorderDisplay = () => {
       displayInfo = state.manualTeams.includes(team) ? 'Manual' : 'Auto';
     }
     return (
-      <li key={team + i} data-id={pick}>
+      <SelectionLi
+        key={team + i}
+        data-id={pick}
+        team={team}
+        manual={state.manualTeams.includes(team)}
+      >
         <span>{displayPick}</span>
         <span>{nflTeams[team].code}</span>
         <span>{displayInfo}</span>
-      </li>
+      </SelectionLi>
     );
   });
 
@@ -167,7 +179,7 @@ const DraftorderDisplay = () => {
           Scroll To current
         </button>
       </div>
-      <ul>{displaySelectionList}</ul>
+      <SelectionList>{displaySelectionList}</SelectionList>
     </Article>
   );
 };

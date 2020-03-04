@@ -6,6 +6,8 @@ import Settings from '../components/nfl/Settings';
 import Draftroom from '../components/nfl/Draftroom';
 import { NFLProvider } from '../context/nflContext';
 import SEO from '../components/layout/SEO';
+import PrivateRoute from '../components/nfl/PrivateRoute';
+import { useAppState } from '../context/appContext';
 
 const colors = {
   brown: '#D1AB98',
@@ -61,7 +63,12 @@ const Container = styled.div`
   }
 `;
 
+const StyledLink = styled(Link)`
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+`;
+
 const NFL = () => {
+  const { isNflSetup } = useAppState();
   return (
     <NFLProvider>
       <Container id="page-container">
@@ -69,12 +76,13 @@ const NFL = () => {
         <nav>
           <Link to="/">Home</Link>
           <Link to="/nfl/settings">Settings</Link>
-          <span>Profile</span>
-          <span>Sign in</span>
+          <StyledLink to="/nfl/draftroom" disabled={!isNflSetup}>
+            Draftroom
+          </StyledLink>
         </nav>
         <Router>
+          <PrivateRoute path="/nfl/draftroom" component={Draftroom} />
           <Settings path="/nfl/settings" default />
-          <Draftroom path="/nfl/draftroom" />
         </Router>
         <footer>Created by Paul O&apos;Shea 2020</footer>
       </Container>

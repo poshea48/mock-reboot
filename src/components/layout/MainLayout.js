@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
 import { useStaticQuery, graphql } from 'gatsby';
+import Div100vh from 'react-div-100vh';
 
 import theme from '../../../config/theme';
 // import Header from '../header'
@@ -19,21 +20,21 @@ const MainLayout = ({ children }) => {
     }
   `);
 
-  const handleResize = () => {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  };
+  // const handleResize = () => {
+  //   let vh = window.innerHeight * 0.01;
+  //   document.documentElement.style.setProperty('--vh', `${vh}px`);
+  // };
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', handleResize);
-    }
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', handleResize);
-      }
-    };
-  });
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     window.addEventListener('resize', handleResize);
+  //   }
+  //   return () => {
+  //     if (typeof window !== 'undefined') {
+  //       window.removeEventListener('resize', handleResize);
+  //     }
+  //   };
+  // });
 
   return (
     <ThemeProvider theme={theme}>
@@ -60,6 +61,7 @@ const MainLayout = ({ children }) => {
             body {
               width: 100vw;
               min-height: 100vh;
+              min-height: -webkit-fill-available;
               margin: 0;
               padding: 0;
             }
@@ -151,7 +153,7 @@ const MainLayout = ({ children }) => {
           `}
         />
         <SEO title={site.siteMetadata.title} />
-        {children}
+        <Div100vh>{children}</Div100vh>
       </Fragment>
     </ThemeProvider>
   );

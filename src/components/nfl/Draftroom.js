@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useNflState, useNflDispatch } from '../../context/nflContext';
+import { useAppState } from '../../context/appContext';
 import DraftroomHeader from './DraftroomHeader';
 import DraftorderDisplay from './DraftorderDisplay';
 import BigBoard from './BigBoard';
 import TeamSelectedPlayers from './TeamSelectedPlayers';
 import prospects from '../../data/players';
 import { NFLPOSITIONS } from '../../data/positions';
+import ControlPanel from './controls/ControlPanel';
+import { navigate } from 'gatsby';
 
 const Main = styled.main`
   position: relative;
@@ -15,34 +18,6 @@ const Main = styled.main`
   height: calc(100vh - 80px);
   @media screen and(max-width: 800px) {
     justify-content: center;
-  }
-`;
-
-const StartButton = styled.button`
-  position: absolute;
-  top: 0;
-  right: 1em;
-  height: 55px;
-  padding: 0;
-  border-radius: 10px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  color: ${({ color }) => (color === 'pause' ? 'gray' : 'green')};
-  span {
-    font-size: 1.2em;
-    align-self: center;
-    height: 20px;
-  }
-  .action {
-    font-size: 1em;
-    font-weight: 900;
-  }
-  @media screen and(max-width: 600px) {
-    right: 0;
   }
 `;
 
@@ -67,6 +42,12 @@ const PlayersSection = styled.section`
 `;
 
 const Draftroom = () => {
+  const { isNflSetup } = useAppState();
+  useEffect(() => {
+    if (!isNflSetup) {
+      navigate('/nfl/settings');
+    }
+  });
   const state = useNflState();
   const dispatch = useNflDispatch();
   let simulationTimeout;
@@ -150,39 +131,7 @@ const Draftroom = () => {
 
   return (
     <Main>
-      {!finished && (
-        <StartButton
-          onClick={handleDraftPlay}
-          color={!started ? 'begin' : paused ? 'play' : 'pause'}
-        >
-          {!started ? (
-            <>
-              <span className="action">Start Draft</span>
-              <span
-                role="img"
-                title="start draft"
-                aria-label="start draft action"
-              >
-                ▶️
-              </span>
-            </>
-          ) : paused ? (
-            <>
-              <span className="action">Resume</span>
-              <span role="img" title="resume" aria-label="resume draft action">
-                ▶️
-              </span>
-            </>
-          ) : (
-            <>
-              <span className="action">Pause</span>
-              <span role="img" title="pause" aria-label="pause draft action">
-                ⏸
-              </span>
-            </>
-          )}
-        </StartButton>
-      )}
+      <ControlPanel handleDraftPlay={handleDraftPlay} />
       <DraftroomHeader myTeam={myTeam} />
       <DraftorderDisplay
         currentRound={currentRound || 1}

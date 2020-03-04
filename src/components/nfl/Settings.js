@@ -1,25 +1,10 @@
-import React, { useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import styled from '@emotion/styled';
 import NFLTEAMS from '../../data/nflTeams';
 import { navigate } from '@reach/router';
 import { useNflDispatch, useNflState } from '../../context/nflContext';
 import { useAppState, useAppDispatch } from '../../context/appContext';
-
-const colors = {
-  brown: '#D1AB98',
-  black: '#232323',
-  gray: '#476A6F',
-  teal: '#BFDBDD',
-  white: '#F7F7F7',
-};
-
-const colors2 = {
-  eerieBlack: '#1c1d21',
-  vanDykeBrown: '#634133',
-  dodgerBlue: '#2191fb',
-  gray: '#bebbbb',
-  cadetGrey: '#93a3b1',
-};
+import ResetButton from './controls/ResetButton';
 
 const Main = styled.main`
   display: flex;
@@ -34,7 +19,7 @@ const Main = styled.main`
     align-self: center;
     display: inline-block;
     margin-bottom: 1em;
-    color: ${colors2.eerieBlack};
+    color: ${p => p.theme.colors.primaryPalette.eerieBlack};
     text-align: center;
     font-weight: 800;
     text-transform: uppercase;
@@ -53,7 +38,7 @@ const Form = styled.form`
   background: #8b4c33;
   padding: 1em;
   max-height: calc(100% - 30px);
-  border: 1px solid ${colors.black};
+  border: 1px solid ${p => p.theme.colors.primaryPalette.eerieBlack};
   border-radius: 20px;
   overflow: hidden;
   display: flex;
@@ -95,13 +80,13 @@ const Field = styled.div`
   margin-bottom: .5em;
   label {
     width: 140px;
-    color: #fff;/*${colors2.eerieBlack};*/
+    color: #fff;/*${p => p.theme.colors.primaryPalette.eerieBlack};*/
     font-weight: 900;
   }
   select {
     flex: 1 auto;
-    border: 1px solid ${colors2.eerieBlack};
-    color: ${colors2.dodgerBlue};
+    border: 1px solid ${p => p.theme.colors.primaryPalette.eerieBlack};
+    color: ${p => p.theme.colors.primaryPalette.dodgerBlue};
     text-transform: uppercase;
     font-weight: 800;
     &:disabled {
@@ -133,7 +118,7 @@ const SimulationField = styled.div`
   }
   h4 {
     text-align: center;
-    color: #fff;/*${colors2.eerieBlack};*/
+    color: #fff;/*${p => p.theme.colors.primaryPalette.eerieBlack};*/
     font-weight: 900;
     margin-bottom: .5em;
   }
@@ -141,8 +126,7 @@ const SimulationField = styled.div`
     padding: 0.5em 1em;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 90%;
+    justify-content: flex-start;
     overflow-y: scroll;
     margin: 0 0 1em 0;
     div {
@@ -172,28 +156,14 @@ const ButtonsWrapper = styled.div`
   min-height: 50px;
 `;
 
-const ResetButton = styled.button`
-  border: 4px solid black;
-  background: ${colors2.gray};
-  margin-left: 0.5em;
-  color: #80000d;
-  border-radius: 50%;
-  font-size: 10px;
-  font-weight: 900;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  padding: 0;
-`;
-
 const SubmitButton = styled.button`
   width: 150px;
   height: 40px;
   align-self: center;
-  background: ${colors2.gray};
+  background: ${p => p.theme.colors.primaryPalette.gray};
   border-radius: 20px;
   text-transform: uppercase;
-  color: ${colors2.eerieBlack};
+  color: ${p => p.theme.colors.primaryPalette.eerieBlack};
   font-weight: 900;
   cursor: pointer;
   transition: all 0.3s ease-in;
@@ -208,35 +178,106 @@ const SubmitButton = styled.button`
   }
 `;
 
-const getSimulationTeams = manualTeams => {
+const getSimulationTeams = () => {
   let newTeams = {};
   for (let team in NFLTEAMS) {
     newTeams[team] = {
       code: NFLTEAMS[team].code,
       fullName: NFLTEAMS[team].fullName,
-      simulate: !manualTeams.includes(team),
+      simulate: true,
     };
   }
   return newTeams;
+};
+
+const settingsReducer = (state, action) => {
+  switch (action.type) {
+    case 'update': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'handleChange': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'simulationToggle': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'allSimulationToggle': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'reset': {
+      return {
+        ...settingsInitialState,
+        simulationTeams: getSimulationTeams(),
+      };
+    }
+  }
+};
+const settingsInitialState = {
+  myTeam: '',
+  teamNeeds: '',
+  draftboard: '',
+  manualTeams: [],
+  simulationTeams: getSimulationTeams(),
+  allSimulationToggle: true,
+  errorMessage: '',
 };
 
 const Settings = () => {
   const nflContext = useNflState();
   const appContext = useAppState();
   const { isNflSetup } = appContext;
+  const [state, dispatch] = useReducer(settingsReducer, settingsInitialState);
+  const { errorMessage } = state;
 
-  const [state, changeState] = useState({
-    myTeam: nflContext.myTeam || '',
-    teamNeeds: nflContext.teamNeeds || '',
-    draftboard: nflContext.draftboard || '',
-    manualTeams: nflContext.manualTeams || [],
-  });
-
-  const [errorMessage, changeError] = useState(null);
-
-  const [simulationTeams, changeSimulationTeams] = useState(
-    getSimulationTeams(state.manualTeams)
-  );
+  useEffect(() => {
+    if (!isNflSetup) {
+      dispatch({ type: 'reset' });
+      return;
+    }
+  }, []);
+  // Updates state on refresh or when updating draft settings
+  useEffect(() => {
+    if (!isNflSetup) return;
+    if (!state.myTeam && nflContext.myTeam) {
+      const { myTeam, teamNeeds, draftboard, manualTeams } = nflContext;
+      let simToggle;
+      let newSimulationTeams = { ...state.simulationTeams };
+      if (manualTeams.length === 0) {
+        simToggle = true;
+      } else {
+        simToggle = false;
+        manualTeams.forEach(
+          team => (newSimulationTeams[team].simulate = false)
+        );
+      }
+      const newState = {
+        myTeam,
+        teamNeeds,
+        draftboard,
+        manualTeams,
+        allSimulationToggle: simToggle,
+        simulationTeams: newSimulationTeams,
+      };
+      dispatch({
+        type: 'update',
+        payload: newState,
+      });
+    } else {
+      return;
+    }
+  }, []);
 
   const teamNeedsList = ['default'];
   const draftboardList = ['default'];
@@ -244,58 +285,88 @@ const Settings = () => {
   const appDispatch = useAppDispatch();
 
   const handleChange = e => {
-    if (e.target.name === 'myTeam' && !!errorMessage) {
-      changeError(null);
+    const newState = { ...state };
+    if (e.target.name === 'myTeam' && !!state.errorMessage) {
+      newState.errorMessage = null;
     }
     if (e.target.name === 'myTeam') {
-      changeState({
-        ...state,
-        myTeam: e.target.value,
-        manualTeams: [e.target.value],
-      });
+      newState.myTeam = e.target.value;
+      newState.manualTeams = [e.target.value];
+      newState.simulationTeams[e.target.value].simulate = false;
+      newState.allSimulationToggle = false;
     } else {
-      changeState({
-        ...state,
-        [e.target.name]: e.target.value,
-      });
+      newState[e.target.name] = e.target.value;
     }
+    dispatch({
+      type: 'handleChange',
+      payload: newState,
+    });
   };
 
   const handleSimulationToggle = e => {
     const team = e.target.value;
-    let newManualPicks = [...state.manualTeams];
+    let newManualTeams = [...state.manualTeams];
+    let newSimulationTeams = { ...state.simulationTeams };
     let index;
     if ((index = state.manualTeams.indexOf(team) === -1)) {
-      newManualPicks.push(team);
+      newManualTeams.push(team);
+      newSimulationTeams[team].simulate = false;
     } else {
-      newManualPicks.splice(index, 1);
+      newManualTeams.splice(index, 1);
+      newSimulationTeams[team].simulate = true;
     }
-    changeState({ ...state, manualTeams: newManualPicks });
-    changeSimulationTeams({
-      ...simulationTeams,
-      [team]: {
-        ...simulationTeams[team],
-        simulate: !simulationTeams[team].simulate,
+    dispatch({
+      type: 'simulationToggle',
+      payload: {
+        manualTeams: newManualTeams,
+        simulationTeams: newSimulationTeams,
+        allSimulationToggle: newManualTeams.length === 0,
       },
     });
     return;
   };
 
+  const handleAllToggle = e => {
+    let newSimulatedTeams = { ...state.simulationTeams };
+    let simulate = !state.allSimulationToggle;
+    let newManualTeams = [];
+    for (let team in newSimulatedTeams) {
+      newSimulatedTeams[team].simulate = simulate;
+      if (!simulate) newManualTeams.push(team);
+    }
+    dispatch({
+      type: 'allSimulationToggle',
+      payload: {
+        simulationTeams: newSimulatedTeams,
+        allSimulationToggle: simulate,
+        manualTeams: newManualTeams,
+      },
+    });
+  };
+
   const submitForm = e => {
     e.preventDefault();
+    const type = isNflSetup ? 'updateDraft' : 'newDraft';
     if (!state.myTeam) {
-      changeError('You must select a team');
+      dispatch({
+        type: 'changeError',
+        payload: {
+          errorMessage: 'You must select a team',
+        },
+      });
       return;
     }
-
     nflDispatch({
-      type: 'newDraft',
+      type,
       payload: { ...state },
     });
-    appDispatch({
-      type: 'nflSetup',
-      payload: { isNflSetup: true },
-    });
+
+    if (!isNflSetup) {
+      appDispatch({
+        type: 'nflSetup',
+        payload: { isNflSetup: true },
+      });
+    }
     navigate('/nfl/draftroom');
   };
 
@@ -311,37 +382,20 @@ const Settings = () => {
     </>
   );
 
-  let simulationDisplay = Object.keys(simulationTeams).map(team => {
-    let disableMyTeam = false;
-    if (!appContext.isNflSetup && simulationTeams[team].code === state.myTeam) {
-      disableMyTeam = true;
-    }
+  let simulationDisplay = Object.keys(state.simulationTeams).map(team => {
     return (
       <div key={team}>
-        <label htmlFor="team">{simulationTeams[team].fullName}</label>
+        <label htmlFor="team">{state.simulationTeams[team].fullName}</label>
         <input
           type="checkbox"
           name="team"
           value={team}
-          checked={simulationTeams[team].simulate}
+          checked={state.simulationTeams[team].simulate}
           onChange={handleSimulationToggle}
-          disabled={disableMyTeam}
         />
       </div>
     );
   });
-
-  const handleReset = async () => {
-    changeState({
-      myTeam: '',
-      teamNeeds: '',
-      draftboard: '',
-      manualTeams: [],
-    });
-    changeSimulationTeams(getSimulationTeams([]));
-    appDispatch({ type: 'reset' });
-    nflDispatch({ type: 'reset' });
-  };
   return (
     <Main>
       <h2>Customize draft</h2>
@@ -407,14 +461,29 @@ const Settings = () => {
         </div>
         <SimulationField>
           <h4 htmlFor="simulation-teams">Simulated Teams</h4>
-          <fieldset>{simulationDisplay}</fieldset>
+          <fieldset>
+            <div>
+              <label htmlFor="all">Simulate All</label>
+              <input
+                type="checkbox"
+                name="all"
+                value="all"
+                checked={state.allSimulationToggle}
+                onChange={handleAllToggle}
+              />
+            </div>
+
+            {simulationDisplay}
+          </fieldset>
         </SimulationField>
         <ButtonsWrapper>
           <SubmitButton onClick={submitForm}>
             {appContext.isNflSetup ? 'Update' : 'Submit'}
           </SubmitButton>
 
-          {isNflSetup && <ResetButton onClick={handleReset}>reset</ResetButton>}
+          {isNflSetup && (
+            <ResetButton mini={false} settingsDispatch={dispatch} />
+          )}
         </ButtonsWrapper>
       </Form>
     </Main>

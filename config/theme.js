@@ -10,6 +10,13 @@ export const colors = {
     light: '#4b4e57',
     blue: '#2e3246',
   },
+  primaryPalette: {
+    eerieBlack: '#1c1d21',
+    vanDykeBrown: '#634133',
+    dodgerBlue: '#2191fb',
+    gray: '#bebbbb',
+    cadetGrey: '#93a3b1',
+  },
   primary: {
     base: '#3498db',
     light: '#3e5fbc',
