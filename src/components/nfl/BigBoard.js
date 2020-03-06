@@ -139,8 +139,6 @@ const NameColumn = styled(Column)`
   width: 80%;
 `;
 
-//TODO  make more generic for FF, prop => players, dispatch
-
 const BigBoard = ({ positions, draftPlayer }) => {
   const { open, openModal, closeModal } = useModal();
   const buttonRef = useRef(null);
@@ -150,10 +148,11 @@ const BigBoard = ({ positions, draftPlayer }) => {
 
   const handleDraftPlayerClick = e => {
     e.preventDefault();
-    draftPlayer(player);
+    draftPlayer(players[player]);
     closeModal();
     buttonRef.current = null;
   };
+
   const showDraftPlayerWindow = () => {
     return (
       <>

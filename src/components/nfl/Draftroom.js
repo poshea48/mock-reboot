@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
+import { navigate } from 'gatsby';
 import { useNflState, useNflDispatch } from '../../context/nflContext';
 import { useAppState } from '../../context/appContext';
 import DraftroomHeader from './DraftroomHeader';
@@ -9,13 +10,16 @@ import TeamSelectedPlayers from './TeamSelectedPlayers';
 import prospects from '../../data/players';
 import { NFLPOSITIONS } from '../../data/positions';
 import ControlPanel from './controls/ControlPanel';
-import { navigate } from 'gatsby';
+import findSimulatedPlayer, {
+  updateTeamNeeds,
+} from '../../algorithms/findSimulatedPlayer';
+import { getCurrentTeam } from '../../algorithms/getTeam';
 
 const Main = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 90px);
   @media screen and(max-width: 800px) {
     justify-content: center;
   }
@@ -25,7 +29,7 @@ const PlayersSection = styled.section`
   position: relative;
   display: flex;
   width: 100%;
-  height: calc(100% - 165px);
+  height: calc(100% - 184px);
   justify-content: center;
   @media screen and (max-width: 800px) {
     justify-content: center;
@@ -64,6 +68,7 @@ const Draftroom = () => {
   } = state;
 
   let simulationTime;
+
   useEffect(() => {
     if (paused || !started || finished) return;
     if (manualTeams.includes(teamOnTheClock)) {
@@ -86,34 +91,49 @@ const Draftroom = () => {
   // splice from undraftedPlayers list => return new list
   // add spliced player to results
 
-  const draftPlayer = name => {
+  const draftPlayer = player => {
     let i = 0;
     let newUndraftedList = [...undraftedPlayers];
-    let draftedPlayerInfo;
+    let team = getCurrentTeam(currentPick, currentRound);
+    let teamNeedsPos = player.pos.match(/OT|OG|OC/) ? 'OL' : player.pos;
+    // take just team object from state.teamNeeds[team] => { QB: {...}, RB: {...}...}
+
     // remove player name from newUndraftedList
     for (i; i < undraftedPlayers.length - 1; i++) {
-      if (name === undraftedPlayers[i]) {
-        draftedPlayerInfo = prospects[newUndraftedList.splice(i, 1)];
+      if (player.name === undraftedPlayers[i]) {
+        newUndraftedList.splice(i, 1);
         break;
       }
     }
+    let newSingleTeamNeeds = {
+      ...state.teamNeeds[team],
+      [teamNeedsPos]: updateTeamNeeds(state.teamNeeds[team][teamNeedsPos]),
+    };
 
     // update contex
     dispatch({
       type: 'draftPlayer',
       payload: {
         newUndraftedList,
-        player: name,
-        position: draftedPlayerInfo.pos,
-        school: draftedPlayerInfo.sch,
+        team,
+        newSingleTeamNeeds,
+        ...player,
       },
     });
   };
 
   const simulatePick = () => {
+    const players = undraftedPlayers.slice(0, 15).map(player => {
+      return {
+        name: player,
+        pos: prospects[player].pos,
+      };
+    });
+    const team = getCurrentTeam(currentPick, currentRound);
+    const draftedPlayer = findSimulatedPlayer(players, state.teamNeeds[team]);
     // For now just take highest ranked player
-    const player = undraftedPlayers[0];
-    draftPlayer(player);
+    // const player = undraftedPlayers[0];
+    draftPlayer(draftedPlayer);
   };
 
   const handleDraftPlay = () => {

@@ -13,7 +13,7 @@ const Main = styled.main`
   align-self: center;
   max-width: 650px;
   width: 100%;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 90px);
   margin: 0 auto;
   h2 {
     align-self: center;
@@ -226,8 +226,8 @@ const settingsReducer = (state, action) => {
 };
 const settingsInitialState = {
   myTeam: '',
-  teamNeeds: '',
-  draftboard: '',
+  teamNeeds: 'default',
+  draftboard: 'default',
   manualTeams: [],
   simulationTeams: getSimulationTeams(),
   allSimulationToggle: true,
@@ -326,7 +326,7 @@ const Settings = () => {
     return;
   };
 
-  const handleAllToggle = e => {
+  const handleAllToggle = () => {
     let newSimulatedTeams = { ...state.simulationTeams };
     let simulate = !state.allSimulationToggle;
     let newManualTeams = [];
@@ -358,7 +358,12 @@ const Settings = () => {
     }
     nflDispatch({
       type,
-      payload: { ...state },
+      payload: {
+        myTeam: state.myTeam,
+        manualTeams: [...state.manualTeams],
+        draftboard: state.draftboard,
+        teamNeeds: state.teamNeeds,
+      },
     });
 
     if (!isNflSetup) {

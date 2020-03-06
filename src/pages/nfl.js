@@ -55,8 +55,11 @@ const Container = styled.div`
   }
   footer {
     display: flex;
+    /* background: ${p => p.theme.colors.white.grey}; */
+    /* color: black; */
+    
     width: 100%;
-    height: 40px;
+    height: 50px;
     padding: 0.5em;
     text-align: center;
     justify-content: center;

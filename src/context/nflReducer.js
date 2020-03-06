@@ -1,12 +1,13 @@
 import defaultDraftBoard from '../data/defaults/draftboard';
 import draftOrder from '../data/draftOrder';
+import defaultTeamNeeds from '../data/defaults/teamNeeds';
+import { getCurrentTeam, getNextTeamUp } from '../algorithms/getTeam';
 
 const initialState = {
   myTeam: '',
   manualTeams: [],
   teamOnTheClock: draftOrder[0][0],
   draftboard: '',
-  draftOrder: draftOrder,
   teamNeeds: '',
   started: false,
   paused: false,
@@ -52,22 +53,24 @@ const initialState = {
 
 function nflReducer(state, action) {
   let players;
+  let teamNeeds;
   switch (action.type) {
     case 'newDraft': {
+      if (action.payload.teamNeeds === 'default') {
+        teamNeeds = defaultTeamNeeds;
+      } else {
+        // fetch Team needs
+      }
       if (action.payload.draftboard === 'default') {
         players = defaultDraftBoard;
       } else {
         // fetch draftboard
       }
-      if (!action.payload.teamNeeds) {
-        action.payload.teamNeeds = 'default';
-      }
-      if (!action.payload.draftboard) {
-        action.payload.draftboard = 'default';
-      }
       return {
         ...initialState,
-        ...action.payload,
+        myTeam: action.payload.myTeam,
+        manualTeams: action.payload.manualTeams,
+        teamNeeds,
         undraftedPlayers: [...players],
       };
     }
@@ -108,29 +111,30 @@ function nflReducer(state, action) {
       };
     }
     case 'draftPlayer': {
-      let { newUndraftedList, player, position, school } = action.payload;
-      let { currentPick, currentRound, draftOrder } = state;
+      let {
+        newUndraftedList,
+        name,
+        pos,
+        school,
+        newSingleTeamNeeds,
+      } = action.payload;
+      let { currentPick, currentRound } = state;
       const advanceRound = currentPick % 32 === 0 && currentRound !== 7;
       let nextPick =
         currentRound === 7 && currentPick % 32 === 0 ? 'n/a' : currentPick + 1;
       let nextRound = advanceRound ? currentRound + 1 : currentRound;
-      let team = draftOrder[currentRound - 1][(currentPick - 1) % 32];
+      let team = getCurrentTeam(currentPick, currentRound);
       let newTeamResults = [...state.results[team]];
       const draftedPlayerObject = {
-        player,
-        position,
+        name,
+        pos,
         school,
         pick: currentPick,
         round: currentRound,
       };
 
       newTeamResults.push(draftedPlayerObject);
-      let newTeamUp;
-      if (advanceRound) {
-        newTeamUp = draftOrder[nextRound - 1][0];
-      } else {
-        newTeamUp = draftOrder[nextRound - 1][(nextPick - 1) % 32];
-      }
+      let newTeamUp = getNextTeamUp(currentPick, currentRound);
 
       if (currentRound === 7 && currentPick === 224) {
         return {
@@ -141,6 +145,10 @@ function nflReducer(state, action) {
           currentRound: currentRound,
           finished: true,
           teamOnTheClock: 'N/A',
+          teamNeeds: {
+            ...state.teamNeeds,
+            [team]: newSingleTeamNeeds,
+          },
         };
       } else {
         return {
@@ -150,6 +158,10 @@ function nflReducer(state, action) {
           currentPick: nextPick,
           currentRound: nextRound,
           teamOnTheClock: newTeamUp,
+          teamNeeds: {
+            ...state.teamNeeds,
+            [team]: newSingleTeamNeeds,
+          },
         };
       }
     }

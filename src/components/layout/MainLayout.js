@@ -20,21 +20,21 @@ const MainLayout = ({ children }) => {
     }
   `);
 
-  // const handleResize = () => {
-  //   let vh = window.innerHeight * 0.01;
-  //   document.documentElement.style.setProperty('--vh', `${vh}px`);
-  // };
+  const handleResize = () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
 
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     window.addEventListener('resize', handleResize);
-  //   }
-  //   return () => {
-  //     if (typeof window !== 'undefined') {
-  //       window.removeEventListener('resize', handleResize);
-  //     }
-  //   };
-  // });
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', handleResize);
+      }
+    };
+  });
 
   return (
     <ThemeProvider theme={theme}>

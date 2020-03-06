@@ -59,9 +59,9 @@ const SelectionLi = styled.li`
     manual ? theme.colors.teamColors[team].primary : 'transparent'};
   color: ${({ manual }) => (manual ? '#fff' : '#000')};
   font-size: 14px;
-  width: 300px;
+  min-width: 160px;
   border-radius: 10px;
-  padding: 0.5em 1em;
+  padding: 0.5em;
   box-sizing: border-box;
   &:first-of-type {
     margin: 0;
@@ -69,14 +69,20 @@ const SelectionLi = styled.li`
   span {
     display: inline-block;
     text-align: center;
-    width: 100px;
+    width: 100%;
     b {
       background: #0da305;
       box-shadow: 0 2px 8px 1px black;
       color: #fff;
-      padding: 0.1em 0.3em;
-      border-radius: 10px;
+      padding: 0.3em;
+      border-radius: 12px;
+      vertical-align: middle;
     }
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 12px;
+    min-width: 120px;
   }
 `;
 const NUMOFTEAMS = 32;
@@ -133,13 +139,15 @@ const DraftorderDisplay = () => {
   };
 
   const displaySelectionList = draftOrder[selectedRound - 1].map((team, i) => {
+    let bottomLine = ' ';
     pick = NUMOFTEAMS * (selectedRound - 1) + (i + 1);
     displayPick = pickWithSuffix(pick);
     drafted = state.results[team].filter(p => p.pick === pick)[0];
     if (pick === currentPick && !state.finished) {
       displayInfo = <b>Current</b>;
     } else if (drafted) {
-      displayInfo = `${abbreviateName(drafted.player)} | ${drafted.position}`;
+      displayInfo = `${abbreviateName(drafted.name)}`;
+      bottomLine = `${drafted.pos}`;
     } else {
       displayInfo = state.manualTeams.includes(team) ? 'Manual' : 'Auto';
     }
@@ -153,6 +161,7 @@ const DraftorderDisplay = () => {
         <span>{displayPick}</span>
         <span>{nflTeams[team].code}</span>
         <span>{displayInfo}</span>
+        <span>{bottomLine}</span>
       </SelectionLi>
     );
   });

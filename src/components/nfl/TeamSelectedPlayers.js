@@ -108,8 +108,8 @@ const TeamSelectedPlayers = () => {
         return (
           <tr key={player.pick}>
             <td>{player.pick}</td>
-            <td>{player.player}</td>
-            <td>{player.position}</td>
+            <td>{player.name}</td>
+            <td>{player.pos}</td>
           </tr>
         );
       })

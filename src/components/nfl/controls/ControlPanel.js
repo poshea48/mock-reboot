@@ -11,7 +11,7 @@ const ControlsWrapper = styled.div`
   height: 55px;
   width: 150px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 const Button = styled.button`
@@ -76,7 +76,11 @@ const ControlPanel = ({ handleDraftPlay }) => {
       </Button>
       <ResetButton mini={true} title="Start new draft" />
     </ControlsWrapper>
-  ) : null;
+  ) : (
+    <ControlsWrapper>
+      <ResetButton mini={true} title="Start new Draft" />
+    </ControlsWrapper>
+  );
 };
 
 ControlPanel.propTypes = {
