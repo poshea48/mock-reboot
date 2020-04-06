@@ -6,12 +6,16 @@ const AppDispatchContext = createContext();
 
 const initialState = {
   isNflSetup: false,
+  isNflFinished: false,
 };
 
 function appReducer(state, action) {
   switch (action.type) {
     case 'nflSetup': {
       return { ...state, ...action.payload };
+    }
+    case 'nflFinished': {
+      return { ...state, isNflFinished: true };
     }
     case 'reset': {
       localStorage.removeItem('appState');

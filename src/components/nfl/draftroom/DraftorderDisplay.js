@@ -1,9 +1,8 @@
 import React, { useState, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
-import draftOrder from '../../data/draftOrder';
-
-import nflTeams from '../../data/nflTeams';
-import { useNflState } from '../../context/nflContext';
+import nflTeams from '../../../data/nflTeams';
+import players from '../../../data/players';
+import { useNflState } from '../../../context/nflContext';
 import smoothscroll from 'smoothscroll-polyfill';
 
 const Article = styled.article`
@@ -12,7 +11,7 @@ const Article = styled.article`
   justify-content: center;
   border: 1px solid black;
   border-radius: 10px;
-  min-height: 120px;
+  height: 120px;
   .round-selection {
     display: flex;
     align-self: center;
@@ -40,16 +39,19 @@ const Article = styled.article`
       }
     }
   }
-
-  @media screen and (max-width: 600px) {
-    min-height: 99px;
+  @media screen and (max-width: 450px) {
+    height: 100px;
   }
+  /* @media screen and (max-width: 600px) {
+    min-height: 99px;
+  } */
 `;
 
 const SelectionList = styled.ul`
   width: 100%;
   display: flex;
   overflow: scroll;
+  flex: 1 auto;
 `;
 
 const SelectionLi = styled.li`
@@ -79,25 +81,37 @@ const SelectionLi = styled.li`
       vertical-align: middle;
     }
   }
+  .team,
+  .selection,
+  .pos {
+    color: ${p =>
+      p.manual
+        ? p.theme.colors.teamColors[p.team].secondary1
+        : p.theme.colors.teamColors[p.team].primary};
+    font-weight: 800;
+  }
 
   @media screen and (max-width: 450px) {
     font-size: 12px;
     min-width: 120px;
   }
 `;
-const NUMOFTEAMS = 32;
 
 const DraftorderDisplay = () => {
-  const state = useNflState();
-  const { currentRound, currentPick } = state;
-  let pick;
+  const {
+    state: { currentRound, currentPick, draftOrder, finished, manualTeams },
+  } = useNflState();
+
   let drafted;
   let displayPick;
   let displayInfo;
+
   const [selectedRound, changeRound] = useState(currentRound);
+
   const handleRoundChange = e => {
     changeRound(e.target.value);
   };
+
   const pickWithSuffix = num => {
     if (typeof num !== 'number') return 'N/A';
     const suffix =
@@ -110,7 +124,7 @@ const DraftorderDisplay = () => {
   const scrollTo = () => {
     smoothscroll.polyfill();
 
-    let element = document.querySelector(`li[data-id='${state.currentPick}']`);
+    let element = document.querySelector(`li[data-id='${currentPick}']`);
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
@@ -118,7 +132,7 @@ const DraftorderDisplay = () => {
         inline: 'center',
       });
     } else {
-      changeRound(state.currentRound);
+      changeRound(currentRound);
       document.querySelector('li[data-id]').scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
@@ -128,7 +142,7 @@ const DraftorderDisplay = () => {
   };
   useLayoutEffect(() => {
     scrollTo();
-  }, [state, state.currentPick]);
+  }, [currentPick]);
 
   const handleScrollToClick = () => {
     scrollTo();
@@ -138,30 +152,31 @@ const DraftorderDisplay = () => {
     return `${firstName[0]}. ${rest}`;
   };
 
-  const displaySelectionList = draftOrder[selectedRound - 1].map((team, i) => {
+  const displaySelectionList = draftOrder[selectedRound].map((selection, i) => {
     let bottomLine = ' ';
-    pick = NUMOFTEAMS * (selectedRound - 1) + (i + 1);
-    displayPick = pickWithSuffix(pick);
-    drafted = state.results[team].filter(p => p.pick === pick)[0];
-    if (pick === currentPick && !state.finished) {
+    displayPick = pickWithSuffix(selection.overallPick);
+    if (selection.overallPick === currentPick && !finished) {
       displayInfo = <b>Current</b>;
-    } else if (drafted) {
+    } else if (selection.result) {
+      drafted = players[selection.result];
       displayInfo = `${abbreviateName(drafted.name)}`;
       bottomLine = `${drafted.pos}`;
     } else {
-      displayInfo = state.manualTeams.includes(team) ? 'Manual' : 'Auto';
+      displayInfo = manualTeams.includes(selection.team)
+        ? 'Your Pick'
+        : 'Auto Pick';
     }
     return (
       <SelectionLi
-        key={team + i}
-        data-id={pick}
-        team={team}
-        manual={state.manualTeams.includes(team)}
+        key={selection.team + i}
+        data-id={selection.overallPick}
+        team={selection.team}
+        manual={manualTeams.includes(selection.team)}
       >
         <span>{displayPick}</span>
-        <span>{nflTeams[team].code}</span>
-        <span>{displayInfo}</span>
-        <span>{bottomLine}</span>
+        <span className="team">{nflTeams[selection.team].code}</span>
+        <span className="selection">{displayInfo}</span>
+        <span className="pos">{bottomLine}</span>
       </SelectionLi>
     );
   });
@@ -178,9 +193,9 @@ const DraftorderDisplay = () => {
           onBlur={handleRoundChange}
           onChange={handleRoundChange}
         >
-          {draftOrder.map((_, i) => (
-            <option key={i} value={i + 1}>
-              {i + 1}
+          {Object.keys(draftOrder).map(round => (
+            <option key={round} value={round}>
+              {round}
             </option>
           ))}
         </select>

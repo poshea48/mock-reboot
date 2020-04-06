@@ -1,19 +1,27 @@
 /* eslint-disable prettier/prettier */
-import draftOrder from '../data/draftOrder';
+import { draftOrderObject } from '../data/draftOrder';
 
 const getCurrentTeam = (currentPick, currentRound) => {
-  return draftOrder[currentRound - 1][(currentPick - 1) % 32];
+  return draftOrderObject[currentRound].find(s => s.overallPick === currentPick)
+    .team;
 };
 
 const getNextTeamUp = (currentPick, currentRound) => {
-  let nextPick =
-    currentRound === 7 && currentPick % 32 === 0 ? 'n/a' : currentPick + 1;
-  let nextRound = advanceRound ? currentRound + 1 : currentRound;
-  const advanceRound = currentPick % 32 === 0 && currentRound !== 7;
+  const roundArray = draftOrderObject[currentRound];
+  const currentSelectionIndex = draftOrderObject[currentRound].findIndex(
+    s => s.overallPick === currentPick
+  );
+  const lastPick = roundArray[roundArray.length - 1].overallPick;
+  const advanceRound = currentPick === lastPick && currentRound !== 7;
+
+  // last pick in draft
+  if (currentRound === 7 && currentPick === lastPick) {
+    return 'N/A';
+  }
   if (advanceRound) {
-    return draftOrder[nextRound - 1][0];
+    return draftOrderObject[currentRound + 1][0].team;
   } else {
-    return draftOrder[nextRound - 1][(nextPick - 1) % 32];
+    return draftOrderObject[currentRound][currentSelectionIndex + 1].team;
   }
 };
 

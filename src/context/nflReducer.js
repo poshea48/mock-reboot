@@ -1,18 +1,20 @@
-import defaultDraftBoard from '../data/defaults/draftboard';
-import draftOrder from '../data/draftOrder';
-import defaultTeamNeeds from '../data/defaults/teamNeeds';
+import draftOrder, { draftOrderObject } from '../data/draftOrder';
 import { getCurrentTeam, getNextTeamUp } from '../algorithms/getTeam';
+import NFLTEAMS from '../data/nflTeams';
 
 const initialState = {
   myTeam: '',
   manualTeams: [],
   teamOnTheClock: draftOrder[0][0],
-  draftboard: '',
-  teamNeeds: '',
+  draftboardType: '',
+  draftboard: [],
+  teamNeedsType: '',
+  teamNeeds: {},
   started: false,
   paused: false,
   finished: false,
   undraftedPlayers: [],
+  draftOrder: draftOrderObject,
   results: {
     ARI: [],
     ATL: [],
@@ -51,27 +53,119 @@ const initialState = {
   currentRound: 1,
 };
 
+const getSimulationTeams = () => {
+  let newTeams = {};
+  for (let team in NFLTEAMS) {
+    newTeams[team] = {
+      code: NFLTEAMS[team].code,
+      fullName: NFLTEAMS[team].fullName,
+      simulate: true,
+    };
+  }
+  return newTeams;
+};
+
+const settingsInitialState = {
+  myTeam: '',
+  draftboard: '',
+  draftboardType: '',
+  teamNeeds: {},
+  teamNeedsType: '',
+  undraftedPlayers: [],
+  simulationTeams: getSimulationTeams(),
+  manualTeams: [],
+  allSimulationToggle: true,
+  updated: {
+    teamNeeds: false,
+    undraftedPlayers: false,
+    manualTeams: false,
+  },
+  errorMessage: '',
+};
+
+function settingsReducer(state, action) {
+  switch (action.type) {
+    case 'update': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'addTeam': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'addTeamNeeds': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'addUndraftedPlayers': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'simulationToggle': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'allSimulationToggle': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'reset': {
+      return {
+        ...settingsInitialState,
+        simulationTeams: getSimulationTeams(),
+      };
+    }
+    case 'teamNeedsCustomization': {
+      const newTeamNeeds = {
+        ...state.teamNeeds,
+        [action.payload.team]: { ...action.payload.needs },
+      };
+      return {
+        ...state,
+        teamNeeds: newTeamNeeds,
+      };
+    }
+    case 'updateUndrafted': {
+      return { ...state, undraftedPlayers: action.payload };
+    }
+
+    case 'changeError': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case 'closeErrorField': {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+  }
+}
+
 function nflReducer(state, action) {
-  let players;
-  let teamNeeds;
   switch (action.type) {
     case 'newDraft': {
-      if (action.payload.teamNeeds === 'default') {
-        teamNeeds = defaultTeamNeeds;
-      } else {
-        // fetch Team needs
-      }
-      if (action.payload.draftboard === 'default') {
-        players = defaultDraftBoard;
-      } else {
-        // fetch draftboard
-      }
       return {
         ...initialState,
-        myTeam: action.payload.myTeam,
-        manualTeams: action.payload.manualTeams,
-        teamNeeds,
-        undraftedPlayers: [...players],
+        ...action.payload,
+        // myTeam: action.payload.myTeam,
+        // manualTeams: action.payload.manualTeams,
+        // teamNeeds,
+        // undraftedPlayers: [...players],
       };
     }
     case 'updateDraft': {
@@ -118,10 +212,27 @@ function nflReducer(state, action) {
         school,
         newSingleTeamNeeds,
       } = action.payload;
-      let { currentPick, currentRound } = state;
-      const advanceRound = currentPick % 32 === 0 && currentRound !== 7;
+      let { draftOrder, currentPick, currentRound } = state;
+
+      // add drafted player to draftOrder result field for currentRound and currentPick
+      // then add array to dispatch
+      let currentRoundArray = [...draftOrder[currentRound]];
+      let currentSelectionIndex = currentRoundArray.findIndex(
+        s => s.overallPick === currentPick
+      );
+      currentRoundArray[currentSelectionIndex].result = name;
+
+      let roundLength = draftOrder[currentRound].length;
+      let lastPickInRound =
+        draftOrder[currentRound][roundLength - 1].overallPick;
+
+      const advanceRound =
+        currentPick === lastPickInRound && currentRound !== 7;
       let nextPick =
-        currentRound === 7 && currentPick % 32 === 0 ? 'n/a' : currentPick + 1;
+        currentRound === 7 && currentPick === lastPickInRound
+          ? 'n/a'
+          : currentPick + 1;
+
       let nextRound = advanceRound ? currentRound + 1 : currentRound;
       let team = getCurrentTeam(currentPick, currentRound);
       let newTeamResults = [...state.results[team]];
@@ -135,35 +246,29 @@ function nflReducer(state, action) {
 
       newTeamResults.push(draftedPlayerObject);
       let newTeamUp = getNextTeamUp(currentPick, currentRound);
-
-      if (currentRound === 7 && currentPick === 224) {
-        return {
-          ...state,
-          undraftedPlayers: newUndraftedList,
-          results: { ...state.results, [team]: newTeamResults },
-          currentPick: currentPick,
-          currentRound: currentRound,
-          finished: true,
-          teamOnTheClock: 'N/A',
-          teamNeeds: {
-            ...state.teamNeeds,
-            [team]: newSingleTeamNeeds,
-          },
-        };
+      let finished = false;
+      let teamOnTheClock;
+      if (currentRound === 7 && currentPick === lastPickInRound) {
+        finished = true;
+        teamOnTheClock = 'N/A';
       } else {
-        return {
-          ...state,
-          undraftedPlayers: newUndraftedList,
-          results: { ...state.results, [team]: newTeamResults },
-          currentPick: nextPick,
-          currentRound: nextRound,
-          teamOnTheClock: newTeamUp,
-          teamNeeds: {
-            ...state.teamNeeds,
-            [team]: newSingleTeamNeeds,
-          },
-        };
+        teamOnTheClock = newTeamUp;
       }
+      let newDraftOrder = { ...draftOrder, [currentRound]: currentRoundArray };
+      return {
+        ...state,
+        undraftedPlayers: newUndraftedList,
+        results: { ...state.results, [team]: newTeamResults },
+        currentPick: nextPick,
+        currentRound: nextRound,
+        teamOnTheClock,
+        draftOrder: newDraftOrder,
+        finished,
+        teamNeeds: {
+          ...state.teamNeeds,
+          [team]: newSingleTeamNeeds,
+        },
+      };
     }
     case 'addMyPlayer': {
       return { ...state, ...action.payload };
@@ -173,5 +278,5 @@ function nflReducer(state, action) {
     }
   }
 }
-export { initialState };
+export { initialState, settingsInitialState, settingsReducer };
 export default nflReducer;

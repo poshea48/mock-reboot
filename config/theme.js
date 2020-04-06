@@ -159,7 +159,7 @@ export const colors = {
       secondary2: '#000000',
     },
     LV: {
-      primary: '#C4C9CC',
+      primary: '#a5acaf',
       secondary1: '#000000',
       secondary2: '#000000',
     },

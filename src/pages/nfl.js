@@ -2,8 +2,9 @@ import React from 'react';
 import { Router } from '@reach/router';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
-import Settings from '../components/nfl/Settings';
-import Draftroom from '../components/nfl/Draftroom';
+import Settings from '../components/nfl/settings/Settings';
+import Draftroom from '../components/nfl/draftroom/Draftroom';
+import Results from '../components/nfl/results/Results';
 import { NFLProvider } from '../context/nflContext';
 import SEO from '../components/layout/SEO';
 import PrivateRoute from '../components/nfl/PrivateRoute';
@@ -71,7 +72,7 @@ const StyledLink = styled(Link)`
 `;
 
 const NFL = () => {
-  const { isNflSetup } = useAppState();
+  const { isNflSetup, isNflFinished } = useAppState();
   return (
     <NFLProvider>
       <Container id="page-container">
@@ -82,10 +83,17 @@ const NFL = () => {
           <StyledLink to="/nfl/draftroom" disabled={!isNflSetup}>
             Draftroom
           </StyledLink>
+
+          {isNflFinished && (
+            <StyledLink to="/nfl/results" disabled={!isNflSetup}>
+              Results
+            </StyledLink>
+          )}
         </nav>
         <Router>
           <PrivateRoute path="/nfl/draftroom" component={Draftroom} />
           <Settings path="/nfl/settings" default />
+          <Results path="/nfl/results" />
         </Router>
         <footer>Created by Paul O&apos;Shea 2020</footer>
       </Container>

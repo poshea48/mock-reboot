@@ -141,11 +141,11 @@ const MainLayout = ({ children }) => {
               margin: 0;
               padding: 0;
               border: none;
-              tr {
+              /* tr {
                 &:hover {
                   background: #e0ebeb;
                 }
-              }
+              } */
               td {
                 border-top: 1px solid hsla(0, 0%, 0%, 0.12);
               }

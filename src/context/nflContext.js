@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import nflReducer, { initialState } from './nflReducer';
+import nflReducer, {
+  initialState,
+  settingsInitialState,
+  settingsReducer,
+} from './nflReducer';
 
 const NFLStateContext = createContext();
 const NFLDispatchContext = createContext();
@@ -10,18 +14,22 @@ function NFLProvider({ children }) {
   if (typeof window !== 'undefined') {
     localNflState = JSON.parse(localStorage.getItem('nflState'));
   }
-  const [state, dispatch] = useReducer(
+  const [state, nflDispatch] = useReducer(
     nflReducer,
     localNflState || initialState
   );
+
+  const [settingsState, settingsDispatch] = useReducer(settingsReducer, {
+    ...settingsInitialState,
+  });
 
   useEffect(() => {
     localStorage.setItem('nflState', JSON.stringify(state));
   }, [state]);
 
   return (
-    <NFLStateContext.Provider value={state}>
-      <NFLDispatchContext.Provider value={dispatch}>
+    <NFLStateContext.Provider value={{ state, settingsState }}>
+      <NFLDispatchContext.Provider value={{ nflDispatch, settingsDispatch }}>
         {children}
       </NFLDispatchContext.Provider>
     </NFLStateContext.Provider>

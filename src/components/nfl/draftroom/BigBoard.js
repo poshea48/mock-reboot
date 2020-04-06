@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import players from '../../data/players';
-import { useNflState } from '../../context/nflContext';
-import Modal from '../Modal';
-import useModal from '../../customHooks/useModal';
+import players from '../../../data/players';
+import { useNflState } from '../../../context/nflContext';
+import Modal from '../../Modal';
+import useModal from '../../../customHooks/useModal';
 
 const Container = styled.div`
   align-self: flex-start;
@@ -12,7 +12,7 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
   flex: 1 auto;
-  max-width: 500px;
+  max-width: 550px;
 `;
 
 const PositionsFilter = styled.div`
@@ -144,7 +144,7 @@ const BigBoard = ({ positions, draftPlayer }) => {
   const buttonRef = useRef(null);
   const [position, changePosition] = useState('ALL');
   const [player, changePlayer] = useState(null);
-  const state = useNflState();
+  const { state } = useNflState();
 
   const handleDraftPlayerClick = e => {
     e.preventDefault();

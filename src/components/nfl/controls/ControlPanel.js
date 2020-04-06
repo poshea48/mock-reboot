@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { useNflState } from '../../../context/nflContext';
+import { useNflState, useNflDispatch } from '../../../context/nflContext';
+import { useAppDispatch } from '../../../context/appContext';
 import ResetButton from './ResetButton';
 
 const ControlsWrapper = styled.div`
@@ -38,8 +39,18 @@ const Button = styled.button`
   }
 `;
 const ControlPanel = ({ handleDraftPlay }) => {
-  const { finished, started, paused, manualTeams } = useNflState();
+  const {
+    state: { finished, started, paused, manualTeams },
+  } = useNflState();
+  const { nflDispatch, settingsDispatch } = useNflDispatch();
+  const appDispatch = useAppDispatch();
   const show = manualTeams.length !== 32;
+
+  const handleReset = () => {
+    appDispatch({ type: 'reset' });
+    nflDispatch({ type: 'reset' });
+    settingsDispatch({ type: 'reset' });
+  };
 
   return !finished && show ? (
     <ControlsWrapper>
@@ -74,11 +85,19 @@ const ControlPanel = ({ handleDraftPlay }) => {
           </>
         )}
       </Button>
-      <ResetButton mini={true} title="Start new draft" />
+      <ResetButton
+        resetFunc={handleReset}
+        mini={true}
+        title="Start new draft"
+      />
     </ControlsWrapper>
   ) : (
     <ControlsWrapper>
-      <ResetButton mini={true} title="Start new Draft" />
+      <ResetButton
+        mini={true}
+        title="Start new Draft"
+        resetFunc={handleReset}
+      />
     </ControlsWrapper>
   );
 };

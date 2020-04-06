@@ -11,6 +11,7 @@ const teamNeeds = {
     LB: { wt: 0.2, total: 2, drafted: 0 },
     QB: { wt: 0.1, total: 1, drafted: 0 },
   },
+
   ATL: {
     EDGE: { wt: 1, total: 2, drafted: 0 },
     CB: { wt: 0.9, total: 2, drafted: 0 },

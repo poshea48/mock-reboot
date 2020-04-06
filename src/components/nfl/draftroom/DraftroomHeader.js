@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import nflTeams from '../../data/nflTeams';
+import nflTeams from '../../../data/nflTeams';
 
 const HGroup = styled.hgroup`
   display: flex;

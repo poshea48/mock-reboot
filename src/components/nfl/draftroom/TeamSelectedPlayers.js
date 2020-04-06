@@ -1,38 +1,22 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { useNflState } from '../../context/nflContext';
-import nflTeams from '../../data/nflTeams';
-import useModal from '../../customHooks/useModal';
-import ToggleButton from '../ToggleButton';
+import { useNflState } from '../../../context/nflContext';
+import nflTeams from '../../../data/nflTeams';
+import useModal from '../../../customHooks/useModal';
+import ToggleButton from '../../ToggleButton';
+import DraftedPlayersContent from '../../styles/DraftedPlayersContent';
+import TeamFilter from '../../styles/TeamFilter';
 
 const Container = styled.div`
   display: block;
   flex: 0.5 auto;
-  span {
-    @media screen and (min-width: 801px) {
-      display: none;
-      flex: none;
-    }
-  }
-  @media screen and (max-width: 801px) {
+  max-width: 550px;
+  @media screen and (max-width: 800px) {
     flex: none;
   }
 `;
 
-const Content = styled.div`
-  display: flex;
-  padding: 1em;
-  overflow-y: scroll;
-  flex-direction: column;
-  min-width: 400px;
-  color: ${p => p.theme.colors.teamColors[p.team].primary};
-  height: 100%;
-  table {
-    th,
-    td {
-      text-align: center;
-    }
-  }
+const Content = styled(DraftedPlayersContent)`
   @media screen and (max-width: 800px) {
     position: absolute;
     top: 0;
@@ -47,51 +31,30 @@ const Content = styled.div`
   }
 `;
 
-const TeamFilter = styled.div`
+const TeamNeedsList = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: 90px;
-  h2 {
-    text-align: center;
-    text-transform: uppercase;
-    margin: 0;
-    font-weight: 700;
-    font-size: 1.2em;
-  }
-  @media screen and (max-width: 600px) {
-    padding: 0.8em 0;
-    h2 {
-      font-size: 1.4em;
-    }
-  }
-  @media screen and (max-width: 450px) {
-    padding: 0.5em 0;
-    flex-direction: row;
-    justify-content: space-between;
-    h2 {
-      font-size: 1.4em;
-    }
-  }
-  .select-wrapper {
+  justify-content: center;
+  ul {
+    flex: 1 auto;
+    justify-content: flex-start;
     display: flex;
-
-    label {
-      display: inline-block;
+    li {
       margin: 0 0.25em;
     }
   }
-  select {
-    font-size: 16px;
-    font-weight: 900;
-    color: ${p => p.theme.colors.teamColors[p.team].primary};
+  .label {
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .needs {
+    text-transform: uppercase;
+    font-size: 14px;
   }
 `;
 
 const TeamSelectedPlayers = () => {
-  const state = useNflState();
+  const { state } = useNflState();
   const [selectedTeam, changeSelectedTeam] = useState(state.myTeam);
 
   const { open, openModal, closeModal } = useModal();
@@ -114,6 +77,28 @@ const TeamSelectedPlayers = () => {
         );
       })
     );
+  const teamNeeds = Object.keys(state.teamNeeds[selectedTeam])
+    .sort(
+      (a, b) =>
+        state.teamNeeds[selectedTeam][b].wt -
+        state.teamNeeds[selectedTeam][a].wt
+    )
+    .map((n, i) => {
+      if (i === 9) {
+        return (
+          <li key={n} className="needs">
+            {n}
+          </li>
+        );
+      } else {
+        return (
+          <li key={n} className="needs">
+            {n},
+          </li>
+        );
+      }
+    });
+
   return (
     <Container>
       <ToggleButton
@@ -142,6 +127,10 @@ const TeamSelectedPlayers = () => {
             </label>
           </div>
         </TeamFilter>
+        <TeamNeedsList>
+          <span className="label">Adjusted Team Needs:</span>
+          <ul>{teamNeeds}</ul>
+        </TeamNeedsList>
         <table>
           <thead>
             <tr>

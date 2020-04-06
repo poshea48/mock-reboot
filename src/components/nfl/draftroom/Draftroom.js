@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { navigate } from 'gatsby';
-import { useNflState, useNflDispatch } from '../../context/nflContext';
-import { useAppState } from '../../context/appContext';
+import { useNflState, useNflDispatch } from '../../../context/nflContext';
+import { useAppState, useAppDispatch } from '../../../context/appContext';
 import DraftroomHeader from './DraftroomHeader';
 import DraftorderDisplay from './DraftorderDisplay';
 import BigBoard from './BigBoard';
 import TeamSelectedPlayers from './TeamSelectedPlayers';
-import prospects from '../../data/players';
-import { NFLPOSITIONS } from '../../data/positions';
-import ControlPanel from './controls/ControlPanel';
+import prospects from '../../../data/players';
+import { NFLPOSITIONS } from '../../../data/positions';
+import ControlPanel from '../controls/ControlPanel';
 import findSimulatedPlayer, {
   updateTeamNeeds,
-} from '../../algorithms/findSimulatedPlayer';
-import { getCurrentTeam } from '../../algorithms/getTeam';
+} from '../../../algorithms/findSimulatedPlayer';
+import { getCurrentTeam } from '../../../algorithms/getTeam';
 
 const Main = styled.main`
   position: relative;
@@ -29,31 +29,33 @@ const PlayersSection = styled.section`
   position: relative;
   display: flex;
   width: 100%;
-  height: calc(100% - 184px);
+  height: calc(100% - 175px); /* header(55) + orderDisplay(120) */
   justify-content: center;
   @media screen and (max-width: 800px) {
     justify-content: center;
   }
   @media screen and (max-width: 600px) {
-    height: calc(100% - 154px);
+    /* height: calc(100% - 154px); */
   }
   @media screen and (max-width: 450px) {
-    height: calc(100% - 149px);
+    height: calc(100% - 150px); /* header(50) + orderDisplay(100) */
   }
   @media screen and (max-width: 350px) {
-    height: calc(100% - 144px);
+    height: calc(100% - 145px); /* header(45) + orderDisplay(100) */
   }
 `;
 
 const Draftroom = () => {
-  const { isNflSetup } = useAppState();
+  const { isNflSetup, isNflFinished } = useAppState();
+  const appDispatch = useAppDispatch();
+
   useEffect(() => {
     if (!isNflSetup) {
       navigate('/nfl/settings');
     }
   });
-  const state = useNflState();
-  const dispatch = useNflDispatch();
+  const { state } = useNflState();
+  const { nflDispatch } = useNflDispatch();
   let simulationTimeout;
   const {
     myTeam,
@@ -63,19 +65,29 @@ const Draftroom = () => {
     paused,
     finished,
     undraftedPlayers,
+    teamNeeds,
     currentPick,
     currentRound,
+    draftOrder,
   } = state;
 
   let simulationTime;
+
+  // when draft just finishes to navigate to results page, but will allow to route to draftroom after
+  useEffect(() => {
+    if (finished && !isNflFinished) {
+      navigate('/nfl/results');
+      appDispatch({ type: 'nflFinished' });
+    }
+  }, [finished]);
 
   useEffect(() => {
     if (paused || !started || finished) return;
     if (manualTeams.includes(teamOnTheClock)) {
       return;
     } else {
-      if ((currentPick - 1) % 32 === 0) {
-        simulationTime = 1500;
+      if (draftOrder[currentRound][0].overallPick === currentPick) {
+        simulationTime = 2000;
       } else {
         simulationTime = 500;
       }
@@ -106,12 +118,12 @@ const Draftroom = () => {
       }
     }
     let newSingleTeamNeeds = {
-      ...state.teamNeeds[team],
-      [teamNeedsPos]: updateTeamNeeds(state.teamNeeds[team][teamNeedsPos]),
+      ...teamNeeds[team],
+      [teamNeedsPos]: updateTeamNeeds(teamNeeds[team][teamNeedsPos]),
     };
 
     // update contex
-    dispatch({
+    nflDispatch({
       type: 'draftPlayer',
       payload: {
         newUndraftedList,
@@ -130,7 +142,7 @@ const Draftroom = () => {
       };
     });
     const team = getCurrentTeam(currentPick, currentRound);
-    const draftedPlayer = findSimulatedPlayer(players, state.teamNeeds[team]);
+    const draftedPlayer = findSimulatedPlayer(players, teamNeeds[team]);
     // For now just take highest ranked player
     // const player = undraftedPlayers[0];
     draftPlayer(draftedPlayer);
@@ -139,13 +151,13 @@ const Draftroom = () => {
   const handleDraftPlay = () => {
     if (!started) {
       // Start draft
-      dispatch({ type: 'startDraft' });
+      nflDispatch({ type: 'startDraft' });
     } else if (paused) {
       // resume draft
-      dispatch({ type: 'resumeDraft' });
+      nflDispatch({ type: 'resumeDraft' });
     } else {
       // pause draft
-      dispatch({ type: 'pauseDraft' });
+      nflDispatch({ type: 'pauseDraft' });
     }
   };
 
@@ -153,10 +165,7 @@ const Draftroom = () => {
     <Main>
       <ControlPanel handleDraftPlay={handleDraftPlay} />
       <DraftroomHeader myTeam={myTeam} />
-      <DraftorderDisplay
-        currentRound={currentRound || 1}
-        currentPick={currentPick || 1}
-      />
+      <DraftorderDisplay />
       <PlayersSection>
         <BigBoard positions={NFLPOSITIONS} draftPlayer={draftPlayer} />
         <TeamSelectedPlayers />
