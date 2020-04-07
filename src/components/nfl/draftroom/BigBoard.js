@@ -144,6 +144,7 @@ const BigBoard = ({ positions, draftPlayer }) => {
   const buttonRef = useRef(null);
   const [position, changePosition] = useState('ALL');
   const [player, changePlayer] = useState(null);
+  const [filteredPlayers, changeFilteredPlayers] = useState([]);
   const { state } = useNflState();
 
   const handleDraftPlayerClick = e => {
@@ -173,9 +174,12 @@ const BigBoard = ({ positions, draftPlayer }) => {
   const displayedPlayers =
     position === 'ALL'
       ? state.undraftedPlayers
-      : state.undraftedPlayers.filter(
-          player => players[player].pos === position
-        );
+      : state.undraftedPlayers.reduce((acc, player, i) => {
+          if (players[player].pos === position) {
+            acc.push(`${player}*${i + 1}`);
+          }
+          return acc;
+        }, []);
 
   const handlePositionChange = e => {
     changePosition(e.target.value);
@@ -186,7 +190,6 @@ const BigBoard = ({ positions, draftPlayer }) => {
     buttonRef.current = e.target;
     openModal();
   };
-
   return (
     <Container>
       {open ? (
@@ -216,31 +219,34 @@ const BigBoard = ({ positions, draftPlayer }) => {
         </div>
       </PositionsFilter>
       <PlayersList>
-        {displayedPlayers.map((player, i) => (
-          <PlayerLi key={player}>
-            <Column>{i + 1}</Column>
-            <NameColumn className="name-column">
-              <div className="column-content">
-                <button
-                  ref={buttonRef}
-                  value={player}
-                  onClick={handlePlayerClick}
-                >
-                  {player}
-                </button>
-                <span>
-                  {players[player].pos} | {players[player].sch}
-                </span>
-              </div>
-            </NameColumn>
-            <Column>
-              <div className="column-content last">
-                <span>{players[player].height}</span>
-                <span>{players[player].weight} </span>
-              </div>
-            </Column>
-          </PlayerLi>
-        ))}
+        {displayedPlayers.map((p, i) => {
+          let [player, overall] = p.split('*');
+          return (
+            <PlayerLi key={player}>
+              {overall ? <Column>{overall}</Column> : <Column>{i + 1}</Column>}
+              <NameColumn className="name-column">
+                <div className="column-content">
+                  <button
+                    ref={buttonRef}
+                    value={player}
+                    onClick={handlePlayerClick}
+                  >
+                    {player}
+                  </button>
+                  <span>
+                    {players[player].pos} | {players[player].sch}
+                  </span>
+                </div>
+              </NameColumn>
+              <Column>
+                <div className="column-content last">
+                  <span>{players[player].height}</span>
+                  <span>{players[player].weight} </span>
+                </div>
+              </Column>
+            </PlayerLi>
+          );
+        })}
       </PlayersList>
     </Container>
   );

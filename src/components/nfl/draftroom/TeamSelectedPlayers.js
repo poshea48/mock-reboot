@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useNflState } from '../../../context/nflContext';
 import nflTeams from '../../../data/nflTeams';
@@ -54,20 +54,28 @@ const TeamNeedsList = styled.div`
 `;
 
 const TeamSelectedPlayers = () => {
-  const { state } = useNflState();
-  const [selectedTeam, changeSelectedTeam] = useState(state.myTeam);
+  const {
+    state: { myTeam, teamOnTheClock, manualTeams, results, teamNeeds },
+  } = useNflState();
+  const [selectedTeam, changeSelectedTeam] = useState(myTeam);
+
+  useEffect(() => {
+    if (manualTeams.includes(teamOnTheClock)) {
+      changeSelectedTeam(teamOnTheClock);
+    }
+  }, [teamOnTheClock]);
 
   const { open, openModal, closeModal } = useModal();
   const handleTeamChange = e => {
     changeSelectedTeam(e.target.value);
   };
   const players =
-    state.results[selectedTeam].length === 0 ? (
+    results[selectedTeam].length === 0 ? (
       <tr>
         <td colSpan="3">No Selections</td>
       </tr>
     ) : (
-      state.results[selectedTeam].map(player => {
+      results[selectedTeam].map(player => {
         return (
           <tr key={player.pick}>
             <td>{player.pick}</td>
@@ -77,11 +85,9 @@ const TeamSelectedPlayers = () => {
         );
       })
     );
-  const teamNeeds = Object.keys(state.teamNeeds[selectedTeam])
+  const sortedTeamNeeds = Object.keys(teamNeeds[selectedTeam])
     .sort(
-      (a, b) =>
-        state.teamNeeds[selectedTeam][b].wt -
-        state.teamNeeds[selectedTeam][a].wt
+      (a, b) => teamNeeds[selectedTeam][b].wt - teamNeeds[selectedTeam][a].wt
     )
     .map((n, i) => {
       if (i === 9) {
@@ -129,7 +135,7 @@ const TeamSelectedPlayers = () => {
         </TeamFilter>
         <TeamNeedsList>
           <span className="label">Adjusted Team Needs:</span>
-          <ul>{teamNeeds}</ul>
+          <ul>{sortedTeamNeeds}</ul>
         </TeamNeedsList>
         <table>
           <thead>

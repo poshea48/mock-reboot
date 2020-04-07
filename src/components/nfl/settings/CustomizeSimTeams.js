@@ -7,7 +7,7 @@ const CustomizeSimTeams = ({ simulationDisplay }) => {
   return (
     <>
       <Description>
-        <p>** Checked Teams will be simulated **</p>
+        <p>** unCheck Teams to manually draft **</p>
       </Description>
       <Fieldset>{simulationDisplay}</Fieldset>
     </>

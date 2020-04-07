@@ -15,7 +15,6 @@ const PlayersList = styled.ol`
 `;
 
 const Player = styled.li`
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -83,8 +82,12 @@ const Player = styled.li`
   }
 `;
 
-const ResetButton = styled.button`
-  width: 100%;
+const ButtonWrapper = styled.div`
+  display: flex;
+`;
+
+const Button = styled.button`
+  flex-basis: calc(100% / 2);
   height: 30px;
   background: red;
   text-align: center;
@@ -95,6 +98,14 @@ const ResetButton = styled.button`
   font-weight: 800;
   border: none;
   cursor: pointer;
+`;
+
+const ResetButton = styled(Button)`
+  background: red;
+`;
+
+const SaveButton = styled(Button)`
+  background: dodgerblue;
 `;
 
 const initialState = {
@@ -156,7 +167,6 @@ const CustomizeDraftboard = ({ undraftedPlayers, undraftedPlayersSave }) => {
     if (state.draggedFrom !== state.draggedTo) {
       setPlayersList(state.updatedOrder);
       updated = true;
-      undraftedPlayersSave(state.updatedOrder);
     }
     changeState({
       ...state,
@@ -197,6 +207,17 @@ const CustomizeDraftboard = ({ undraftedPlayers, undraftedPlayersSave }) => {
     </Player>
   ));
 
+  const saveList = e => {
+    e.preventDefault();
+    undraftedPlayersSave(state.updatedOrder);
+    changeState(prev => {
+      return {
+        ...prev,
+        updated: false,
+      };
+    });
+  };
+  // ! doesnt work
   const resetList = e => {
     e.preventDefault();
     setPlayersList([...undraftedPlayers]);
@@ -205,14 +226,10 @@ const CustomizeDraftboard = ({ undraftedPlayers, undraftedPlayersSave }) => {
     });
   };
 
-  // const handleSaveClick = e => {
-  //   e.preventDefault();
-  // };
-
   return (
     <>
       <Description>
-        <p>** Adjust Ranking. not avialable on mobile **</p>
+        <p>** Modify Ranking. not available on mobile **</p>
       </Description>
       <Fieldset>
         {undraftedPlayers.length === 0 ? (
@@ -221,7 +238,10 @@ const CustomizeDraftboard = ({ undraftedPlayers, undraftedPlayersSave }) => {
           <>
             <PlayersList full={!state.updated}>{playersDisplay}</PlayersList>
             {state.updated && (
-              <ResetButton onClick={resetList}>Reset Draftboard</ResetButton>
+              <ButtonWrapper>
+                <SaveButton onClick={saveList}>Save</SaveButton>
+                <ResetButton onClick={resetList}>Reset Draftboard</ResetButton>
+              </ButtonWrapper>
             )}
           </>
         )}

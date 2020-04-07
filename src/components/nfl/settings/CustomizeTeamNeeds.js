@@ -197,8 +197,9 @@ const CustomizeTeamNeeds = ({ teamNeeds, handleTeamNeedsCustomization }) => {
     const pos = e.target.parentElement.dataset.pos;
     const posIndex = positions.findIndex(ele => ele.pos === pos);
     const weight = positions[posIndex].wt;
+    if (weight === 1) return;
     let newPositions = [...positions];
-    newPositions[posIndex].wt = weight + 0.01 >= 1 ? 0.99 : weight + 0.01;
+    newPositions[posIndex].wt = weight + 0.01 > 1 ? 1.0 : weight + 0.01;
     changePositions(newPositions);
     if (!updated) {
       toggleUpdated(true);
@@ -210,6 +211,7 @@ const CustomizeTeamNeeds = ({ teamNeeds, handleTeamNeedsCustomization }) => {
     const pos = e.target.parentElement.dataset.pos;
     const posIndex = positions.findIndex(ele => ele.pos === pos);
     const weight = positions[posIndex].wt;
+    if (weight === 0) return;
     let newPositions = [...positions];
     newPositions[posIndex].wt = weight - 0.01 <= 0 ? 0 : weight - 0.01;
     changePositions(newPositions);
@@ -267,9 +269,7 @@ const CustomizeTeamNeeds = ({ teamNeeds, handleTeamNeedsCustomization }) => {
   return (
     <>
       <Description>
-        <p>
-          ** Adjust Team needs on scale 0 to 1.0. 1.0 being the highest need **
-        </p>
+        <p>** Select Team and Modify needs from lowest(0) to highest(1.0) **</p>
       </Description>
       <FieldsetContainer>
         {Object.keys(teamNeeds).length === 0 ? (
