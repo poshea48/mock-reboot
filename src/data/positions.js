@@ -4,7 +4,6 @@ const NFLPOSITIONS = [
   'RB',
   'WR',
   'TE',
-  'OL',
   'OG',
   'OT',
   'OC',

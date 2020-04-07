@@ -144,7 +144,7 @@ const BigBoard = ({ positions, draftPlayer }) => {
   const buttonRef = useRef(null);
   const [position, changePosition] = useState('ALL');
   const [player, changePlayer] = useState(null);
-  const [filteredPlayers, changeFilteredPlayers] = useState([]);
+  // const [filteredPlayers, changeFilteredPlayers] = useState([]);
   const { state } = useNflState();
 
   const handleDraftPlayerClick = e => {
