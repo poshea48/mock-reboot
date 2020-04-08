@@ -6,8 +6,8 @@ import ResetButton from '../controls/ResetButton';
 const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
-  height: 40px;
-  margin-top: 0.5em;
+  min-height: 45px;
+  flex-basis: 45px;
 `;
 
 const SubmitButton = styled.button`
@@ -16,6 +16,7 @@ const SubmitButton = styled.button`
   align-self: center;
   background: ${p => p.theme.colors.primaryPalette.gray};
   border-radius: 20px;
+  border: none;
   text-transform: uppercase;
   color: ${p => p.theme.colors.primaryPalette.eerieBlack};
   font-weight: 900;

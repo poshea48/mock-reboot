@@ -8,11 +8,13 @@ const Container = styled(Field)`
   justify-content: space-between;
   flex-wrap: wrap;
   min-height: 35px;
+  flex-basis: 35px;
   padding: 0 2px;
   margin-bottom: 0;
   @media screen and (max-width: 450px) {
     flex-direction: column;
     justify-content: center;
+    flex-basis: 95px;
     min-height: 95px;
   }
 `;

@@ -7,7 +7,7 @@ const FieldsetContainer = styled.div`
   display: flex;
   border: 1px solid silver;
   justify-content: center;
-  overflow: hidden;
+  height: calc(100% - 30px);
   background: ${p => p.theme.colors.primaryPalette.eerieBlack};
   width: 100%;
   h4 {
@@ -15,9 +15,6 @@ const FieldsetContainer = styled.div`
     color: #fff;
     text-align: center;
     width: 100%;
-  }
-  @media screen and (max-width: 450px) {
-    height: calc(100% - 80px);
   }
 `;
 const Fieldset = styled.fieldset`
@@ -30,7 +27,7 @@ const Fieldset = styled.fieldset`
   color: #fff;
   justify-content: center;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 0;
   .content {
     display: flex;

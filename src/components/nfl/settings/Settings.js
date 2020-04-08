@@ -11,7 +11,7 @@ import CustomizeTypeContent from './CustomizeTypeContent';
 const Main = styled.main`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-self: center;
   max-width: 650px;
   width: 100%;
@@ -20,17 +20,17 @@ const Main = styled.main`
   h2 {
     align-self: center;
     display: inline-block;
-    margin-bottom: 0.5em;
     color: ${p => p.theme.colors.primaryPalette.eerieBlack};
     text-align: center;
     font-weight: 800;
     text-transform: uppercase;
+    flex-basis: 40px;
+    min-height: 40px;
   }
 
   @media screen and (max-width: 450px) {
     h2 {
       font-size: 1.4em;
-      margin-bottom: 0.5em;
     }
   }
   @media screen and (max-width: 600px) {
@@ -40,16 +40,14 @@ const Main = styled.main`
 const Form = styled.form`
   background: #8b4c33;
   padding: 1em;
-  max-height: calc(100% - 30px);
+  height: calc(100% - 30px);
+  flex: 1 auto;
   border: 1px solid ${p => p.theme.colors.primaryPalette.eerieBlack};
   border-radius: 20px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  flex: 1 auto;
+  justify-content: flex-start;
   margin: 0;
-  overflow: hidden;
   @media screen and (max-width: 450px) {
     padding: 0.5em;
   }
@@ -61,12 +59,15 @@ const CutomizeTypesField = styled.div`
   flex-direction: column;
   width: 100%;
   flex: 1 auto;
+  /* height: 100%; */
   overflow: hidden;
   label {
     width: 100%;
     color: #fff;
     font-weight: 900;
     text-align: center;
+    flex-basis: 26px;
+    min-height: 26px;
   }
 
   @media screen and (max-width: 600px) {

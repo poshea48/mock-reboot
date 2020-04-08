@@ -10,9 +10,11 @@ import { useNflState, useNflDispatch } from '../../../context/nflContext';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  flex-basis: 100px;
   min-height: 100px;
 
   @media screen and (max-width: 450px) {
+    flex-basis: 148px;
     min-height: 148px;
   }
 `;

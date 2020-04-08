@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 
 const Description = styled.div`
-  height: 30px;
+  flex-basis: 30px;
+
+  min-height: 30px;
   padding: 0.25em;
   border-top: 1px solid silver;
 
@@ -16,7 +18,8 @@ const Description = styled.div`
     text-transform: uppercase;
   }
   @media screen and (max-width: 550px) {
-    height: 20px;
+    /* flex-basis: 20px;
+    min-height: 20px; */
     padding: 0.2em;
     p {
       font-size: 8px;

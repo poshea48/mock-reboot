@@ -153,7 +153,7 @@ const MainLayout = ({ children }) => {
           `}
         />
         <SEO title={site.siteMetadata.title} />
-        <Div100vh>{children}</Div100vh>
+        {children}
       </Fragment>
     </ThemeProvider>
   );

@@ -217,7 +217,6 @@ const CustomizeDraftboard = ({ undraftedPlayers, undraftedPlayersSave }) => {
       };
     });
   };
-  // ! doesnt work
   const resetList = e => {
     e.preventDefault();
     setPlayersList([...undraftedPlayers]);

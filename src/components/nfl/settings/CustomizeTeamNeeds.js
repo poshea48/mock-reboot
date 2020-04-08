@@ -5,10 +5,23 @@ import { FieldsetContainer } from '../../styles/Fieldset';
 import Description from '../../styles/Description';
 import NFLTEAMS from '../../../data/nflTeams';
 
-const TeamsList = styled.ul`
-  width: 120px;
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  flex: 1 auto;
+  height: calc(100% - 61px); /* label(26px) + customizeNav(35) */
+  @media screen and (max-width: 450px) {
+    height: calc(100% - 121px); /* label(26) + customizeNav(95) */
+  }
+`;
+
+const TeamsList = styled.ul`
+  flex-basis: 120px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  /* height: calc(100% - 30px); */
   overflow-y: scroll;
   padding: 0.5em 0;
   li {
@@ -38,16 +51,19 @@ const TeamsList = styled.ul`
       font-size: 18px;
     }
   }
+  @media screen and (max-width: 450px) {
+    flex-basis: 80px;
+    min-width: 80px;
+  }
 `;
 
 const Fieldset = styled.fieldset`
-  height: 100%;
+  flex: 1 auto;
   display: flex;
   flex-direction: column;
   position: relative;
   justify-content: space-between;
   color: ${p => p.theme.colors.primaryPalette.eerieBlack};
-  flex: 1 auto;
   border-top: none;
   border-right: none;
   border-bottom: none;
@@ -58,11 +74,10 @@ const Fieldset = styled.fieldset`
 const Header = styled.header`
   display: flex;
   justify-content: center;
-
   width: 100%;
-  height: 30px;
+  min-height: 30px;
+  flex-basis: 30px;
   opacity: 0.95;
-
   text-align: center;
   background: #fff;
   @media screen and (max-width: 600px) {
@@ -76,19 +91,21 @@ const Header = styled.header`
 `;
 
 const NeedsList = styled.ul`
-  /* flex: 1 auto; */
+  flex: 1 auto;
   display: flex;
+  padding-top: 0.2em;
   flex-direction: column;
   justify-content: space-between;
   height: ${p => (p.short ? 'calc(100% - 60px)' : 'calc(100% - 30px)')};
   overflow-y: scroll;
   li {
     display: flex;
+    min-height: 30px;
     justify-content: center;
     border-bottom: 1px solid ${p => p.theme.colors.primaryPalette.eerieBlack};
     padding: 0.25em;
     label {
-      width: 60px;
+      min-width: 60px;
       color: ${p => p.theme.colors.primaryPalette.eerieBlack};
       text-transform: uppercase;
     }
@@ -267,35 +284,33 @@ const CustomizeTeamNeeds = ({ teamNeeds, handleTeamNeedsCustomization }) => {
   ));
 
   return (
-    <>
+    <Wrapper>
       <Description>
         <p>** Select Team and Modify needs from lowest(0) to highest(1.0) **</p>
       </Description>
-      <FieldsetContainer>
-        {Object.keys(teamNeeds).length === 0 ? (
-          <h4>You need to select a Team Needs Type first</h4>
-        ) : (
-          <>
-            <TeamsList>{teams}</TeamsList>
-            <Fieldset>
-              <Header>
-                <h3>{team ? NFLTEAMS[team].fullName : 'Select Team'}</h3>
-              </Header>
-              <NeedsList short={updated || saved}>{fieldsetData}</NeedsList>
-              {updated && <SaveButton onClick={handleSave}>Save</SaveButton>}
-              {saved && (
-                <Saved>
-                  <h5>Saved!</h5>
-                  <button onClick={closeSaved} title="close">
-                    x
-                  </button>
-                </Saved>
-              )}
-            </Fieldset>
-          </>
-        )}
-      </FieldsetContainer>
-    </>
+      {Object.keys(teamNeeds).length === 0 ? (
+        <h4>You need to select a Team Needs Type first</h4>
+      ) : (
+        <FieldsetContainer>
+          <TeamsList>{teams}</TeamsList>
+          <Fieldset>
+            <Header>
+              <h3>{team ? NFLTEAMS[team].fullName : 'Select Team'}</h3>
+            </Header>
+            <NeedsList short={updated || saved}>{fieldsetData}</NeedsList>
+            {updated && <SaveButton onClick={handleSave}>Save</SaveButton>}
+            {saved && (
+              <Saved>
+                <h5>Saved!</h5>
+                <button onClick={closeSaved} title="close">
+                  x
+                </button>
+              </Saved>
+            )}
+          </Fieldset>
+        </FieldsetContainer>
+      )}
+    </Wrapper>
   );
 };
 
