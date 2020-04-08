@@ -70,13 +70,9 @@ const CustomizeTypeContent = ({ open }) => {
   return (
     <>
       {open.draftboard ? (
-        <CustomizeDraftboard
-          undraftedPlayers={settingsState.undraftedPlayers}
-          undraftedPlayersSave={handleUndraftedSave}
-        />
+        <CustomizeDraftboard undraftedPlayersSave={handleUndraftedSave} />
       ) : open.teamNeeds ? (
         <CustomizeTeamNeeds
-          teamNeeds={settingsState.teamNeeds}
           handleTeamNeedsCustomization={handleTeamNeedsCustomization}
         />
       ) : open.simTeams ? (

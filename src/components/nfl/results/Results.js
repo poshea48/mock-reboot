@@ -7,10 +7,13 @@ import TeamResults from './TeamResults';
 const Main = styled.main`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   height: calc(100vh - 90px);
 `;
 
 const Header = styled.header`
+  flex-basis: 50px;
+  min-height: 50px;
   display: flex;
   justify-content: center;
   h1 {
@@ -31,12 +34,15 @@ const Header = styled.header`
 
 const ContentWrapper = styled.div`
   flex: 1 auto;
-  height: calc(100% - 75px);
+  /* height: calc(100% - 75px); */
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
   .results-nav {
     width: 100%;
-    height: 75px;
+    flex-basis: 75px;
+    min-height: 75px;
     font-size: 16px;
     display: flex;
     flex-direction: column;

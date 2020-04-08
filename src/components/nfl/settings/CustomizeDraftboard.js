@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import Fieldset from '../../styles/Fieldset';
 import playersObject from '../../../data/players';
 import Description from '../../styles/Description';
+import { useNflState } from '../../../context/nflContext';
 
 const PlayersList = styled.ol`
   /* width: 100%; */
@@ -117,8 +118,12 @@ const initialState = {
   draggedIndex: null,
   updated: false,
 };
-const CustomizeDraftboard = ({ undraftedPlayers, undraftedPlayersSave }) => {
+const CustomizeDraftboard = ({ undraftedPlayersSave }) => {
+  const {
+    state: { undraftedPlayers },
+  } = useNflState();
   const [state, changeState] = useState(initialState);
+
   const [playersList, setPlayersList] = useState([...undraftedPlayers]);
 
   const handleDragStart = e => {

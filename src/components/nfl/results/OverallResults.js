@@ -17,13 +17,15 @@ const Container = styled.div`
 const DraftedList = styled.ul`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   overflow-y: scroll;
 `;
 
 const Selection = styled.li`
   display: flex;
   padding: 0.5em;
-  height: 40px;
+  flex-basis: 40px;
+  min-height: 40px;
   @media screen and (max-width: 400px) {
     padding: 0.25em;
   }

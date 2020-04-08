@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { FieldsetContainer } from '../../styles/Fieldset';
 import Description from '../../styles/Description';
 import NFLTEAMS from '../../../data/nflTeams';
+import { useNflState } from '../../../context/nflContext';
 
 const Wrapper = styled.div`
   display: flex;
@@ -188,12 +189,14 @@ const initialPositions = [
   { pos: 'CB', wt: 0 },
 ];
 
-const CustomizeTeamNeeds = ({ teamNeeds, handleTeamNeedsCustomization }) => {
+const CustomizeTeamNeeds = ({ handleTeamNeedsCustomization }) => {
   const [team, changeTeam] = useState('');
   const [positions, changePositions] = useState(initialPositions);
   const [updated, toggleUpdated] = useState(false);
   const [saved, toggleSaved] = useState(false);
-
+  const {
+    state: { teamNeeds },
+  } = useNflState();
   const handleTeamClick = e => {
     e.preventDefault();
     e.target.scrollIntoView({
@@ -315,7 +318,6 @@ const CustomizeTeamNeeds = ({ teamNeeds, handleTeamNeedsCustomization }) => {
 };
 
 CustomizeTeamNeeds.propTypes = {
-  teamNeeds: PropTypes.object.isRequired,
   handleTeamNeedsCustomization: PropTypes.func.isRequired,
 };
 export default CustomizeTeamNeeds;

@@ -20,6 +20,7 @@ const Container = styled.div`
 const Drafted = styled(DraftedPlayersContent)`
   width: 100% !important;
   max-width: none;
+  flex: 1 auto;
 `;
 
 const TeamResults = ({ round }) => {
