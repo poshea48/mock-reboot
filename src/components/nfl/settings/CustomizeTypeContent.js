@@ -66,34 +66,7 @@ const CustomizeTypeContent = ({ open }) => {
       },
     });
   };
-  let simulationDisplay = [
-    <div className="content" key="sim-all">
-      <label htmlFor="all">Simulate All</label>
-      <input
-        type="checkbox"
-        name="all"
-        value="all"
-        checked={settingsState.allSimulationToggle}
-        onChange={handleAllToggle}
-      />
-    </div>,
-  ];
-  Object.keys(settingsState.simulationTeams).forEach(team => {
-    simulationDisplay.push(
-      <div key={team} className="content">
-        <label htmlFor="team">
-          {settingsState.simulationTeams[team].fullName}
-        </label>
-        <input
-          type="checkbox"
-          name="team"
-          value={team}
-          checked={settingsState.simulationTeams[team].simulate}
-          onChange={handleSimulationToggle}
-        />
-      </div>
-    );
-  });
+
   return (
     <>
       {open.draftboard ? (
@@ -107,7 +80,10 @@ const CustomizeTypeContent = ({ open }) => {
           handleTeamNeedsCustomization={handleTeamNeedsCustomization}
         />
       ) : open.simTeams ? (
-        <CustomizeSimTeams simulationDisplay={simulationDisplay} />
+        <CustomizeSimTeams
+          handleAllToggle={handleAllToggle}
+          handleSimulationToggle={handleSimulationToggle}
+        />
       ) : null}
     </>
   );

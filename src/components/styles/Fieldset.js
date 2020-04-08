@@ -29,27 +29,6 @@ const Fieldset = styled.fieldset`
   width: 100%;
   overflow-y: auto;
   margin: 0;
-  .content {
-    display: flex;
-    padding: 0 0.5em;
-    margin-bottom: 0.2em;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-    min-height: 30px;
-    label {
-      width: 250px;
-      color: #fff;
-      text-transform: uppercase;
-      @media screen and (max-width: 500px) {
-        margin-bottom: 0.5em;
-        font-size: 14px;
-      }
-    }
-    input {
-      align-self: center;
-      color: #fff;
-    }
-  }
-
   h4 {
     color: #fff;
     width: 100%;
