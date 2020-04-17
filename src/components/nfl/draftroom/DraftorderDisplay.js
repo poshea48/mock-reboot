@@ -128,15 +128,15 @@ const DraftorderDisplay = () => {
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center',
+        // block: 'nearest',
+        // inline: 'center',
       });
     } else {
       changeRound(currentRound);
       document.querySelector('li[data-id]').scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center',
+        // block: 'nearest',
+        // inline: 'center',
       });
     }
   };

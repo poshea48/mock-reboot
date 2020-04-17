@@ -20,6 +20,8 @@ const colors = {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 0 1em;
+  /* height: calc(100% - 50px); */
   background: ${colors.white};
   width: 100vw;
   overflow-x: hidden;
@@ -56,14 +58,14 @@ const Container = styled.div`
   }
   footer {
     display: flex;
-    /* background: ${p => p.theme.colors.white.grey}; */
-    /* color: black; */
-    
     width: 100%;
     height: 50px;
     padding: 0.5em;
     text-align: center;
     justify-content: center;
+  }
+  @media screen and (max-width: 600px) {
+    padding: 0 0.5em;
   }
 `;
 
@@ -75,7 +77,7 @@ const NFL = () => {
   const { isNflSetup, isNflFinished } = useAppState();
   return (
     <NFLProvider>
-      <Container id="page-container">
+      <Container>
         <SEO title="NFL Mock Draft" />
         <nav>
           <Link to="/">Home</Link>
