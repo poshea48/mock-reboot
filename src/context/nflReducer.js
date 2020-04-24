@@ -122,6 +122,7 @@ function settingsReducer(state, action) {
       };
     }
     case 'reset': {
+      localStorage.removeItem('nflState');
       return {
         ...settingsInitialState,
         simulationTeams: getSimulationTeams(),

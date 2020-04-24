@@ -19,6 +19,7 @@ function appReducer(state, action) {
     }
     case 'reset': {
       localStorage.removeItem('appState');
+      localStorage.removeItem('nflState');
       return {
         ...initialState,
       };
