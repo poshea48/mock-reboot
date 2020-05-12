@@ -47,6 +47,7 @@ const CloseButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   height: 30px;
+  background-color: white;
 `;
 
 const CloseButton = styled.button`
@@ -56,8 +57,7 @@ const CloseButton = styled.button`
   border: none;
   padding: 0;
   align-self: center;
-  background-color: white;
-  background-color: transparent;
+  background-color: transparent !important;
 
   span {
     display: inline-block;
