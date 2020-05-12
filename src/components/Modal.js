@@ -56,6 +56,7 @@ const CloseButton = styled.button`
   border: none;
   padding: 0;
   align-self: center;
+  background-color: transparent;
 
   &:hover,
   &:focus {
@@ -99,7 +100,7 @@ const Modal = ({ children, close, render, buttonRef }) => {
 
   useEffect(() => {
     modalRef.current.focus();
-    //TODO if modal closes because of player drafted put focus on top of undraftedPlayers list
+    //when modal closes because of player drafted put focus on top of undraftedPlayers list
     return () => buttonRef.current && buttonRef.current.focus();
   }, []);
   return (

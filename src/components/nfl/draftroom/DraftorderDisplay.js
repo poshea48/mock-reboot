@@ -73,6 +73,7 @@ const SelectionLi = styled.li`
     text-align: center;
     width: 100%;
     b {
+      display: inline-block;
       background: #0da305;
       box-shadow: 0 2px 8px 1px black;
       color: #fff;

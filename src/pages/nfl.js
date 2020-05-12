@@ -10,6 +10,10 @@ import SEO from '../components/layout/SEO';
 import PrivateRoute from '../components/nfl/PrivateRoute';
 import { useAppState } from '../context/appContext';
 
+// const Draftroom = lazy(() => import('../components/nfl/draftroom/Draftroom'))
+// const Settings = lazy(() => import('../components/nfl/settings/Settings'))
+// const Results = lazy(() => import('../components/nfl/results/Results'))
+
 const colors = {
   brown: '#D1AB98',
   black: '#232323',
@@ -21,7 +25,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1em;
-  /* height: calc(100% - 50px); */
   background: ${colors.white};
   width: 100vw;
   overflow-x: hidden;

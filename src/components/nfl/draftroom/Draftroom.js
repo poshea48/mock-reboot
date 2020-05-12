@@ -134,6 +134,7 @@ const Draftroom = () => {
     });
   };
 
+  //Todo useMemo???
   const simulatePick = () => {
     const players = undraftedPlayers.slice(0, 15).map(player => {
       return {
