@@ -56,8 +56,13 @@ const CloseButton = styled.button`
   border: none;
   padding: 0;
   align-self: center;
+  background-color: white;
   background-color: transparent;
 
+  span {
+    display: inline-block;
+    background-color: transparent;
+  }
   &:hover,
   &:focus {
     color: #000;
