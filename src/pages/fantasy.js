@@ -3,6 +3,7 @@ import { Router } from '@reach/router';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 // import { NFLProvider } from '../context/nflContext';
+import Draftroom from '../components/fantasy/draftroom/Draftroom';
 
 const colors = {
   brown: '#D1AB98',
@@ -16,9 +17,9 @@ const Container = styled.div`
   flex-direction: column;
   background: ${colors.white};
   width: 100vw;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding: 0 1em;
-  overflow: hidden;
+  /* overflow: hidden; */
   nav {
     display: flex;
     justify-content: flex-end;
@@ -64,13 +65,13 @@ const StyledRouter = styled(Router)`
   height: calc(100vh - 80px);
 `;
 
-const Draftroom = () => (
-  <div style={{ marginTop: '5em' }}>
-    <h1 style={{ textAlign: 'center' }}>
-      Fantasy Draftroom Under Construction
-    </h1>
-  </div>
-);
+// const Draftroom = () => (
+//   <div style={{ marginTop: '5em' }}>
+//     <h1 style={{ textAlign: 'center' }}>
+//       Fantasy Draftroom Under Construction
+//     </h1>
+//   </div>
+// );
 
 const Fantasy = () => {
   return (

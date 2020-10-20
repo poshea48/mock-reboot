@@ -103,7 +103,7 @@ const Draftroom = () => {
   // splice from undraftedPlayers list => return new list
   // add spliced player to results
 
-  const draftPlayer = player => {
+  const draftPlayer = (player) => {
     let i = 0;
     let newUndraftedList = [...undraftedPlayers];
     let team = getCurrentTeam(currentPick, currentRound);
@@ -136,7 +136,7 @@ const Draftroom = () => {
 
   //Todo useMemo???
   const simulatePick = () => {
-    const players = undraftedPlayers.slice(0, 15).map(player => {
+    const players = undraftedPlayers.slice(0, 15).map((player) => {
       return {
         name: player,
         pos: prospects[player].pos,
@@ -144,8 +144,7 @@ const Draftroom = () => {
     });
     const team = getCurrentTeam(currentPick, currentRound);
     const draftedPlayer = findSimulatedPlayer(players, teamNeeds[team]);
-    // For now just take highest ranked player
-    // const player = undraftedPlayers[0];
+
     draftPlayer(draftedPlayer);
   };
 

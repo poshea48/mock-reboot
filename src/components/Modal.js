@@ -108,7 +108,9 @@ const Modal = ({ children, close, render, buttonRef }) => {
     //when modal closes because of player drafted put focus on top of undraftedPlayers list
     return () => buttonRef.current && buttonRef.current.focus();
   }, []);
+  //TOdo replace ModalBody with children, add modal body into bigborad for styling
   return (
+    // @ts-ignore
     <Portal>
       <>
         <ModalWrapper
@@ -117,11 +119,11 @@ const Modal = ({ children, close, render, buttonRef }) => {
           tabIndex={-1}
           role="dialog"
           ref={modalRef}
-          onKeyDown={e => e.keyCode === 27 && close()}
+          onKeyDown={(e) => e.keyCode === 27 && close()}
         >
           <ModalBody
             aria-label="draft player action"
-            onKeyDown={e => e.keyCode === 27 && close()}
+            onKeyDown={(e) => e.keyCode === 27 && close()}
           >
             <CloseButtonWrapper>
               <CloseButton
