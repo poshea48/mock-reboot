@@ -3,21 +3,42 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import players from '../../../data/fantasy/players';
 
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   padding: 1em;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 80px);
   .playersList {
     display: flex;
     flex-direction: column;
+    max-width: 650px;
+    width: 100%;
+    overflow: scroll;
   }
   .player-item {
-    display: grid;
-    grid-template-columns: 50px 1fr 50px 100px 50px;
+    display: flex;
+    justify-content: flex-start;
     margin: 1em 0;
+  }
+  .rank,
+  .pos {
+    width: 50px;
+  }
+  button {
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
+  .team {
+    width: 100px;
+  }
+  .player {
+    flex: 1;
   }
 `;
 
@@ -40,7 +61,7 @@ const Draftroom = () => {
       <span className="pos">{player.pos}</span>
       <span className="team">{player.team}</span>
       <button onClick={removePlayer} data-index={i}>
-        x
+        🗑
       </button>
     </li>
   ));
