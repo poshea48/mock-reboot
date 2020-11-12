@@ -16,7 +16,7 @@ const BgImage = styled(Img)`
   left: 0;
   width: 100vw;
   height: 100vh;
-  height: calc((var(--vh, 1vh) * 100) - 90px);
+  height: calc((var(--vh, 1vh) * 100));
   & > img {
     display: block;
     margin: 0 auto;
