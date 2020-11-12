@@ -21,9 +21,7 @@ const globalStyles = () => css`
   html,
   body {
     width: 100vw;
-    height: 100vh;
-    height: calc((var(--vh, 1vh) * 100));
-
+    /* min-height: 100vh; */
     min-height: -webkit-fill-available;
     margin: 0;
     padding: 0;
@@ -32,7 +30,7 @@ const globalStyles = () => css`
   }
   #page-container {
     padding: 0 1em;
-    min-height: calc(var(--vh, 1vh) * 100);
+    /* min-height: calc(var(--vh, 1vh) * 100); */
     @media screen and (max-width: 600px) {
       padding: 0 0.5em;
     }
