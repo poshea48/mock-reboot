@@ -4,7 +4,7 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background: ${p => p.theme.colors.primaryPalette.eerieBlack};
+  background: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
 
   flex: 1 auto;
   height: calc(100% - 61px); /* label(26px) + customizeNav(35) */
@@ -21,7 +21,7 @@ const Description = styled.div`
 
   border-left: 1px solid silver;
   border-right: 1px solid silver;
-  background: ${p => p.theme.colors.primaryPalette.eerieBlack};
+  background: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
   color: #fff;
   p {
     text-align: center;

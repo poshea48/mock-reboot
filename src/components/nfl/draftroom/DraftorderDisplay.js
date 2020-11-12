@@ -85,7 +85,7 @@ const SelectionLi = styled.li`
   .team,
   .selection,
   .pos {
-    color: ${p =>
+    color: ${(p) =>
       p.manual
         ? p.theme.colors.teamColors[p.team].secondary1
         : p.theme.colors.teamColors[p.team].primary};
@@ -109,11 +109,11 @@ const DraftorderDisplay = () => {
 
   const [selectedRound, changeRound] = useState(currentRound);
 
-  const handleRoundChange = e => {
+  const handleRoundChange = (e) => {
     changeRound(e.target.value);
   };
 
-  const pickWithSuffix = num => {
+  const pickWithSuffix = (num) => {
     if (typeof num !== 'number') return 'N/A';
     const suffix =
       ['st', 'nd', 'rd'][
@@ -148,7 +148,7 @@ const DraftorderDisplay = () => {
   const handleScrollToClick = () => {
     scrollTo();
   };
-  const abbreviateName = name => {
+  const abbreviateName = (name) => {
     let [firstName, rest] = name.split(' ');
     return `${firstName[0]}. ${rest}`;
   };
@@ -194,7 +194,7 @@ const DraftorderDisplay = () => {
           onBlur={handleRoundChange}
           onChange={handleRoundChange}
         >
-          {Object.keys(draftOrder).map(round => (
+          {Object.keys(draftOrder).map((round) => (
             <option key={round} value={round}>
               {round}
             </option>

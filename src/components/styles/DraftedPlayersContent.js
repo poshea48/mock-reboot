@@ -6,8 +6,8 @@ const DraftedPlayersContent = styled.div`
   overflow-y: scroll;
   flex-direction: column;
   max-width: 550px;
-  color: ${p => p.theme.colors.teamColors[p.team].primary};
-  background: ${p => p.theme.colors.teamColors[p.team].secondary1};
+  color: ${(p) => p.theme.colors.teamColors[p.team].primary};
+  background: ${(p) => p.theme.colors.teamColors[p.team].secondary1};
 
   height: 100%;
   table {
@@ -23,9 +23,9 @@ const DraftedPlayersContent = styled.div`
     tbody {
       tr {
         &:hover {
-          background: ${p => p.theme.colors.teamColors[p.team].primary}; 
-          color: ${p => p.theme.colors.teamColors[p.team].secondary1};
-}
+          background: ${(p) => p.theme.colors.teamColors[p.team].primary};
+          color: ${(p) => p.theme.colors.teamColors[p.team].secondary1};
+        }
       }
     }
   }
@@ -33,7 +33,7 @@ const DraftedPlayersContent = styled.div`
     position: absolute;
     top: 0;
     right: 1em;
-    background: ${p => p.theme.colors.teamColors[p.team].secondary1};
+    background: ${(p) => p.theme.colors.teamColors[p.team].secondary1};
     max-width: 500px;
     min-width: 0;
     width: ${({ open }) => (open ? '100%' : '0px')};

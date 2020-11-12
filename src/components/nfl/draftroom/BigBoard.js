@@ -147,7 +147,7 @@ const BigBoard = ({ positions, draftPlayer }) => {
   // const [filteredPlayers, changeFilteredPlayers] = useState([]);
   const { state } = useNflState();
 
-  const handleDraftPlayerClick = e => {
+  const handleDraftPlayerClick = (e) => {
     e.preventDefault();
     draftPlayer(players[player]);
     closeModal();
@@ -181,11 +181,11 @@ const BigBoard = ({ positions, draftPlayer }) => {
           return acc;
         }, []);
 
-  const handlePositionChange = e => {
+  const handlePositionChange = (e) => {
     changePosition(e.target.value);
   };
 
-  const handlePlayerClick = e => {
+  const handlePlayerClick = (e) => {
     changePlayer(e.target.value);
     buttonRef.current = e.target;
     openModal();
@@ -207,9 +207,9 @@ const BigBoard = ({ positions, draftPlayer }) => {
               name="filterBy"
               value={position}
               onChange={handlePositionChange}
-              onBlur={e => e.target.blur()}
+              onBlur={(e) => e.target.blur()}
             >
-              {positions.map(p => (
+              {positions.map((p) => (
                 <option key={p} value={p}>
                   {p}
                 </option>

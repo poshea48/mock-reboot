@@ -21,7 +21,7 @@ const Content = styled(DraftedPlayersContent)`
     position: absolute;
     top: 0;
     right: 1em;
-    background: ${p => p.theme.colors.teamColors[p.team].secondary1};
+    background: ${(p) => p.theme.colors.teamColors[p.team].secondary1};
     max-width: 500px;
     min-width: 0;
     width: ${({ open }) => (open ? '100%' : '0px')};
@@ -66,7 +66,7 @@ const TeamSelectedPlayers = () => {
   }, [teamOnTheClock]);
 
   const { open, openModal, closeModal } = useModal();
-  const handleTeamChange = e => {
+  const handleTeamChange = (e) => {
     changeSelectedTeam(e.target.value);
   };
   const players =
@@ -75,7 +75,7 @@ const TeamSelectedPlayers = () => {
         <td colSpan="3">No Selections</td>
       </tr>
     ) : (
-      results[selectedTeam].map(player => {
+      results[selectedTeam].map((player) => {
         return (
           <tr key={player.pick}>
             <td>{player.pick}</td>
@@ -122,9 +122,9 @@ const TeamSelectedPlayers = () => {
                 name="filterBy"
                 value={selectedTeam}
                 onChange={handleTeamChange}
-                onBlur={e => e.target.blur()}
+                onBlur={(e) => e.target.blur()}
               >
-                {Object.keys(nflTeams).map(p => (
+                {Object.keys(nflTeams).map((p) => (
                   <option key={p} value={p}>
                     {p}
                   </option>

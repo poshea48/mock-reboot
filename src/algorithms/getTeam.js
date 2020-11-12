@@ -2,14 +2,15 @@
 import { draftOrderObject } from '../data/draftOrder';
 
 const getCurrentTeam = (currentPick, currentRound) => {
-  return draftOrderObject[currentRound].find(s => s.overallPick === currentPick)
-    .team;
+  return draftOrderObject[currentRound].find(
+    (s) => s.overallPick === currentPick
+  ).team;
 };
 
 const getNextTeamUp = (currentPick, currentRound) => {
   const roundArray = draftOrderObject[currentRound];
   const currentSelectionIndex = draftOrderObject[currentRound].findIndex(
-    s => s.overallPick === currentPick
+    (s) => s.overallPick === currentPick
   );
   const lastPick = roundArray[roundArray.length - 1].overallPick;
   const advanceRound = currentPick === lastPick && currentRound !== 7;
