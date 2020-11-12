@@ -16,11 +16,12 @@ const Main = styled.main`
   max-width: 650px;
   width: 100%;
   height: calc(100vh - 90px);
+  height: calc((var(--vh, 1vh) * 100) - 90px);
   margin: 0 auto;
   h2 {
     align-self: center;
     display: inline-block;
-    color: ${p => p.theme.colors.primaryPalette.eerieBlack};
+    color: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
     text-align: center;
     font-weight: 800;
     text-transform: uppercase;
@@ -42,7 +43,7 @@ const Form = styled.form`
   padding: 1em;
   height: calc(100% - 30px);
   flex: 1 auto;
-  border: 1px solid ${p => p.theme.colors.primaryPalette.eerieBlack};
+  border: 1px solid ${(p) => p.theme.colors.primaryPalette.eerieBlack};
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -111,7 +112,7 @@ const Settings = () => {
       } else {
         simToggle = false;
         state.manualTeams.forEach(
-          team => (newSimulationTeams[team].simulate = false)
+          (team) => (newSimulationTeams[team].simulate = false)
         );
       }
       const newState = {
@@ -137,7 +138,7 @@ const Settings = () => {
 
   // Pass to SelectField component
 
-  const handleTypeSelect = e => {
+  const handleTypeSelect = (e) => {
     e.preventDefault();
     const selectedType = e.target.dataset.type;
     let newControls = {
@@ -151,7 +152,7 @@ const Settings = () => {
     });
   };
 
-  const submitForm = e => {
+  const submitForm = (e) => {
     e.preventDefault();
     const type = isNflSetup ? 'updateDraft' : 'newDraft';
     if (
