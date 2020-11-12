@@ -20,7 +20,6 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   height: calc(100vh - 90px);
-  height: calc((var(--vh, 1vh) * 100) - 90px);
   @media screen and(max-width: 800px) {
     justify-content: center;
   }
