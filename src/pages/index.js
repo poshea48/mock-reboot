@@ -19,6 +19,7 @@ const Container = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  height: calc((var(--vh, 1vh) * 100));
   text-align: center;
 `;
 
