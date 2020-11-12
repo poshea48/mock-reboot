@@ -4,9 +4,10 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background: ${p => p.theme.colors.primaryPalette.eerieBlack};
-
+  background: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
+  border: 1px solid silver;
   flex: 1 auto;
+  color: #fff;
   height: calc(100% - 61px); /* label(26px) + customizeNav(35) */
   @media screen and (max-width: 450px) {
     height: calc(100% - 121px); /* label(26) + customizeNav(95) */
@@ -17,15 +18,13 @@ const Description = styled.div`
   flex-basis: 30px;
   min-height: 30px;
   padding: 0.25em;
-  border-top: 1px solid silver;
-
-  border-left: 1px solid silver;
-  border-right: 1px solid silver;
-  background: ${p => p.theme.colors.primaryPalette.eerieBlack};
+  background: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
+  border-bottom: 1px solid silver;
   color: #fff;
   p {
     text-align: center;
     font-size: 12px;
+    color: #fff;
     margin: 0;
     text-transform: uppercase;
   }

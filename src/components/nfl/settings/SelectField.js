@@ -26,7 +26,7 @@ const CloseButton = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
-  color: ${p => p.theme.colors.primaryPalette.eerieBlack};
+  color: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
 `;
 
 const SelectField = ({ isNflSetup }) => {
@@ -36,7 +36,7 @@ const SelectField = ({ isNflSetup }) => {
   const teamsField = (
     <>
       <option disabled value=""></option>
-      {Object.keys(NFLTEAMS).map(team => (
+      {Object.keys(NFLTEAMS).map((team) => (
         <option key={NFLTEAMS[team].code} value={NFLTEAMS[team].code}>
           {NFLTEAMS[team].fullName}
         </option>
@@ -44,7 +44,7 @@ const SelectField = ({ isNflSetup }) => {
       ;
     </>
   );
-  const handleSelect = e => {
+  const handleSelect = (e) => {
     if (e.target.name === 'myTeam') {
       handleTeamSelect(e);
     } else if (e.target.name === 'teamNeedsType') {
@@ -54,7 +54,7 @@ const SelectField = ({ isNflSetup }) => {
     }
   };
 
-  const handleTeamSelect = e => {
+  const handleTeamSelect = (e) => {
     const newState = { ...settingsState };
     if (errorMessage) {
       newState.errorMessage = null;
@@ -69,7 +69,7 @@ const SelectField = ({ isNflSetup }) => {
     });
   };
 
-  const handleTeamNeedsSelect = e => {
+  const handleTeamNeedsSelect = (e) => {
     e.preventDefault();
     let teamNeeds;
     if (e.target.value === 'default') {
@@ -86,7 +86,7 @@ const SelectField = ({ isNflSetup }) => {
     });
   };
 
-  const handleDraftboardSelect = e => {
+  const handleDraftboardSelect = (e) => {
     e.preventDefault();
     let undraftedPlayers;
     if (e.target.value === 'default') {
@@ -98,7 +98,7 @@ const SelectField = ({ isNflSetup }) => {
       type: 'addUndraftedPlayers',
       payload: {
         draftboardType: e.target.value,
-        undraftedPlayers,
+        players: undraftedPlayers,
       },
     });
   };
@@ -129,7 +129,7 @@ const SelectField = ({ isNflSetup }) => {
           id="myTeam"
           name="myTeam"
           onChange={handleSelect}
-          onBlur={e => e.target.blur()}
+          onBlur={(e) => e.target.blur()}
           value={myTeam}
           disabled={isNflSetup}
         >
@@ -141,7 +141,7 @@ const SelectField = ({ isNflSetup }) => {
         <select
           id="teamNeedsType"
           name="teamNeedsType"
-          onBlur={e => e.target.blur()}
+          onBlur={(e) => e.target.blur()}
           onChange={handleSelect}
           value={teamNeedsType}
           disabled={isNflSetup}
@@ -159,7 +159,7 @@ const SelectField = ({ isNflSetup }) => {
         <select
           id="draftboardType"
           name="draftboardType"
-          onBlur={e => e.target.blur()}
+          onBlur={(e) => e.target.blur()}
           onChange={handleSelect}
           value={draftboardType}
           disabled={isNflSetup}

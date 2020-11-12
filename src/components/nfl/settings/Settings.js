@@ -20,7 +20,7 @@ const Main = styled.main`
   h2 {
     align-self: center;
     display: inline-block;
-    color: ${p => p.theme.colors.primaryPalette.eerieBlack};
+    color: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
     text-align: center;
     font-weight: 800;
     text-transform: uppercase;
@@ -42,7 +42,7 @@ const Form = styled.form`
   padding: 1em;
   height: calc(100% - 30px);
   flex: 1 auto;
-  border: 1px solid ${p => p.theme.colors.primaryPalette.eerieBlack};
+  border: 1px solid ${(p) => p.theme.colors.primaryPalette.eerieBlack};
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -79,11 +79,12 @@ const CutomizeTypesField = styled.div`
   }
 `;
 
-const Settings = () => {
+function Settings() {
   const { state, settingsState } = useNflState();
   const appContext = useAppState();
   const { isNflSetup } = appContext;
 
+  // passed to CustomizeTypeContent to display proper customization setting
   const [open, toggleOpen] = useState({
     teamNeeds: false,
     draftboard: false,
@@ -97,7 +98,6 @@ const Settings = () => {
     if (!settingsState.myTeam && state.myTeam) {
       const {
         myTeam,
-        draftboard,
         draftboardType,
         teamNeeds,
         teamNeedsType,
@@ -111,13 +111,12 @@ const Settings = () => {
       } else {
         simToggle = false;
         state.manualTeams.forEach(
-          team => (newSimulationTeams[team].simulate = false)
+          (team) => (newSimulationTeams[team].simulate = false)
         );
       }
       const newState = {
         ...settingsState,
         myTeam,
-        draftboard,
         draftboardType,
         teamNeeds,
         teamNeedsType,
@@ -135,9 +134,27 @@ const Settings = () => {
     }
   }, []);
 
-  // Pass to SelectField component
+  return (
+    <Main>
+      <h2>Customize draft</h2>
+      <Form>
+        <SelectField isNflSetup={isNflSetup} />
+        <CutomizeTypesField>
+          <label htmlFor="customize-types">Customize Types</label>
+          <CustomizeTypesNav handleTypeSelect={handleTypeSelect} open={open} />
+          <CustomizeTypeContent open={open} />
+        </CutomizeTypesField>
+        <FormButtons
+          submitForm={submitForm}
+          handleReset={handleReset}
+          isNflSetup={isNflSetup}
+        />
+      </Form>
+    </Main>
+  );
 
-  const handleTypeSelect = e => {
+  // Pass to CustomizeTypesNav component
+  function handleTypeSelect(e) {
     e.preventDefault();
     const selectedType = e.target.dataset.type;
     let newControls = {
@@ -149,9 +166,9 @@ const Settings = () => {
       ...newControls,
       [selectedType]: !open[selectedType],
     });
-  };
+  }
 
-  const submitForm = e => {
+  function submitForm(e) {
     e.preventDefault();
     const type = isNflSetup ? 'updateDraft' : 'newDraft';
     if (
@@ -180,7 +197,7 @@ const Settings = () => {
         manualTeams: [...settingsState.manualTeams],
         teamNeedsType: settingsState.teamNeedsType,
         draftboardType: settingsState.draftboardType,
-        undraftedPlayers: [...settingsState.undraftedPlayers],
+        undraftedPlayers: [...settingsState.players],
         teamNeeds: { ...settingsState.teamNeeds },
       },
     });
@@ -192,31 +209,13 @@ const Settings = () => {
       });
     }
     navigate('/nfl/draftroom');
-  };
+  }
 
-  const handleReset = () => {
+  function handleReset() {
     settingsDispatch({ type: 'reset' });
     appDispatch({ type: 'reset' });
     nflDispatch({ type: 'reset' });
-  };
-  return (
-    <Main>
-      <h2>Customize draft</h2>
-      <Form>
-        <SelectField isNflSetup={isNflSetup} />
-        <CutomizeTypesField>
-          <label htmlFor="customize-types">Customize Types</label>
-          <CustomizeTypesNav handleTypeSelect={handleTypeSelect} open={open} />
-          <CustomizeTypeContent open={open} />
-        </CutomizeTypesField>
-        <FormButtons
-          submitForm={submitForm}
-          handleReset={handleReset}
-          isNflSetup={isNflSetup}
-        />
-      </Form>
-    </Main>
-  );
-};
+  }
+}
 
 export default Settings;

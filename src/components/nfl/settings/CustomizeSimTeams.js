@@ -10,16 +10,6 @@ import {
   DataContainer,
 } from '../../styles/SettingsCustomization';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  height: calc(100% - 61px); /* label(26) + nav(35px) */
-  @media screen and (max-width: 450px) {
-    height: calc(100% - 121px);
-  }
-`;
-
 const SimTeam = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -58,7 +48,7 @@ const CustomizeSimTeams = ({ handleAllToggle, handleSimulationToggle }) => {
       />
     </SimTeam>,
   ];
-  Object.keys(settingsState.simulationTeams).forEach(team => {
+  Object.keys(settingsState.simulationTeams).forEach((team) => {
     simulationDisplay.push(
       <SimTeam key={team}>
         <label htmlFor="team">
@@ -79,9 +69,7 @@ const CustomizeSimTeams = ({ handleAllToggle, handleSimulationToggle }) => {
       <Description>
         <p>** unCheck Teams to manually draft **</p>
       </Description>
-      <DataContainer>
-        <Fieldset>{simulationDisplay}</Fieldset>
-      </DataContainer>
+      <DataContainer>{simulationDisplay}</DataContainer>
     </ContentWrapper>
   );
 };

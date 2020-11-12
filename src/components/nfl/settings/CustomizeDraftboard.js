@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import Fieldset from '../../styles/Fieldset';
 import playersObject from '../../../data/players';
-import Description from '../../styles/Description';
-import { useNflState } from '../../../context/nflContext';
+import {
+  ContentWrapper,
+  Description,
+} from '../../styles/SettingsCustomization';
+import { useNflDispatch, useNflState } from '../../../context/nflContext';
 
 const PlayersList = styled.ol`
   /* width: 100%; */
-  height: ${p => (p.full ? '100%' : 'calc(100% - 30px + 0.5em)')};
+  height: ${(p) => (p.full ? '100%' : 'calc(100% - 30px + 0.5em)')};
   overflow-y: scroll;
   margin: 0;
   padding: 0;
@@ -56,7 +57,7 @@ const Player = styled.li`
   }
   button {
     width: 30px;
-    height: 30px;
+    padding: 10px;
     padding: 0;
     background: transparent;
     color: red;
@@ -70,7 +71,7 @@ const Player = styled.li`
   }
   &:active,
   &:hover {
-    background: ${p => p.theme.colors.primaryPalette.gray};
+    background: ${(p) => p.theme.colors.primaryPalette.gray};
   }
 
   @media screen and (max-width: 450px) {
@@ -89,7 +90,7 @@ const ButtonWrapper = styled.div`
 
 const Button = styled.button`
   flex-basis: calc(100% / 2);
-  height: 30px;
+  padding: 10px;
   background: red;
   text-align: center;
   display: flex;
@@ -118,15 +119,25 @@ const initialState = {
   draggedIndex: null,
   updated: false,
 };
-const CustomizeDraftboard = ({ undraftedPlayersSave }) => {
+
+const CustomizeDraftboard = () => {
   const {
-    state: { undraftedPlayers },
+    settingsState: { players },
   } = useNflState();
   const [state, changeState] = useState(initialState);
+  const { settingsDispatch } = useNflDispatch();
 
-  const [playersList, setPlayersList] = useState([...undraftedPlayers]);
+  // create local state array for players so you can move players around and
+  // reset without messing with context
+  const [playersList, setPlayersList] = useState([]);
 
-  const handleDragStart = e => {
+  useEffect(() => {
+    if (players) {
+      setPlayersList(players);
+    }
+  }, [players]);
+
+  const handleDragStart = (e) => {
     const initialPosition = Number(e.currentTarget.dataset.index);
     changeState({
       ...state,
@@ -138,7 +149,7 @@ const CustomizeDraftboard = ({ undraftedPlayersSave }) => {
     e.dataTransfer.setData('text/html', '');
   };
 
-  const handleDragOver = e => {
+  const handleDragOver = (e) => {
     e.preventDefault();
     let newPlayersList = state.originalOrder;
 
@@ -212,50 +223,47 @@ const CustomizeDraftboard = ({ undraftedPlayersSave }) => {
     </Player>
   ));
 
-  const saveList = e => {
+  const saveList = (e) => {
     e.preventDefault();
-    undraftedPlayersSave(state.updatedOrder);
-    changeState(prev => {
+    settingsDispatch({
+      type: 'updateUndrafted',
+      payload: state.updatedOrder,
+    });
+    changeState((prev) => {
       return {
         ...prev,
         updated: false,
       };
     });
   };
-  const resetList = e => {
+  const resetList = (e) => {
     e.preventDefault();
-    setPlayersList([...undraftedPlayers]);
-    changeState(prev => {
+    setPlayersList([...players]);
+    changeState((prev) => {
       return { ...prev, updated: false };
     });
   };
 
   return (
-    <>
+    <ContentWrapper>
       <Description>
         <p>** Modify Ranking. not available on mobile **</p>
       </Description>
-      <Fieldset>
-        {undraftedPlayers.length === 0 ? (
-          <h4>You need to select a draft board type first</h4>
-        ) : (
-          <>
-            <PlayersList full={!state.updated}>{playersDisplay}</PlayersList>
-            {state.updated && (
-              <ButtonWrapper>
-                <SaveButton onClick={saveList}>Save</SaveButton>
-                <ResetButton onClick={resetList}>Reset Draftboard</ResetButton>
-              </ButtonWrapper>
-            )}
-          </>
-        )}
-      </Fieldset>
-    </>
+      {playersList.length === 0 ? (
+        <h4>You need to select a draft board type first</h4>
+      ) : (
+        <>
+          <PlayersList full={!state.updated}>{playersDisplay}</PlayersList>
+          {state.updated && (
+            <ButtonWrapper>
+              <SaveButton onClick={saveList}>Save</SaveButton>
+              <ResetButton onClick={resetList}>Reset Draftboard</ResetButton>
+            </ButtonWrapper>
+          )}
+        </>
+      )}
+    </ContentWrapper>
   );
 };
 
-CustomizeDraftboard.propTypes = {
-  undraftedPlayers: PropTypes.array.isRequired,
-  undraftedPlayersSave: PropTypes.func.isRequired,
-};
 export default CustomizeDraftboard;

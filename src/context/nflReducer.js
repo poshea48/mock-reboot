@@ -4,17 +4,16 @@ import NFLTEAMS from '../data/nflTeams';
 
 const initialState = {
   myTeam: '',
-  manualTeams: [],
+  manualTeams: [], // teams that user can draft for
   teamOnTheClock: draftOrder[0][0],
   draftboardType: '',
-  draftboard: [],
+  undraftedPlayers: null, // or [playerName, ...]
+  draftOrder: draftOrderObject,
   teamNeedsType: '',
-  teamNeeds: {},
+  teamNeeds: null, // {team: {pos: weight}, ...}
   started: false,
   paused: false,
   finished: false,
-  undraftedPlayers: [],
-  draftOrder: draftOrderObject,
   results: {
     ARI: [],
     ATL: [],
@@ -67,11 +66,10 @@ const getSimulationTeams = () => {
 
 const settingsInitialState = {
   myTeam: '',
-  draftboard: '',
   draftboardType: '',
-  teamNeeds: {},
+  players: null,
+  teamNeeds: null,
   teamNeedsType: '',
-  undraftedPlayers: [],
   simulationTeams: getSimulationTeams(),
   manualTeams: [],
   allSimulationToggle: true,
@@ -219,7 +217,7 @@ function nflReducer(state, action) {
       // then add array to dispatch
       let currentRoundArray = [...draftOrder[currentRound]];
       let currentSelectionIndex = currentRoundArray.findIndex(
-        s => s.overallPick === currentPick
+        (s) => s.overallPick === currentPick
       );
       currentRoundArray[currentSelectionIndex].result = name;
 
