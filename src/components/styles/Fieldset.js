@@ -8,7 +8,7 @@ const FieldsetContainer = styled.div`
   border: 1px solid silver;
   justify-content: center;
   height: calc(100% - 30px);
-  background: ${p => p.theme.colors.primaryPalette.eerieBlack};
+  background: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
   width: 100%;
   h4 {
     padding: 1em;
@@ -23,7 +23,7 @@ const Fieldset = styled.fieldset`
   display: flex;
   border: 1px solid silver;
   flex-direction: column;
-  background: ${p => p.theme.colors.primaryPalette.eerieBlack};
+  background: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
   color: #fff;
   justify-content: center;
   width: 100%;

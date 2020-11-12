@@ -39,7 +39,7 @@ const TeamFilter = styled.div`
   select {
     font-size: 16px;
     font-weight: 900;
-    color: ${p => p.theme.colors.teamColors[p.team].primary};
+    color: ${(p) => p.theme.colors.teamColors[p.team].primary};
   }
 `;
 

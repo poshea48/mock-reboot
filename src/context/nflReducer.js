@@ -219,7 +219,7 @@ function nflReducer(state, action) {
       // then add array to dispatch
       let currentRoundArray = [...draftOrder[currentRound]];
       let currentSelectionIndex = currentRoundArray.findIndex(
-        s => s.overallPick === currentPick
+        (s) => s.overallPick === currentPick
       );
       currentRoundArray[currentSelectionIndex].result = name;
 

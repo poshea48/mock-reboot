@@ -4,14 +4,14 @@ import styled from '@emotion/styled';
 
 const Button = styled.button`
   border: 4px solid black;
-  background: ${p => p.theme.colors.primaryPalette.gray};
+  background: ${(p) => p.theme.colors.primaryPalette.gray};
   margin-left: 0.5em;
   color: #80000d;
   border-radius: 50%;
   font-size: 10px;
   font-weight: 900;
-  width: ${p => (p.mini ? '40px' : '45px')};
-  height: ${p => (p.mini ? '40px' : '45px')};
+  width: ${(p) => (p.mini ? '40px' : '45px')};
+  height: ${(p) => (p.mini ? '40px' : '45px')};
   cursor: pointer;
   padding: 0;
 `;

@@ -9,7 +9,7 @@ const Description = styled.div`
 
   border-left: 1px solid silver;
   border-right: 1px solid silver;
-  background: ${p => p.theme.colors.primaryPalette.eerieBlack};
+  background: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
   color: #fff;
   p {
     text-align: center;

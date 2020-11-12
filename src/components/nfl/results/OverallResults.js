@@ -44,7 +44,7 @@ const Selection = styled.li`
   }
   .team {
     width: 50px;
-    color: ${p => p.theme.colors.teamColors[p.team].primary};
+    color: ${(p) => p.theme.colors.teamColors[p.team].primary};
     text-transform: uppercase;
     font-size: 16px;
     font-weight: 800;
@@ -68,7 +68,7 @@ const Selection = styled.li`
     flex: 1 auto;
     text-align: left;
     font-weight: 800;
-    color: ${p => p.theme.colors.teamColors[p.team].primary};
+    color: ${(p) => p.theme.colors.teamColors[p.team].primary};
     text-transform: uppercase;
     padding: 0 1em;
     .pos {

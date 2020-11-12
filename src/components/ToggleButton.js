@@ -21,7 +21,7 @@ const StyledBurger = styled.button`
   div {
     width: 1.2rem;
     height: 0.22rem;
-    background: ${p => p.theme.colors.teamColors[p.team].primary};
+    background: ${(p) => p.theme.colors.teamColors[p.team].primary};
     border-radius: 10px;
     transition: all 0.3s linear;
     position: relative;
@@ -33,7 +33,7 @@ const StyledBurger = styled.button`
     &:nth-of-type(2) {
       opacity: ${({ open }) => (open ? '0' : '1')};
       visibility: ${({ open }) => (open ? 'hidden' : 'visible')};
-      transition: visibility .1s ease-out;
+      transition: visibility 0.1s ease-out;
       /* transform: ${({ open }) =>
         open ? 'translateX(30px)' : 'translateX(0)'}; */
     }
@@ -43,7 +43,7 @@ const StyledBurger = styled.button`
   }
 
   @media screen and (min-width: 801px) {
-   display: none;
+    display: none;
   }
   @media screen and (max-width: 600px) {
     top: 0.8em;
