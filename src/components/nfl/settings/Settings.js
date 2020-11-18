@@ -25,8 +25,8 @@ const Main = styled.main`
     text-align: center;
     font-weight: 800;
     text-transform: uppercase;
-    flex-basis: 40px;
-    min-height: 40px;
+    flex-basis: 30px;
+    min-height: 30px;
   }
 
   @media screen and (max-width: 450px) {
@@ -80,11 +80,12 @@ const CutomizeTypesField = styled.div`
   }
 `;
 
-const Settings = () => {
+function Settings() {
   const { state, settingsState } = useNflState();
   const appContext = useAppState();
   const { isNflSetup } = appContext;
 
+  // passed to CustomizeTypeContent to display proper customization setting
   const [open, toggleOpen] = useState({
     teamNeeds: false,
     draftboard: false,
@@ -97,13 +98,12 @@ const Settings = () => {
   useEffect(() => {
     if (!settingsState.myTeam && state.myTeam) {
       const {
-        myTeam,
-        draftboard,
-        draftboardType,
-        teamNeeds,
-        teamNeedsType,
-        undraftedPlayers,
-        manualTeams,
+        myTeam, // string
+        draftboardType, // string
+        teamNeedsType, // string
+        teamNeeds, // object || null
+        undraftedPlayers, // array || null
+        manualTeams, // array
       } = state;
       let simToggle;
       let newSimulationTeams = { ...settingsState.simulationTeams };
@@ -118,10 +118,9 @@ const Settings = () => {
       const newState = {
         ...settingsState,
         myTeam,
-        draftboard,
         draftboardType,
-        teamNeeds,
         teamNeedsType,
+        teamNeeds,
         undraftedPlayers,
         allSimulationToggle: simToggle,
         simulationTeams: newSimulationTeams,
@@ -135,10 +134,29 @@ const Settings = () => {
       return;
     }
   }, []);
+  return (
+    <Main>
+      <h2>Customize draft</h2>
+      <Form>
+        <SelectField isNflSetup={isNflSetup} />
+        <CutomizeTypesField>
+          <label htmlFor="customize-types">Customize Types</label>
+          <CustomizeTypesNav handleTypeSelect={handleTypeSelect} open={open} />
+          <CustomizeTypeContent open={open} />
+        </CutomizeTypesField>
+        <FormButtons
+          submitForm={submitForm}
+          handleReset={handleReset}
+          isNflSetup={isNflSetup}
+        />
+      </Form>
+    </Main>
+  );
 
-  // Pass to SelectField component
+  /********************** Util Functions ***********************/
 
-  const handleTypeSelect = (e) => {
+  // Pass to CustomizeTypesNav component
+  function handleTypeSelect(e) {
     e.preventDefault();
     const selectedType = e.target.dataset.type;
     let newControls = {
@@ -150,9 +168,9 @@ const Settings = () => {
       ...newControls,
       [selectedType]: !open[selectedType],
     });
-  };
+  }
 
-  const submitForm = (e) => {
+  function submitForm(e) {
     e.preventDefault();
     const type = isNflSetup ? 'updateDraft' : 'newDraft';
     if (
@@ -193,31 +211,13 @@ const Settings = () => {
       });
     }
     navigate('/nfl/draftroom');
-  };
+  }
 
-  const handleReset = () => {
+  function handleReset() {
     settingsDispatch({ type: 'reset' });
     appDispatch({ type: 'reset' });
     nflDispatch({ type: 'reset' });
-  };
-  return (
-    <Main>
-      <h2>Customize draft</h2>
-      <Form>
-        <SelectField isNflSetup={isNflSetup} />
-        <CutomizeTypesField>
-          <label htmlFor="customize-types">Customize Types</label>
-          <CustomizeTypesNav handleTypeSelect={handleTypeSelect} open={open} />
-          <CustomizeTypeContent open={open} />
-        </CutomizeTypesField>
-        <FormButtons
-          submitForm={submitForm}
-          handleReset={handleReset}
-          isNflSetup={isNflSetup}
-        />
-      </Form>
-    </Main>
-  );
-};
+  }
+}
 
 export default Settings;

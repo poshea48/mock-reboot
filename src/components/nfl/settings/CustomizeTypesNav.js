@@ -12,16 +12,14 @@ const Container = styled(Field)`
   padding: 0 2px;
   margin-bottom: 0;
   @media screen and (max-width: 450px) {
-    flex-direction: column;
-    justify-content: center;
-    flex-basis: 95px;
-    min-height: 95px;
+    flex-basis: 30px;
+    min-height: 30px;
   }
 `;
 
 const ToggleFieldButton = styled.button`
   color: #fff;
-  background: ${p =>
+  background: ${(p) =>
     p.open ? p.theme.colors.primaryPalette.eerieBlack : 'transparent'};
   border: none;
   cursor: pointer;
@@ -38,6 +36,10 @@ const ToggleFieldButton = styled.button`
   &:active,
   &:focus {
     outline: dodgerblue auto 2px;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 12px;
+    padding: 0.5em;
   }
 `;
 

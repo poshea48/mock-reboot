@@ -18,14 +18,7 @@ const CustomizeTypeContent = ({ open }) => {
     });
   };
 
-  const handleUndraftedSave = newList => {
-    settingsDispatch({
-      type: 'updateUndrafted',
-      payload: newList,
-    });
-  };
-
-  const handleSimulationToggle = e => {
+  const handleSimulationToggle = (e) => {
     const team = e.target.value;
     let newManualTeams = [...settingsState.manualTeams];
     let newSimulationTeams = { ...settingsState.simulationTeams };
@@ -70,7 +63,7 @@ const CustomizeTypeContent = ({ open }) => {
   return (
     <>
       {open.draftboard ? (
-        <CustomizeDraftboard undraftedPlayersSave={handleUndraftedSave} />
+        <CustomizeDraftboard />
       ) : open.teamNeeds ? (
         <CustomizeTeamNeeds
           handleTeamNeedsCustomization={handleTeamNeedsCustomization}

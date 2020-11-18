@@ -12,13 +12,13 @@ const ButtonsWrapper = styled.div`
 
 const SubmitButton = styled.button`
   width: 150px;
-  height: 40px;
+  height: 35px;
   align-self: center;
-  background: ${p => p.theme.colors.primaryPalette.gray};
+  background: ${(p) => p.theme.colors.primaryPalette.gray};
   border-radius: 20px;
   border: none;
   text-transform: uppercase;
-  color: ${p => p.theme.colors.primaryPalette.eerieBlack};
+  color: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
   font-weight: 900;
   cursor: pointer;
   transition: all 0.3s ease-in;
@@ -27,7 +27,7 @@ const SubmitButton = styled.button`
     transform: scale(1.1);
   }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 450px) {
     font-weight: 800;
     font-size: 1em;
   }

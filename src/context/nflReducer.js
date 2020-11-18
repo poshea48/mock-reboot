@@ -4,17 +4,16 @@ import NFLTEAMS from '../data/nflTeams';
 
 const initialState = {
   myTeam: '',
-  manualTeams: [],
   teamOnTheClock: draftOrder[0][0],
   draftboardType: '',
-  draftboard: [],
   teamNeedsType: '',
-  teamNeeds: {},
+  manualTeams: [], // teams that user can draft for
+  undraftedPlayers: null, // or [playerName, ...]
+  teamNeeds: null, // {team: {pos: weight}, ...}
+  draftOrder: draftOrderObject,
   started: false,
   paused: false,
   finished: false,
-  undraftedPlayers: [],
-  draftOrder: draftOrderObject,
   results: {
     ARI: [],
     ATL: [],
@@ -67,11 +66,10 @@ const getSimulationTeams = () => {
 
 const settingsInitialState = {
   myTeam: '',
-  draftboard: '',
   draftboardType: '',
-  teamNeeds: {},
   teamNeedsType: '',
-  undraftedPlayers: [],
+  undraftedPlayers: null,
+  teamNeeds: null,
   simulationTeams: getSimulationTeams(),
   manualTeams: [],
   allSimulationToggle: true,
