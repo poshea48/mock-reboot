@@ -10,10 +10,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  background: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
+  border: 1px solid silver;
   flex: 1 auto;
+  color: #fff;
   height: calc(100% - 61px); /* label(26px) + customizeNav(35) */
+  overflow: scroll;
   @media screen and (max-width: 450px) {
-    height: calc(100% - 121px); /* label(26) + customizeNav(95) */
+    height: calc(100% - 116px); /* label(26) + customizeNav(95) */
   }
 `;
 
@@ -22,7 +26,6 @@ const TeamsList = styled.ul`
   min-width: 120px;
   display: flex;
   flex-direction: column;
-  /* height: calc(100% - 30px); */
   overflow-y: scroll;
   padding: 0.5em 0;
   li {
@@ -34,7 +37,7 @@ const TeamsList = styled.ul`
     margin-bottom: 0.2em;
     .selected {
       background: #fff !important;
-      color: ${p => p.theme.colors.primaryPalette.eerieBlack} !important;
+      color: ${(p) => p.theme.colors.primaryPalette.eerieBlack} !important;
     }
     button {
       background: transparent;
@@ -44,8 +47,8 @@ const TeamsList = styled.ul`
       cursor: pointer;
 
       &:hover {
-        background: ${p => p.theme.colors.primaryPalette.gray};
-        color: ${p => p.theme.colors.primaryPalette.eerieBlack};
+        background: ${(p) => p.theme.colors.primaryPalette.gray};
+        color: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
       }
     }
     @media screen and (max-width: 500px) {
@@ -58,18 +61,19 @@ const TeamsList = styled.ul`
   }
 `;
 
-const Fieldset = styled.fieldset`
+const TeamsNeeds = styled.div`
   flex: 1 auto;
   display: flex;
   flex-direction: column;
   position: relative;
   justify-content: space-between;
-  color: ${p => p.theme.colors.primaryPalette.eerieBlack};
+  color: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
   border-top: none;
   border-right: none;
   border-bottom: none;
   background: #fff;
   margin: 0;
+  overflow-y: scroll;
 `;
 
 const Header = styled.header`
@@ -97,17 +101,17 @@ const NeedsList = styled.ul`
   padding-top: 0.2em;
   flex-direction: column;
   justify-content: space-between;
-  height: ${p => (p.short ? 'calc(100% - 60px)' : 'calc(100% - 30px)')};
+  height: ${(p) => (p.short ? 'calc(100% - 60px)' : 'calc(100% - 30px)')};
   overflow-y: scroll;
   li {
     display: flex;
     min-height: 30px;
     justify-content: center;
-    border-bottom: 1px solid ${p => p.theme.colors.primaryPalette.eerieBlack};
+    border-bottom: 1px solid ${(p) => p.theme.colors.primaryPalette.eerieBlack};
     padding: 0.25em;
     label {
       min-width: 60px;
-      color: ${p => p.theme.colors.primaryPalette.eerieBlack};
+      color: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
       text-transform: uppercase;
     }
     .increment {
@@ -125,35 +129,36 @@ const NeedsList = styled.ul`
   }
 `;
 
-const SaveButton = styled.button`
+const SaveContainer = styled.div`
   width: 100%;
-  height: 30px;
+  height: 45px;
 
-  background: ${p => p.theme.colors.primaryPalette.dodgerBlue};
-  color: ${p => p.theme.colors.primaryPalette.eerieBlack};
   text-align: center;
   border: none;
   display: flex;
   justify-content: center;
   align-self: center;
   margin: 0 auto;
+`;
+
+const SaveButton = styled.button`
+  width: 100%;
+  height: 100%;
+  padding: 0.5em;
+
+  background: ${(p) => p.theme.colors.primaryPalette.dodgerBlue};
+  color: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
+  color: #fff;
   text-transform: uppercase;
   font-weight: 800;
   cursor: pointer;
 `;
 
-const Saved = styled.div`
+const SaveSuccess = styled(SaveContainer)`
+  padding: 0.5em;
+
   position: relative;
-  width: 100%;
-  height: 30px;
   background: green;
-  color: #fff;
-  text-align: center;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-self: center;
-  margin: 0 auto;
   color: #fff;
   h5 {
     align-self: center;
@@ -195,83 +200,21 @@ const CustomizeTeamNeeds = ({ handleTeamNeedsCustomization }) => {
   const [updated, toggleUpdated] = useState(false);
   const [saved, toggleSaved] = useState(false);
   const {
-    state: { teamNeeds },
+    settingsState: { teamNeeds },
   } = useNflState();
-  const handleTeamClick = e => {
-    e.preventDefault();
-    e.target.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-    const team = e.target.parentElement.dataset.team;
-    let newPositions = Object.keys(teamNeeds[team])
-      .map(pos => {
-        return { pos, wt: teamNeeds[team][pos].wt };
-      })
-      .sort((a, b) => b.wt - a.wt);
-    changeTeam(team);
-    changePositions(newPositions);
-  };
-  const increaseWeight = e => {
-    e.preventDefault();
-    const pos = e.target.parentElement.dataset.pos;
-    const posIndex = positions.findIndex(ele => ele.pos === pos);
-    const weight = positions[posIndex].wt;
-    if (weight === 1) return;
-    let newPositions = [...positions];
-    newPositions[posIndex].wt = weight + 0.01 > 1 ? 1.0 : weight + 0.01;
-    changePositions(newPositions);
-    if (!updated) {
-      toggleUpdated(true);
-    }
-  };
-
-  const decreaseWeight = e => {
-    e.preventDefault();
-    const pos = e.target.parentElement.dataset.pos;
-    const posIndex = positions.findIndex(ele => ele.pos === pos);
-    const weight = positions[posIndex].wt;
-    if (weight === 0) return;
-    let newPositions = [...positions];
-    newPositions[posIndex].wt = weight - 0.01 <= 0 ? 0 : weight - 0.01;
-    changePositions(newPositions);
-    if (!updated) {
-      toggleUpdated(true);
-    }
-  };
-
-  const handleSave = e => {
-    if (!updated) {
-      return;
-    }
-    e.preventDefault();
-    // creates an object of current teams needs {OL: {wt: 1, ...}, QB: {...}}
-    let newNeeds = { ...teamNeeds[team] };
-
-    // Iterate thru positions in state and replace newNeeds[pos].wt with state[pos]
-    positions.forEach(pos => (newNeeds[pos.pos].wt = pos.wt));
-    handleTeamNeedsCustomization(team, newNeeds);
-    // changeTeam('');
-    changePositions([...positions].sort((a, b) => b.wt - a.wt));
-    toggleUpdated(false);
-    toggleSaved(true);
-  };
-
-  const closeSaved = () => {
-    toggleSaved(false);
-  };
-
-  let teams = Object.keys(teamNeeds).map(teamCode => (
-    <li key={teamCode} data-team={teamCode}>
-      <button
-        className={teamCode === team ? 'selected' : null}
-        onClick={handleTeamClick}
-      >
-        {teamCode}
-      </button>
-    </li>
-  ));
-  const fieldsetData = positions.map(pos => (
+  let teams = teamNeeds
+    ? Object.keys(teamNeeds).map((teamCode) => (
+        <li key={teamCode} data-team={teamCode}>
+          <button
+            className={teamCode === team ? 'selected' : null}
+            onClick={handleTeamClick}
+          >
+            {teamCode}
+          </button>
+        </li>
+      ))
+    : null;
+  const fieldsetData = positions.map((pos) => (
     <li key={pos.pos}>
       <label htmlFor={pos.pos}>{pos.pos}</label>
       <div className="increment" data-pos={pos.pos}>
@@ -291,30 +234,100 @@ const CustomizeTeamNeeds = ({ handleTeamNeedsCustomization }) => {
       <Description>
         <p>** Select Team and Modify needs from lowest(0) to highest(1.0) **</p>
       </Description>
-      {Object.keys(teamNeeds).length === 0 ? (
+      {!teamNeeds ? (
         <h4>You need to select a Team Needs Type first</h4>
       ) : (
         <FieldsetContainer>
           <TeamsList>{teams}</TeamsList>
-          <Fieldset>
+          <TeamsNeeds>
             <Header>
               <h3>{team ? NFLTEAMS[team].fullName : 'Select Team'}</h3>
             </Header>
             <NeedsList short={updated || saved}>{fieldsetData}</NeedsList>
-            {updated && <SaveButton onClick={handleSave}>Save</SaveButton>}
+            {updated && (
+              <SaveContainer>
+                <SaveButton onClick={handleSave}>Save</SaveButton>
+              </SaveContainer>
+            )}
             {saved && (
-              <Saved>
+              <SaveSuccess>
                 <h5>Saved!</h5>
                 <button onClick={closeSaved} title="close">
                   x
                 </button>
-              </Saved>
+              </SaveSuccess>
             )}
-          </Fieldset>
+          </TeamsNeeds>
         </FieldsetContainer>
       )}
     </Wrapper>
   );
+
+  /*********************** Util Functions ***********************/
+  function handleTeamClick(e) {
+    e.preventDefault();
+    e.target.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+    const team = e.target.parentElement.dataset.team;
+    let newPositions = Object.keys(teamNeeds[team])
+      .map((pos) => {
+        return { pos, wt: teamNeeds[team][pos].wt };
+      })
+      .sort((a, b) => b.wt - a.wt);
+    changeTeam(team);
+    changePositions(newPositions);
+  }
+
+  function increaseWeight(e) {
+    e.preventDefault();
+    const pos = e.target.parentElement.dataset.pos;
+    const posIndex = positions.findIndex((ele) => ele.pos === pos);
+    const weight = positions[posIndex].wt;
+    if (weight === 1) return;
+    let newPositions = [...positions];
+    newPositions[posIndex].wt = weight + 0.01 > 1 ? 1.0 : weight + 0.01;
+    changePositions(newPositions);
+    if (!updated) {
+      toggleUpdated(true);
+    }
+  }
+
+  function decreaseWeight(e) {
+    e.preventDefault();
+    const pos = e.target.parentElement.dataset.pos;
+    const posIndex = positions.findIndex((ele) => ele.pos === pos);
+    const weight = positions[posIndex].wt;
+    if (weight === 0) return;
+    let newPositions = [...positions];
+    newPositions[posIndex].wt = weight - 0.01 <= 0 ? 0 : weight - 0.01;
+    changePositions(newPositions);
+    if (!updated) {
+      toggleUpdated(true);
+    }
+  }
+
+  function handleSave(e) {
+    if (!updated) {
+      return;
+    }
+    e.preventDefault();
+    // creates an object of current teams needs {OL: {wt: 1, ...}, QB: {...}}
+    let newNeeds = { ...teamNeeds[team] };
+
+    // Iterate thru positions in state and replace newNeeds[pos].wt with state[pos]
+    positions.forEach((pos) => (newNeeds[pos.pos].wt = pos.wt));
+    handleTeamNeedsCustomization(team, newNeeds);
+    // changeTeam('');
+    changePositions([...positions].sort((a, b) => b.wt - a.wt));
+    toggleUpdated(false);
+    toggleSaved(true);
+  }
+
+  function closeSaved() {
+    toggleSaved(false);
+  }
 };
 
 CustomizeTeamNeeds.propTypes = {

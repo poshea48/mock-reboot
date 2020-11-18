@@ -10,7 +10,7 @@ const ContentWrapper = styled.div`
   color: #fff;
   height: calc(100% - 61px); /* label(26px) + customizeNav(35) */
   @media screen and (max-width: 450px) {
-    height: calc(100% - 121px); /* label(26) + customizeNav(95) */
+    height: calc(100% - 116px); /* label(26) + customizeNav(95) */
   }
 `;
 

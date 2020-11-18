@@ -25,8 +25,8 @@ const Main = styled.main`
     text-align: center;
     font-weight: 800;
     text-transform: uppercase;
-    flex-basis: 40px;
-    min-height: 40px;
+    flex-basis: 30px;
+    min-height: 30px;
   }
 
   @media screen and (max-width: 450px) {
@@ -98,12 +98,12 @@ function Settings() {
   useEffect(() => {
     if (!settingsState.myTeam && state.myTeam) {
       const {
-        myTeam,
-        draftboardType,
-        teamNeeds,
-        teamNeedsType,
-        undraftedPlayers,
-        manualTeams,
+        myTeam, // string
+        draftboardType, // string
+        teamNeedsType, // string
+        teamNeeds, // object || null
+        undraftedPlayers, // array || null
+        manualTeams, // array
       } = state;
       let simToggle;
       let newSimulationTeams = { ...settingsState.simulationTeams };
@@ -119,8 +119,8 @@ function Settings() {
         ...settingsState,
         myTeam,
         draftboardType,
-        teamNeeds,
         teamNeedsType,
+        teamNeeds,
         undraftedPlayers,
         allSimulationToggle: simToggle,
         simulationTeams: newSimulationTeams,
@@ -134,7 +134,6 @@ function Settings() {
       return;
     }
   }, []);
-
   return (
     <Main>
       <h2>Customize draft</h2>
@@ -153,6 +152,8 @@ function Settings() {
       </Form>
     </Main>
   );
+
+  /********************** Util Functions ***********************/
 
   // Pass to CustomizeTypesNav component
   function handleTypeSelect(e) {
@@ -198,7 +199,7 @@ function Settings() {
         manualTeams: [...settingsState.manualTeams],
         teamNeedsType: settingsState.teamNeedsType,
         draftboardType: settingsState.draftboardType,
-        undraftedPlayers: [...settingsState.players],
+        undraftedPlayers: [...settingsState.undraftedPlayers],
         teamNeeds: { ...settingsState.teamNeeds },
       },
     });

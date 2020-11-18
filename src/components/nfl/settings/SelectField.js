@@ -98,7 +98,7 @@ const SelectField = ({ isNflSetup }) => {
       type: 'addUndraftedPlayers',
       payload: {
         draftboardType: e.target.value,
-        players: undraftedPlayers,
+        undraftedPlayers,
       },
     });
   };

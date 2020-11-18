@@ -2,13 +2,9 @@ import styled from '@emotion/styled';
 
 const Description = styled.div`
   flex-basis: 30px;
-
   min-height: 30px;
   padding: 0.25em;
-  border-top: 1px solid silver;
-
-  border-left: 1px solid silver;
-  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
   background: ${(p) => p.theme.colors.primaryPalette.eerieBlack};
   color: #fff;
   p {

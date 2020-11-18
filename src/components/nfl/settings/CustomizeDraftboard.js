@@ -122,20 +122,20 @@ const initialState = {
 
 const CustomizeDraftboard = () => {
   const {
-    settingsState: { players },
+    settingsState: { undraftedPlayers },
   } = useNflState();
   const [state, changeState] = useState(initialState);
   const { settingsDispatch } = useNflDispatch();
 
-  // create local state array for players so you can move players around and
+  // create local state array for undraftedPlayers so you can move undraftedPlayers around and
   // reset without messing with context
   const [playersList, setPlayersList] = useState([]);
 
   useEffect(() => {
-    if (players) {
-      setPlayersList(players);
+    if (undraftedPlayers) {
+      setPlayersList(undraftedPlayers);
     }
-  }, [players]);
+  }, [undraftedPlayers]);
 
   const handleDragStart = (e) => {
     const initialPosition = Number(e.currentTarget.dataset.index);
@@ -238,7 +238,7 @@ const CustomizeDraftboard = () => {
   };
   const resetList = (e) => {
     e.preventDefault();
-    setPlayersList([...players]);
+    setPlayersList([...undraftedPlayers]);
     changeState((prev) => {
       return { ...prev, updated: false };
     });
