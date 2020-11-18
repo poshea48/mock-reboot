@@ -16,6 +16,7 @@ const Main = styled.main`
   max-width: 650px;
   width: 100%;
   height: calc(100vh - 90px);
+  height: calc((var(--vh, 1vh) * 100) - 90px);
   margin: 0 auto;
   h2 {
     align-self: center;

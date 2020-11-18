@@ -5,20 +5,20 @@ const FormField = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   label {
     width: 160px;
-    color: #fff;/*${p => p.theme.colors.primaryPalette.eerieBlack};*/
+    color: #fff; /*${(p) => p.theme.colors.primaryPalette.eerieBlack};*/
     font-weight: 900;
   }
   select {
     flex: 1 auto;
-    border: 1px solid ${p => p.theme.colors.primaryPalette.eerieBlack};
-    color: ${p => p.theme.colors.primaryPalette.dodgerBlue};
+    border: 1px solid ${(p) => p.theme.colors.primaryPalette.eerieBlack};
+    color: ${(p) => p.theme.colors.primaryPalette.dodgerBlue};
     text-transform: uppercase;
     font-weight: 800;
     &:disabled {
-      opacity: .5;
+      opacity: 0.5;
     }
   }
   option {

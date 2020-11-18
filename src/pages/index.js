@@ -19,6 +19,7 @@ const Container = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  height: calc((var(--vh, 1vh) * 100));
   text-align: center;
 `;
 
@@ -59,8 +60,8 @@ const StyledLink = styled(Link)`
   margin: 0.5em;
   transition: all 0.3s ease-in-out;
   color: ${colors2.eerieBlack};
-  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
-  pointer-events: ${p => (p.disabled ? 'none' : 'auto')};
+  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
+  pointer-events: ${(p) => (p.disabled ? 'none' : 'auto')};
   font-weight: 900;
 
   &:disabled {

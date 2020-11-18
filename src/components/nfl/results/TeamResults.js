@@ -29,15 +29,15 @@ const TeamResults = ({ round }) => {
   } = useNflState();
   const [team, changeTeam] = useState(myTeam);
   const players = results[team]
-    .filter(s => s.round === round)
-    .map(player => (
+    .filter((s) => s.round === round)
+    .map((player) => (
       <tr key={player.pick}>
         <td>{player.pick}</td>
         <td>{player.name}</td>
         <td>{player.pos}</td>
       </tr>
     ));
-  const handleTeamChange = e => {
+  const handleTeamChange = (e) => {
     changeTeam(e.target.value);
   };
   return (
@@ -51,9 +51,9 @@ const TeamResults = ({ round }) => {
                 name="filterBy"
                 value={team}
                 onChange={handleTeamChange}
-                onBlur={e => e.target.blur()}
+                onBlur={(e) => e.target.blur()}
               >
-                {Object.keys(nflTeams).map(p => (
+                {Object.keys(nflTeams).map((p) => (
                   <option key={p} value={p}>
                     {p}
                   </option>

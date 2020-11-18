@@ -27,6 +27,8 @@ const Container = styled.div`
   padding: 0 1em;
   background: ${colors.white};
   width: 100vw;
+  height: 100vh;
+  height: calc((var(--vh, 1vh) * 100));
   overflow-x: hidden;
   nav {
     display: flex;

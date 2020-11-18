@@ -16,13 +16,13 @@ const HGroup = styled.hgroup`
   h2 {
     font-weight: 900;
     font-size: 2em;
-    color: ${p => p.theme.colors.teamColors[p.team].primary};
+    color: ${(p) => p.theme.colors.teamColors[p.team].primary};
     align-self: flex-start;
   }
   h3 {
     font-size: 1em;
     align-self: flex-start;
-    color: ${p =>
+    color: ${(p) =>
       p.altColor
         ? p.theme.colors.teamColors[p.team].secondary2
         : p.theme.colors.teamColors[p.team].secondary1};

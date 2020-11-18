@@ -21,7 +21,7 @@ const findSimulatedPlayer = (players, teamNeeds) => {
 };
 
 // will take in position need from a team => {wt: .4, total: 2, drafted: 1}
-const updateTeamNeeds = teamNeed => {
+const updateTeamNeeds = (teamNeed) => {
   let newPosNeed = {};
   const { wt, total, drafted } = teamNeed;
   newPosNeed.wt = (wt * (total - (drafted + 1))) / total;

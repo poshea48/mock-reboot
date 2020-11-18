@@ -270,8 +270,8 @@ const draftOrderObject = {
   ],
 };
 let pick = 1;
-Object.keys(draftOrderObject).forEach(round => {
-  draftOrderObject[round].forEach(selection => {
+Object.keys(draftOrderObject).forEach((round) => {
+  draftOrderObject[round].forEach((selection) => {
     selection.overallPick = pick;
     pick++;
   });

@@ -9,6 +9,7 @@ const Main = styled.main`
   flex-direction: column;
   justify-content: flex-start;
   height: calc(100vh - 90px);
+  height: calc((var(--vh, 1vh) * 100) - 90px);
 `;
 
 const Header = styled.header`
@@ -18,7 +19,7 @@ const Header = styled.header`
   justify-content: center;
   h1 {
     text-transform: uppercase;
-    color: ${p => p.theme.colors.primaryPalette.vanDykeBrown};
+    color: ${(p) => p.theme.colors.primaryPalette.vanDykeBrown};
   }
   @media screen and (max-width: 600px) {
     h1 {
@@ -69,7 +70,7 @@ const ResultTypes = styled.ul`
       outline: 0 !important;
     }
     .selected {
-      color: ${p => p.theme.colors.primaryPalette.dodgerBlue};
+      color: ${(p) => p.theme.colors.primaryPalette.dodgerBlue};
       text-decoration: underline;
       font-weight: 900;
     }
@@ -83,7 +84,7 @@ const ResultRounds = styled.ul`
   display: flex;
   position: relative;
   justify-content: flex-start;
-  box-shadow: inset 0 -1px 0 ${p => p.theme.colors.primaryPalette.gray};
+  box-shadow: inset 0 -1px 0 ${(p) => p.theme.colors.primaryPalette.gray};
   /* #cbccce */
   li {
     flex-basis: calc(100% / 7);
@@ -98,7 +99,7 @@ const ResultRounds = styled.ul`
       font-weight: 600;
     }
     .selected {
-      color: ${p => p.theme.colors.primaryPalette.dodgerBlue};
+      color: ${(p) => p.theme.colors.primaryPalette.dodgerBlue};
       font-weight: 900;
     }
     .pointer {
@@ -122,7 +123,7 @@ const ResultRounds = styled.ul`
       }
       &::before {
         border-color: rgba(203, 204, 206, 0);
-        border-bottom-color: ${p => p.theme.colors.primaryPalette.gray};
+        border-bottom-color: ${(p) => p.theme.colors.primaryPalette.gray};
         border-width: 8px;
         margin-left: -8px;
       }
@@ -141,7 +142,7 @@ const Results = () => {
   const { state } = useNflState();
   const [type, changeType] = useState('overall');
   const [round, changeRound] = useState(1);
-  const resultRounds = ROUNDS.map(r => (
+  const resultRounds = ROUNDS.map((r) => (
     <li key={r}>
       <button
         onClick={() => changeRound(r)}
