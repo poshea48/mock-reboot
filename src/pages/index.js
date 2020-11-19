@@ -24,18 +24,20 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  color: ${colors2.gray};
+  color: ${colors2.dodgerBlue};
   margin-bottom: 0;
   font-family: 'Gill Sans', sans-serif;
   font-size: 3em;
+  font-weight: 800;
   text-shadow: 0 10px 5px ${colors2.eerieBlack};
 `;
 
 const MainTitle = styled.h1`
-  color: ${colors2.dodgerBlue};
+  color: ${colors2.gray};
   font-size: 4em;
+  font-weight: 700;
   text-shadow: 0 10px 5px ${colors2.eerieBlack};
-  margin: 10px 0;
+  margin: 5px 0;
 `;
 
 const LinksContainer = styled.div`
@@ -50,16 +52,21 @@ const LinksContainer = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  background: ${colors2.cadetGrey};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: ${colors2.dodgerBlue};
   box-shadow: 5px 5px 5px ${colors2.eerieBlack};
   padding: 5px;
   border-radius: 10px;
-  width: 160px;
+  width: 180px;
+  height: 40px;
   font-size: 0.8rem;
   align-self: center;
   margin: 0.5em;
   transition: all 0.3s ease-in-out;
-  color: ${colors2.eerieBlack};
+  color: ${colors2.gray};
+  color: #fff;
   cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
   pointer-events: ${(p) => (p.disabled ? 'none' : 'auto')};
   font-weight: 900;
@@ -76,8 +83,9 @@ const StyledLink = styled(Link)`
   }
 
   &:hover {
-    box-shadow: none;
-    transform: translateX(2px) translateY(2px);
+    /* box-shadow: none;
+    transform: translateX(2px) translateY(2px); */
+    text-decoration: underline;
   }
 `;
 const IndexPage = () => {
