@@ -35,12 +35,21 @@ const TeamNeedsList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  p {
+    margin: 0;
+  }
   ul {
     flex: 1 auto;
     justify-content: flex-start;
     display: flex;
     li {
       margin: 0 0.25em;
+      &:first-of-type {
+        margin-left: 0;
+      }
+      &:last-of-type {
+        margin-right: 0;
+      }
     }
   }
   .label {
@@ -49,6 +58,7 @@ const TeamNeedsList = styled.div`
   }
   .needs {
     text-transform: uppercase;
+    font-weight: 700;
     font-size: 14px;
   }
 `;
@@ -66,6 +76,7 @@ const TeamSelectedPlayers = () => {
   }, [teamOnTheClock]);
 
   const { open, openModal, closeModal } = useModal();
+
   const handleTeamChange = (e) => {
     changeSelectedTeam(e.target.value);
   };
@@ -134,7 +145,7 @@ const TeamSelectedPlayers = () => {
           </div>
         </TeamFilter>
         <TeamNeedsList>
-          <span className="label">Adjusted Team Needs:</span>
+          <p className="label">Adjusted Team Needs:</p>
           <ul>{sortedTeamNeeds}</ul>
         </TeamNeedsList>
         <table>
