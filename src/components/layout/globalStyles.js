@@ -9,7 +9,6 @@ const globalStyles = () => css`
   html {
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
-    font-family: sans-serif;
     box-sizing: border-box;
     line-height: 1.15;
     -ms-overflow-style: scrollbar;
@@ -27,8 +26,6 @@ const globalStyles = () => css`
     min-height: -webkit-fill-available;
     margin: 0;
     padding: 0;
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
-      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   }
   #page-container {
     padding: 0 1em;
@@ -127,7 +124,6 @@ const globalStyles = () => css`
   kbd,
   samp,
   pre {
-    font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace; /* 1 */
     font-size: 1em; /* 2 */
   }
   /* copied from https://github.com/sindresorhus/modern-normalize */
@@ -146,7 +142,6 @@ Forms
   optgroup,
   select,
   textarea {
-    font-family: inherit; /* 1 */
     font-size: 100%; /* 1 */
     line-height: 1.15; /* 1 */
     margin: 0; /* 2 */

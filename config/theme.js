@@ -38,9 +38,10 @@ export const colors = {
       primary: '#013369',
       secondary1: '#d50a0a',
     },
+    //primary: text color, secondary1: backgroundcolor
     ARI: {
       primary: '#97233F',
-      secondary1: '#000000',
+      secondary1: '#fff',
       secondary2: '#FFB612',
     },
     ATL: {
@@ -55,8 +56,8 @@ export const colors = {
     },
     BUF: {
       primary: '#00338D',
-      secondary1: '#C60c30',
-      secondary2: '#000000',
+      secondary1: '#F7F7F7',
+      secondary2: '#C60c30',
     },
     CAR: {
       primary: '#0085CA',
@@ -139,9 +140,9 @@ export const colors = {
       secondary2: '#000000',
     },
     NYG: {
-      primary: '#192E6C',
-      secondary1: '#B20032',
-      secondary2: '#000000',
+      primary: '#0b2265',
+      secondary1: '#fff',
+      secondary2: '#a71930',
     },
     NYJ: {
       primary: '#203731',

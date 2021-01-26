@@ -13,6 +13,7 @@ const TeamFilter = styled.div`
     margin: 0;
     font-weight: 700;
     font-size: 1.2em;
+    color: ${(p) => p.theme.colors.teamColors[p.team].primary};
   }
   @media screen and (max-width: 600px) {
     padding: 0.8em 0;

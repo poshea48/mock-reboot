@@ -41,10 +41,6 @@ const MainLayout = ({ children }) => {
             a {
               color: ${theme.colors.black.blue};
             }
-
-            h1 {
-              font-family: ${theme.fontFamily.heading};
-            }
           `}
         />
         <SEO title={site.siteMetadata.title} />
